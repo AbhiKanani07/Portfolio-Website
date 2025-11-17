@@ -1,0 +1,277 @@
+body {
+  font-family: "Poppins", system-ui, sans-serif;
+  margin: 0;
+  background: #0f172a;
+  color: #e5e7eb;
+  line-height: 1.6;
+}
+
+/* Header & navigation */
+
+header {
+  background: #0f172a; /* match body */
+  border-bottom: 1px solid #1f2937;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.7);
+}
+
+header .container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.4rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+nav a {
+  color: #e5e7eb;
+  margin-left: 18px;
+  text-decoration: none;
+  font-size: 0.95rem;
+  opacity: 0.8;
+  border-bottom: 2px solid transparent;
+  padding-bottom: 4px;
+  transition: opacity 0.2s, border-color 0.2s, transform 0.2s;
+}
+
+nav a:hover {
+  opacity: 1;
+  border-color: #f97316;
+  transform: translateY(-1px);
+}
+
+/* Layout */
+
+main {
+  padding: 2rem 1rem 3rem;
+}
+
+section {
+  max-width: 960px;
+  margin: 0 auto 2rem;
+  padding: 2.5rem 2rem;
+  background: #020617;
+  border-radius: 18px;
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.7);
+}
+
+section h2 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.4rem;
+}
+
+/* About / hero */
+
+.about-hero {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.profile-photo {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #f97316;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.6);
+}
+
+.about-text p {
+  margin-bottom: 0.75rem;
+  color: #cbd5f5;
+}
+
+.about-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.btn-primary,
+.btn-github,
+.btn-instagram,
+.btn-toggle {
+  font-family: "Poppins", system-ui, sans-serif;
+  border: none;
+  cursor: pointer;
+  padding: 0.6rem 1.3rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: transform 0.15s, box-shadow 0.15s, filter 0.15s;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #f97316, #fb923c);
+  color: #111827;
+  box-shadow: 0 10px 25px rgba(248, 113, 113, 0.45);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-github {
+  background: #ffffff;
+  color: #111827;
+  border: 1px solid #d1d5db;
+}
+
+.btn-instagram {
+  background: linear-gradient(135deg, #fd1d1d, #fcb045);
+  color: #ffffff;
+  border: none;
+}
+
+.btn-toggle {
+  /* dark mode appearance: white button */
+  background: #ffffff;
+  color: #111827;
+  border: 1px solid #d1d5db;
+}
+
+.btn-primary:hover,
+.btn-github:hover,
+.btn-instagram:hover,
+.btn-toggle:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+  box-shadow: 0 16px 35px rgba(15, 23, 42, 0.8);
+}
+
+/* Posts bar */
+
+#posts-bar {
+  margin-top: 1.5rem;
+  padding: 0.75rem 1rem;
+  border-radius: 999px;
+  background: #020617;
+  border: 1px solid #1f2937;
+  font-size: 0.9rem;
+  color: #e5e7eb;
+  opacity: 0.9;
+}
+
+/* Projects preview */
+
+#projects #project-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.project-card {
+  background: #020617;
+  border-radius: 14px;
+  padding: 1.25rem 1rem;
+  border: 1px solid #1f2937;
+  box-shadow: 0 14px 35px rgba(15, 23, 42, 0.8);
+}
+
+.project-card h3 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.project-card p {
+  margin-bottom: 0.75rem;
+  color: #cbd5f5;
+}
+
+.project-card a {
+  font-size: 0.9rem;
+  color: #f97316;
+  text-decoration: none;
+}
+
+.project-card a:hover {
+  text-decoration: underline;
+}
+
+/* Contact links */
+
+#contact a {
+  color: #f97316;
+  text-decoration: none;
+}
+
+#contact a:hover {
+  text-decoration: underline;
+}
+
+/* Projects page layout */
+
+#projects-page article {
+  margin-top: 1.5rem;
+}
+
+#projects-page h3 {
+  margin-bottom: 0.5rem;
+}
+
+/* Dark / light theme */
+
+/* base is dark, .light is white theme */
+body.light {
+  background: #f9fafb;
+  color: #000000;
+}
+
+body.light header {
+  background: #ffffff;
+  border-bottom-color: #e5e7eb;
+  box-shadow: 0 6px 20px rgba(15, 23, 42, 0.1);
+}
+
+body.light section {
+  background: #ffffff;
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
+}
+
+body.light #posts-bar {
+  background: #f3f4f6;
+  border-color: #e5e7eb;
+  color: #000000;
+}
+
+body.light .about-text p {
+  color: #000000;
+}
+
+body.light .project-card {
+  background: #ffffff;
+  border-color: #e5e7eb;
+}
+
+body.light #contact a,
+body.light .project-card a {
+  color: #2563eb;
+}
+
+/* ensure base text elements are black in light mode */
+body.light p,
+body.light h1,
+body.light h2,
+body.light h3 {
+  color: #000000;
+}
+
+/* toggle button appearance in light mode */
+body.light .btn-toggle {
+  /* light mode appearance: black button */
+  background: #000000;
+  color: #f9fafb;
+  border-color: #000000;
+}
