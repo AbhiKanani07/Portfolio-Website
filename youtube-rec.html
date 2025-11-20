@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>YouTube Recommendation Bias - Abhi Kanani</title>
+  <link rel="stylesheet" href="pros.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap">
+</head>
+<body>
+
+  <header>
+    <div class="container">
+      <h1 id="name"><a href="index.html">Abhi Kanani</a></h1>
+      <nav>
+        <a href="index.html#about">About</a>
+        <a href="projects.html">Projects</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="project-detail">
+      <p class="eyebrow">Case Study</p>
+      <h2>YouTube Recommendation Bias & Viewing Behavior Model</h2>
+      <p class="lede">Built a graph-based “baby YouTube algorithm” using my own watch history to see how recommendations influence what I watch next.</p>
+
+      <h3>Why it fits</h3>
+      <ul>
+        <li>I ran a YouTube channel growing up, so I’ve long thought about how recommendations drive clicks and retention.</li>
+        <li>Now I can pair that experience with data analysis to quantify how the algorithm nudges my behavior.</li>
+      </ul>
+
+      <h3>Data & parsing</h3>
+      <ul>
+        <li>Used YouTube watch-history export (JSON/HTML) for timestamps, titles, channels, and inferred categories.</li>
+        <li>Built Pandas pipelines to clean, categorize, and enrich sessions with watch-time and return-visit flags.</li>
+      </ul>
+
+      <h3>Analyses</h3>
+      <ul>
+        <li>Watch time per category and channel “return” rates</li>
+        <li>Topic transitions: what I watch after each category or channel</li>
+        <li>Preference drift over years and session-level binge vs. casual patterns</li>
+      </ul>
+
+      <h3>Recommendation simulator</h3>
+      <ul>
+        <li>Represented videos as nodes and transitions as edges; estimated “likely next video” probabilities.</li>
+        <li>Simple graph-based model to simulate what the feed might surface next given recent views.</li>
+      </ul>
+
+      <h3>Optional modeling</h3>
+      <ul>
+        <li>Predict daily watch time given recent behavior</li>
+        <li>Topic clustering to identify core interest groups</li>
+        <li>Detect binge sessions and measure topic drift</li>
+      </ul>
+
+      <h3>Interview angle</h3>
+      <p>
+        I analyzed my own history to understand how algorithms steer behavior, then built a transition-probability model to illustrate that influence.
+        Metrics like topic drift and binge likelihood make the story concrete, memorable, and personal.
+      </p>
+
+      <p>
+        GitHub: <a href="https://github.com/AbhiKanani07/YT-Behavior-Model" target="_blank">YouTube behavior model repository</a>
+      </p>
+
+      <p><a href="projects.html">&larr; Back to Projects</a></p>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

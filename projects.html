@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projects - Abhi Kanani</title>
+    <link rel="stylesheet" href="pros.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 id="name"><a href="index.html">Abhi Kanani</a></h1>
+            <nav>
+                <a href="index.html#about">About</a>
+                <a href="projects.html">Projects</a>
+                <a href="index.html#contact">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="projects-page">
+            <h2>Projects</h2>
+            <p class="lede">Longer write-ups on the projects I'm most proud of. Each one pairs data work with a clear story and measurable outcomes.</p>
+
+            <article id="project-1">
+                <h3>1. Sleep Pattern & Health Insights Dashboard</h3>
+                <p>
+                    Built an end-to-end pipeline for Fitbit/Apple Health exports to understand lifelong sleep issues.
+                    Cleaned and merged night-level data (sleep stages, heart rate, HRV, bedtime consistency), then explored:
+                </p>
+                <ul>
+                    <li>Sleep duration vs. bedtime consistency and screen-time proxies</li>
+                    <li>HRV and nightly heart-rate patterns mapped against perceived restfulness</li>
+                    <li>“Good vs. bad night” classifiers and duration regression baselines</li>
+                    <li>Weekly/monthly trend dashboards plus anomaly flags for possible apnea-like events</li>
+                </ul>
+                <p>
+                    <a href="sleep-dashboard.html">Open full project page</a>
+                </p>
+            </article>
+
+            <article id="project-2">
+                <h3>2. Water Quality in the Netherlands</h3>
+                <p>
+                    Combined regional water measurements to spot seasonal and spatial risk in Dutch rivers.
+                    Used NumPy/Pandas for cleaning, feature engineering, and QC before building visuals that water boards can use for monitoring:
+                </p>
+                <ul>
+                    <li>Trend and variance analysis by province and month to prioritize sampling</li>
+                    <li>Anomaly detection to flag stations for rapid follow-up testing</li>
+                    <li>Exportable summaries so local teams (pet owners, aquaculture, utilities) can check suitability quickly</li>
+                </ul>
+                <p>
+                    <a href="water-quality.html">Open full project page</a><br>
+                    <a href="https://abhikanani07.github.io/Dutch-Water-Model/" target="_blank">Live project site</a>
+                </p>
+            </article>
+
+            <article id="project-3">
+                <h3>3. YouTube Recommendation Bias & Viewing Behavior Model</h3>
+                <p>
+                    Built a “baby YouTube algorithm” informed by my own watch history (exported JSON/HTML).
+                    Mapped videos as nodes and transitions as edges to study how recommendations shape viewing paths.
+                </p>
+                <ul>
+                    <li>Analyzed watch time by category, channel return rates, and topic transitions over years</li>
+                    <li>Graph-based recommendation simulator estimating “likely next video” probabilities</li>
+                    <li>Topic clustering to find core interest groups and detect binge vs. casual sessions</li>
+                    <li>Metrics for topic drift and binge likelihood grounded in personal viewing patterns</li>
+                </ul>
+                <p>
+                    <a href="youtube-rec.html">Open full project page</a>
+                </p>
+            </article>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
