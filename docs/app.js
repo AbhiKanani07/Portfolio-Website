@@ -16,9 +16,9 @@ if (themeButton) {
 
 // Rotating posts bar
 const posts = [
-  "Building projects at the University of Pittsburgh.",
-  "Interested in software engineering, data, and design.",
-  "Always learning new technologies and tools."
+  "Prototyping data stories at the University of Pittsburgh.",
+  "Building a sleep insights dashboard fed by Fitbit/Apple Health.",
+  "Modeling how YouTube recommendations shape what I watch next."
 ];
 
 const postsBar = document.getElementById("posts-bar");
@@ -27,16 +27,13 @@ if (postsBar && posts.length > 0) {
   postsBar.textContent = posts[currentPost];
 
   setInterval(() => {
-    currentPost = (currentPost + 1) % posts.length;
-    postsBar.textContent = posts[currentPost];
-  }, 4000);
-}
-
-const projectsSection = document.getElementById("projects");
-if (projectsSection) {
-  projectsSection.addEventListener("click", () => {
-    projectsSection.classList.toggle("fullscreen");
-  });
+    postsBar.classList.add("is-fading");
+    setTimeout(() => {
+      currentPost = (currentPost + 1) % posts.length;
+      postsBar.textContent = posts[currentPost];
+      postsBar.classList.remove("is-fading");
+    }, 240);
+  }, 4600);
 }
 
 // Projects preview cards on the home page
@@ -44,14 +41,19 @@ const projectList = document.getElementById("project-list");
 if (projectList) {
   const projects = [
   {
+    title: "Sleep Pattern & Health Insights Dashboard",
+    description: "Personal Fitbit/Apple Health pipeline turning nightly sleep into actionable trends and predictions.",
+    link: "sleep-dashboard.html"
+  },
+  {
     title: "Water Quality in the Netherlands",
-    description: "Data analysis & statistical modeling project using Pandas libraries.",
+    description: "Spatial/seasonal analysis of Dutch water quality with NumPy/Pandas and decision-ready visuals.",
     link: "water-quality.html"
   },
   {
-    title: "Portfolio Website",
-    description: "Personal portfolio website built with HTML, CSS, and JavaScript.",
-    link: "port-website.html"
+    title: "YouTube Recommendation Bias & Viewing Model",
+    description: "Graph-based simulator using my watch history to study recommendation paths and viewing behavior.",
+    link: "youtube-rec.html"
   }
 ];
 
@@ -61,7 +63,7 @@ projects.forEach((project) => {
   item.innerHTML = `
     <h3>${project.title}</h3>
     <p>${project.description}</p>
-    <a href="${project.link}" target="_blank">View details</a>
+    <a href="${project.link}">View details</a>
   `;
   projectList.appendChild(item);
 });
