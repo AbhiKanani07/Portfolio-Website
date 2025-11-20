@@ -14,32 +14,34 @@ if (themeButton) {
   });
 }
 
-// Rotating posts bar
-const posts = [
-  "Prototyping data stories at the University of Pittsburgh.",
-  "Building a sleep insights dashboard fed by Fitbit/Apple Health.",
-  "Modeling how YouTube recommendations shape what I watch next."
-];
+// Typewriter for hero headline
+const heroTitle = document.querySelector(".about-text h2");
+const fullTitle = heroTitle ? heroTitle.textContent.trim() : "";
+if (heroTitle && fullTitle) {
+  heroTitle.textContent = "";
+  const cursor = document.createElement("span");
+  cursor.className = "cursor";
+  heroTitle.appendChild(cursor);
 
-const postsBar = document.getElementById("posts-bar");
-if (postsBar && posts.length > 0) {
-  let currentPost = 0;
-  postsBar.textContent = posts[currentPost];
+  let i = 0;
+  const typeNext = () => {
+    if (i < fullTitle.length) {
+      heroTitle.insertBefore(document.createTextNode(fullTitle.charAt(i)), cursor);
+      i += 1;
+      setTimeout(typeNext, 55);
+    } else {
+      setTimeout(() => {
+        cursor.remove();
+      }, 2000);
+    }
+  };
 
-  setInterval(() => {
-    postsBar.classList.add("is-fading");
-    setTimeout(() => {
-      currentPost = (currentPost + 1) % posts.length;
-      postsBar.textContent = posts[currentPost];
-      postsBar.classList.remove("is-fading");
-    }, 240);
-  }, 4600);
+  // retrigger on page load (including when returning from another page)
+  setTimeout(typeNext, 200);
 }
 
-// Projects preview cards on the home page
-const projectList = document.getElementById("project-list");
-if (projectList) {
-  const projects = [
+const ROTATION_MS = 4600;
+const projects = [
   {
     title: "Sleep Pattern & Health Insights Dashboard",
     description: "Personal Fitbit/Apple Health pipeline turning nightly sleep into actionable trends and predictions.",
@@ -57,14 +59,55 @@ if (projectList) {
   }
 ];
 
-projects.forEach((project) => {
-  const item = document.createElement("div");
-  item.className = "project-card";
-  item.innerHTML = `
-    <h3>${project.title}</h3>
-    <p>${project.description}</p>
-    <a href="${project.link}">View details</a>
-  `;
-  projectList.appendChild(item);
-});
+const postsBar = document.getElementById("posts-bar");
+const projectList = document.getElementById("project-list");
+let projectCards = [];
+
+// Projects preview cards on the home page
+if (projectList) {
+  projects.forEach((project) => {
+    const item = document.createElement("div");
+    item.className = "project-card";
+    item.innerHTML = `
+      <h3>${project.title}</h3>
+      <p>${project.description}</p>
+      <a href="${project.link}">View details</a>
+    `;
+    projectList.appendChild(item);
+  });
+
+  projectCards = Array.from(projectList.querySelectorAll(".project-card"));
+}
+
+// Unified rotation for posts bar and project highlights
+if ((postsBar || projectCards.length) && projects.length > 0) {
+  let activeIndex = 0;
+
+  const setActive = (index) => {
+    if (postsBar) {
+      const text = `${projects[index].title} — ${projects[index].description}`;
+      postsBar.textContent = text;
+    }
+    if (projectCards.length) {
+      projectCards.forEach((card, i) => {
+        card.classList.toggle("is-active", i === index);
+      });
+    }
+  };
+
+  // initial render
+  setActive(activeIndex);
+
+  setInterval(() => {
+    if (postsBar) {
+      postsBar.classList.add("is-fading");
+    }
+    setTimeout(() => {
+      activeIndex = (activeIndex + 1) % projects.length;
+      setActive(activeIndex);
+      if (postsBar) {
+        postsBar.classList.remove("is-fading");
+      }
+    }, 240);
+  }, ROTATION_MS);
 }
