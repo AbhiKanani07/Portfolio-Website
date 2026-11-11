@@ -1,6 +1,6 @@
 # Abhi Kanani: portfolio
 
-A personal site with a WebGL2 hologram you can talk to. The assistant answers questions about Abhi from a published record, shows its sources, and says so when something isn't in the record.
+My personal site with a WebGL2 hologram you can talk to. The assistant answers questions about Abhi from a published record, shows its sources, and says so when something isn't in the record.
 
 Live: https://abhikanani07.github.io/Portfolio-Website/
 
@@ -32,13 +32,13 @@ tools/build.mjs       bundles src/ into docs/
 3. `npm run serve` and open http://localhost:8080 to check.
 4. Commit and push. GitHub Pages serves `docs/` from `main`.
 
-Every entry in `knowledge.js` ships to the browser, so anyone can read it. Keep anything private out of it: internal work details, applications in progress, unreleased plans.
+Every entry in `knowledge.js` ships to the browser, so anyone can read it.
 
 ## The assistant
 
 Each question runs through five stages in the browser: parse, route, retrieve (BM25 over the record), guard, compose. The Sandbox section on the page shows them live. Private topics (pay, GPA, age, phone), internal Quest details, comparisons with other people, and prompt-injection attempts are answered by the guard and never sent anywhere.
 
-By default the words come from the record itself. To have Claude write them instead:
+FBy default the words come from the record itself. For open-source work: if you want to have Claude write them instead:
 
 1. Import this repo into Vercel. `vercel.json` builds it and serves `docs/`.
 2. Set `ANTHROPIC_API_KEY`, and `ALLOWED_ORIGINS` (comma-separated, default `https://abhikanani07.github.io`). Optional: `ASK_MODEL` (default `claude-haiku-5-5`).
@@ -51,7 +51,3 @@ The status readout under the hologram shows which engine answered. If the endpoi
 - Tested in headless Chromium at 1440, 1024, 768, 390, and 360 px: no horizontal overflow, no overlapping HUD elements, every text element at WCAG AA contrast or better.
 - `prefers-reduced-motion` gets a still hologram, instant answers, and no reveals. Without WebGL2, a CSS orb replaces the canvas.
 - The hologram pauses offscreen, lowers its point count on slow devices, and frees all GPU resources on `pagehide`. Add `?holo=full` to pin full density, `?debug` to expose `window.__portfolio`.
-
-## Replacing the old site
-
-Delete everything in your clone except `.git`, copy this folder's contents in, then commit. The old `projects.html`, `sleep-dashboard.html`, `water-quality.html`, and `youtube-rec.html` URLs redirect to the matching case studies.
