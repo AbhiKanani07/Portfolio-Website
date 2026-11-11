@@ -7,7 +7,7 @@ import { motion } from '../core/motion.js';
 
 const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select, textarea, [tabindex]:not([tabindex="-1"])';
 
-export function initDrawer({ onOpen } = {}) {
+export function initDrawer({ onOpen, onClose } = {}) {
   const root = $('[data-drawer]');
   if (!root) return null;
   const panel = $('[data-drawer-panel]', root);
@@ -35,6 +35,7 @@ export function initDrawer({ onOpen } = {}) {
     if (current) current.hidden = true;
     current = null;
     if (returnFocus && returnFocus.focus) returnFocus.focus({ preventScroll: true });
+    if (onClose) onClose();
   };
   const anim = driver(progress, render, () => { if (!open && progress.value <= 0.001) finalize(); });
 

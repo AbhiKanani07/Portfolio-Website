@@ -8,8 +8,8 @@ import { DEFAULTS } from '../ai/engine.js';
 
 const NS = 'http://www.w3.org/2000/svg';
 const ORDER = ['parse', 'route', 'retrieve', 'guard', 'compose'];
-const EARLY = new Set(['empty', 'injection', 'greeting', 'thanks', 'identity', 'comparison', 'private', 'confidential', 'followup', 'unknown-term']);
-const DECLINED = new Set(['private', 'confidential', 'injection', 'comparison']);
+const EARLY = new Set(['empty', 'language', 'injection', 'abuse', 'greeting', 'thanks', 'help', 'assistant', 'identity', 'name', 'comparison', 'private', 'confidential', 'task', 'time', 'duration', 'followup', 'skill', 'flagship', 'unknown-term']);
+const DECLINED = new Set(['private', 'confidential', 'injection', 'comparison', 'abuse', 'task']);
 
 export function initSandbox({ engine }) {
   const root = $('[data-sandbox]');
@@ -121,10 +121,10 @@ export function initSandbox({ engine }) {
     const early = EARLY.has(r.route);
     const words = r.text.split(/\s+/).filter(Boolean).length;
     return {
-      parse: { state: 'done', html: t.tokens.length ? `terms: ${t.tokens.map(escapeHTML).join(', ')}${t.expanded.length ? `<br>plus ${t.expanded.length} synonyms` : ''}` : 'no content words' },
-      route: { state: early ? r.route : 'search', html: early ? `${escapeHTML(r.route)}${DECLINED.has(r.route) ? ', declined' : ''}` : 'about Abhi: search the record' },
+      parse: { state: 'done', html: `${(t.corrections || []).map(([a, b]) => `corrected ${escapeHTML(a)} to ${escapeHTML(b)}<br>`).join('')}${t.tokens.length ? `terms: ${t.tokens.map(escapeHTML).join(', ')}${t.expanded && t.expanded.length ? `<br>plus ${t.expanded.length} synonyms` : ''}` : 'no content words'}` },
+      route: { state: early ? r.route : r.route === 'multi' ? 'split' : 'search', html: r.route === 'multi' ? `split into ${t.segments.length} parts: ${t.segments.map(escapeHTML).join(', ')}` : early ? `${escapeHTML(r.route)}${DECLINED.has(r.route) ? ', declined' : ''}` : 'about Abhi: search the record' },
       retrieve: early ? { state: 'skipped', html: 'skipped: the route answered first' } : { state: 'done', html: t.candidates.length ? `best: ${escapeHTML(t.candidates[0].title)}<br>match ${t.candidates[0].match.toFixed(2)}, kept ${t.kept.length} of ${engine.size}` : `nothing matched, 0 of ${engine.size}` },
-      guard: { state: r.route === 'answer' || r.route === 'followup' ? 'pass' : 'held', html: escapeHTML(t.decision) },
+      guard: { state: DECLINED.has(r.route) || ['not-found', 'offtopic', 'gibberish'].includes(r.route) ? 'held' : 'pass', html: escapeHTML(t.decision) },
       compose: { state: 'done', html: `${words} words, ${r.sources.length} ${r.sources.length === 1 ? 'source' : 'sources'}${params.cite ? '' : ', citations off'}` },
     };
   }

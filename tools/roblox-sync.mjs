@@ -1,0 +1,61 @@
+// Pulls Abhi's Roblox library from Roblox's public APIs into docs/roblox.json.
+//   node tools/roblox-sync.mjs           (username from tools/roblox.config.json)
+//   ROBLOX_USER=name node tools/roblox-sync.mjs
+// "Recently played" comes from the newest badges earned, since Roblox doesn't
+// publish play history. "pinnedPlaceIds" adds hand-picked games as top picks.
+import { readFile, writeFile } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
+import path from 'node:path';
+
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const cfg = JSON.parse(await readFile(path.join(root, 'tools/roblox.config.json'), 'utf8').catch(() => '{}'));
+const username = (process.env.ROBLOX_USER || cfg.username || '').trim();
+if (!username) { console.log('No Roblox username set (ROBLOX_USER or tools/roblox.config.json). Skipping.'); process.exit(0); }
+
+async function get(url, init = {}) {
+  const res = await fetch(url, { ...init, headers: { accept: 'application/json', 'content-type': 'application/json', ...(init.headers || {}) } });
+  if (!res.ok) throw new Error(`${res.status} from ${url}`);
+  return res.json();
+}
+
+const user = (await get('https://users.roblox.com/v1/usernames/users', { method: 'POST', body: JSON.stringify({ usernames: [username], excludeBannedUsers: true }) })).data?.[0];
+if (!user) throw new Error(`No Roblox user named "${username}"`);
+
+const favorites = (await get(`https://games.roblox.com/v2/users/${user.id}/favorite/games?limit=50&sortOrder=Desc`)).data || [];
+const badges = (await get(`https://badges.roblox.com/v1/users/${user.id}/badges?limit=100&sortOrder=Desc`)).data || [];
+const ids = badges.map((b) => b.id);
+const dates = ids.length ? (await get(`https://badges.roblox.com/v1/users/${user.id}/badges/awarded-dates?badgeIds=${ids.join(',')}`)).data || [] : [];
+const awarded = new Map(dates.map((d) => [d.badgeId, d.awardedDate]));
+const recent = new Map();
+for (const b of badges) {
+  const u = b.awardingUniverse && b.awardingUniverse.id;
+  if (!u) continue;
+  const when = awarded.get(b.id) || null;
+  const cur = recent.get(u) || { last: null, count: 0 };
+  cur.count += 1;
+  if (when && (!cur.last || when > cur.last)) cur.last = when;
+  recent.set(u, cur);
+}
+const recentIds = [...recent.entries()].sort((a, b) => String(b[1].last).localeCompare(String(a[1].last))).slice(0, 24).map(([u]) => u);
+
+const pinned = [];
+for (const placeId of cfg.pinnedPlaceIds || []) {
+  try { pinned.push((await get(`https://apis.roblox.com/universes/v1/places/${placeId}/universe`)).universeId); } catch (e) { console.warn(`Skipped pinned place ${placeId}: ${e.message}`); }
+}
+
+const universeIds = [...new Set([...recentIds, ...favorites.map((g) => g.id), ...pinned])].filter(Boolean);
+const details = [];
+const icons = new Map();
+for (let i = 0; i < universeIds.length; i += 50) {
+  const batch = universeIds.slice(i, i + 50).join(',');
+  details.push(...((await get(`https://games.roblox.com/v1/games?universeIds=${batch}`)).data || []));
+  for (const t of (await get(`https://thumbnails.roblox.com/v1/games/icons?universeIds=${batch}&returnPolicy=PlaceHolder&size=150x150&format=Png&isCircular=false`)).data || []) icons.set(t.targetId, t.imageUrl);
+}
+const favIds = new Set(favorites.map((g) => g.id));
+const games = details.map((d) => ({
+  universeId: d.id, placeId: d.rootPlaceId, name: d.name, creator: d.creator?.name || '', genre: d.genre && d.genre !== 'All' ? d.genre : '',
+  visits: d.visits || 0, playing: d.playing || 0, updated: d.updated, icon: icons.get(d.id) || null, url: `https://www.roblox.com/games/${d.rootPlaceId}`,
+  recent: recent.has(d.id), lastPlayed: recent.get(d.id)?.last || null, badges: recent.get(d.id)?.count || 0, favorite: favIds.has(d.id), pick: pinned.includes(d.id),
+}));
+await writeFile(path.join(root, 'docs/roblox.json'), `${JSON.stringify({ updated: new Date().toISOString(), user: { id: user.id, name: user.name, displayName: user.displayName }, games }, null, 2)}\n`);
+console.log(`Synced ${games.length} games for @${user.name}: ${games.filter((g) => g.recent).length} recently played, ${games.filter((g) => g.favorite).length} favorites.`);

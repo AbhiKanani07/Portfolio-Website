@@ -38,6 +38,9 @@ export function normalize(input) {
     .replace(/node\.?js/g, 'nodejs')
     .replace(/c\+\+/g, 'cplusplus')
     .replace(/c#/g, 'csharp')
+    .replace(/hugging face/g, 'huggingface')
+    .replace(/power bi/g, 'powerbi')
+    .replace(/\bci\s*\/\s*cd\b/g, 'cicd')
     .replace(/\b5\s*\/\s*24\b/g, 'fivetwentyfour')
     .replace(/\bfive[\s-]*twenty[\s-]*four\b/g, 'fivetwentyfour')
     .replace(/\b(in|use|uses|know|knows|with|and|language|languages) r\b/g, '$1 rlang')
@@ -96,4 +99,29 @@ export function expand(terms) {
     for (const gi of INDEX.get(t) || []) GROUPS[gi].forEach((x) => { if (!terms.includes(x)) out.add(x); });
   }
   return Array.from(out);
+}
+
+// Damerau-Levenshtein distance with an early exit once it passes max.
+export function editDistance(a, b, max = 2) {
+  if (a === b) return 0;
+  const la = a.length;
+  const lb = b.length;
+  if (Math.abs(la - lb) > max) return max + 1;
+  let prev2 = null;
+  let prev = Array.from({ length: lb + 1 }, (_, j) => j);
+  for (let i = 1; i <= la; i++) {
+    const cur = [i];
+    let rowMin = i;
+    for (let j = 1; j <= lb; j++) {
+      const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+      let v = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + cost);
+      if (i > 1 && j > 1 && a[i - 1] === b[j - 2] && a[i - 2] === b[j - 1]) v = Math.min(v, prev2[j - 2] + 1);
+      cur[j] = v;
+      if (v < rowMin) rowMin = v;
+    }
+    if (rowMin > max) return max + 1;
+    prev2 = prev;
+    prev = cur;
+  }
+  return prev[lb];
 }

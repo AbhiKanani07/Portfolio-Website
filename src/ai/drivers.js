@@ -7,7 +7,7 @@ import { streamText } from '../core/stream.js';
 import { buildSystemPrompt } from './prompt.js';
 
 // Questions the guard already answered never go to a model.
-const LOCAL_ONLY = new Set(['empty', 'injection', 'greeting', 'thanks', 'identity', 'comparison', 'private', 'confidential', 'followup']);
+const LOCAL_ONLY = new Set(['empty', 'injection', 'abuse', 'language', 'greeting', 'thanks', 'help', 'identity', 'assistant', 'name', 'comparison', 'private', 'confidential', 'task', 'gibberish', 'time', 'duration', 'skill', 'flagship', 'followup']);
 
 export function localDriver() {
   return {

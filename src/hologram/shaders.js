@@ -99,7 +99,65 @@ vec3 helixShape(vec4 r) {
   return vec3(cos(aa) * R * f, (stp - 0.5) * 2.1, sin(aa) * R * f);
 }
 
+// 5 pipelines: five production streams converging into a 10 x 10 lattice of labs
+vec3 pipelinesShape(vec4 r) {
+  if (r.x < 0.62) {
+    float k = floor(r.y * 5.0);
+    float t = fract(r.z + uTime * (0.08 + 0.05 * r.w));
+    float conv = 1.0 - smoothstep(0.0, 1.0, t) * 0.78;
+    float a = fract(r.x * 37.0) * TAU;
+    return vec3(-1.05 + t * 1.75, (k - 2.0) * 0.3 * conv + sin(t * TAU + k * 1.7) * 0.025 + cos(a) * 0.03, (k - 2.0) * 0.14 * conv + sin(a) * 0.03);
+  }
+  float id = floor(r.y * 100.0);
+  return vec3(0.86 + (r.z - 0.5) * 0.04, (floor(id / 10.0) - 4.5) * 0.125 + (r.w - 0.5) * 0.03, (mod(id, 10.0) - 4.5) * 0.125 + (fract(r.x * 53.0) - 0.5) * 0.03);
+}
+
+// 6 pass: a Wallet pass, the shape of what Keystroke produces
+vec3 passShape(vec4 r) {
+  float W = 0.62;
+  float H = 0.86;
+  if (r.x < 0.3) {
+    float t = r.y * 4.0;
+    vec2 p = t < 1.0 ? vec2(mix(-W, W, t), H) : t < 2.0 ? vec2(W, mix(H, -H, t - 1.0)) : t < 3.0 ? vec2(mix(W, -W, t - 2.0), -H) : vec2(-W, mix(-H, H, t - 3.0));
+    vec2 c = clamp(p, vec2(-W + 0.09, -H + 0.09), vec2(W - 0.09, H - 0.09));
+    vec2 d = p - c;
+    float l = length(d);
+    p = l > 0.0 ? c + d / l * 0.09 : p;
+    return vec3(p, (r.z - 0.5) * 0.02);
+  }
+  if (r.x < 0.58) {
+    float x = mix(-W + 0.05, W - 0.05, r.y);
+    return vec3(x, mix(H - 0.2, H - 0.62, r.z) + sin(x * 7.0 + uTime * 0.8) * 0.035 * r.w, 0.0);
+  }
+  float m = floor(r.y * 225.0);
+  float mx = mod(m, 15.0);
+  float my = floor(m / 15.0);
+  bool finder = (mx < 4.0 && my < 4.0) || (mx > 10.0 && my < 4.0) || (mx < 4.0 && my > 10.0);
+  float bit = fract(sin(m * 12.9898 + 4.1) * 43758.5453);
+  if (r.x < 0.86 && (finder || bit > 0.48)) {
+    return vec3(vec2((mx - 7.0) * 0.03, -H + 0.3 + (7.0 - my) * 0.03) + (r.zw - 0.5) * 0.022, 0.0);
+  }
+  float line = floor(r.z * 3.0);
+  float len = line < 0.5 ? 0.9 : (line < 1.5 ? 0.6 : 0.75);
+  return vec3(mix(-W + 0.08, -W + 0.08 + (2.0 * W - 0.16) * len, r.w), 0.1 - line * 0.11, 0.0);
+}
+
+// 7 voxels: a small block build, for the Roblox side
+const vec3 C_POS[8] = vec3[8](vec3(0.0, -0.7, 0.0), vec3(-0.45, -0.38, 0.25), vec3(0.4, -0.38, -0.2), vec3(-0.45, 0.04, 0.25), vec3(0.45, 0.12, -0.25), vec3(0.45, 0.55, -0.25), vec3(-0.1, -0.02, -0.45), vec3(0.0, 0.85, 0.35));
+const vec3 C_HALF[8] = vec3[8](vec3(0.85, 0.08, 0.65), vec3(0.22), vec3(0.22), vec3(0.18), vec3(0.2), vec3(0.16, 0.2, 0.16), vec3(0.15), vec3(0.12));
+vec3 voxelsShape(vec4 r) {
+  int k = int(floor(r.x * 8.0));
+  float f = floor(r.y * 6.0);
+  vec2 uv = vec2(r.z, r.w) * 2.0 - 1.0;
+  if (fract(r.y * 6.0) < 0.35) uv = abs(uv.x) > abs(uv.y) ? vec2(sign(uv.x), uv.y) : vec2(uv.x, sign(uv.y));
+  vec3 p = f < 1.0 ? vec3(1.0, uv) : f < 2.0 ? vec3(-1.0, uv) : f < 3.0 ? vec3(uv.x, 1.0, uv.y) : f < 4.0 ? vec3(uv.x, -1.0, uv.y) : f < 5.0 ? vec3(uv, 1.0) : vec3(uv, -1.0);
+  return C_POS[k] + p * C_HALF[k];
+}
+
 vec3 shapeOf(int s, float i, vec4 r) {
+  if (s == 7) return voxelsShape(r);
+  if (s == 5) return pipelinesShape(r);
+  if (s == 6) return passShape(r);
   if (s == 1) return torusShape(r);
   if (s == 2) return matrixShape(r);
   if (s == 3) return clustersShape(r);
@@ -108,6 +166,9 @@ vec3 shapeOf(int s, float i, vec4 r) {
 }
 
 vec3 tintOf(int s, vec4 r) {
+  if (s == 7) { float k = floor(r.x * 8.0); return k < 0.5 ? COBALT : (mod(k, 2.0) < 1.0 ? CYAN : SPECTRAL * 0.85); }
+  if (s == 5) return r.x < 0.62 ? mix(CYAN, SPECTRAL, 0.1 + 0.2 * floor(r.y * 5.0) / 4.0) : (fract(r.y * 61.8) > 0.86 ? SPECTRAL : COBALT);
+  if (s == 6) return r.x < 0.3 ? SPECTRAL * 0.9 : (r.x < 0.58 ? mix(COBALT, CYAN, r.y) : (r.x < 0.86 ? SPECTRAL : COBALT));
   if (s == 2) { float b = floor(r.y * 3.0); return b < 0.5 ? CYAN : (b < 1.5 ? COBALT : SPECTRAL * 0.82); }
   if (s == 3) return mix(COBALT, CYAN, floor(r.x * 6.0) / 5.0);
   if (s == 4) return r.y < 0.44 ? CYAN : (r.y < 0.88 ? COBALT : SPECTRAL * 0.8);

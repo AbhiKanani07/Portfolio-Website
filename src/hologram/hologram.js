@@ -6,7 +6,7 @@ import { Spring } from '../core/spring.js';
 import { mulberry32, observeResize } from '../core/dom.js';
 import { motion } from '../core/motion.js';
 
-export const SHAPES = { core: 0, systems: 1, matrix: 2, clusters: 3, helix: 4 };
+export const SHAPES = { core: 0, systems: 1, matrix: 2, clusters: 3, helix: 4, pipelines: 5, pass: 6, voxels: 7 };
 export const MODES = {
   idle: { freq: 0.32, amp: 0.016, disp: 0.1, scan: 0.5, glitch: 0.35, spin: 0.07 },
   listening: { freq: 0.72, amp: 0.022, disp: 0.18, scan: 0.58, glitch: 0.45, spin: 0.1 },
@@ -91,10 +91,13 @@ export class Hologram {
   }
 
   init() {
+    const t0 = performance.now();
     const gl = this.canvas.getContext('webgl2', { antialias: false, alpha: false, depth: false, stencil: false, powerPreference: 'high-performance' });
     if (!gl) return false;
     this.gl = gl;
+    const t1 = performance.now();
     try { this.build(); } catch (err) { console.warn('Hologram disabled:', err); this.gl = null; return false; }
+    this.bootInfo = { contextMs: t1 - t0, compileMs: performance.now() - t1, points: this.N };
     this.listen();
     if (motion.reduced) this.intro = 1;
     this.layout(true);
@@ -204,6 +207,8 @@ export class Hologram {
       this.allocTarget(W, H);
     }
     this.dpr = dpr;
+    this.cssW = w;
+    this.cssH = h;
     perspective(this.proj, FOV, w / h, 0.1, 50);
     if (this.slot) {
       const sr = this.slot.getBoundingClientRect();
@@ -220,7 +225,7 @@ export class Hologram {
   }
 
   sync() {
-    const shouldRun = this.visible && !document.hidden && !this.lost && !this.destroyed && !motion.reduced;
+    const shouldRun = this.visible && !this.covered && !document.hidden && !this.lost && !this.destroyed && !motion.reduced;
     if (shouldRun && !this.running) this.start();
     else if (!shouldRun && this.running) this.stop();
     else if (!shouldRun) this.emit();
@@ -247,6 +252,7 @@ export class Hologram {
     this.last = now;
     this.tick(Math.min(0.25, raw));
     this.draw();
+    if (this.onFrame) this.onFrame(this);
     this.frames += 1;
     this.fpsElapsed += raw;
     this.age += raw;
@@ -356,6 +362,7 @@ export class Hologram {
       this.from = this.to;
     }
     this.draw();
+    if (this.onFrame) this.onFrame(this);
   }
 
   beginMorph(shape) {
@@ -383,6 +390,21 @@ export class Hologram {
   }
 
   pulse(v = 0.2) { this.pulseV = Math.min(1, this.pulseV + v); }
+
+  // A drawer covering the hero pauses rendering, which frees the GPU for demos.
+  cover(flag) { this.covered = !!flag; this.sync(); }
+
+  // Model-space point to CSS pixels on the canvas, for labels pinned to the shape.
+  project(p) {
+    const m = this.modelM;
+    const x = m[0] * p[0] + m[4] * p[1] + m[8] * p[2];
+    const y = m[1] * p[0] + m[5] * p[1] + m[9] * p[2];
+    const z = m[2] * p[0] + m[6] * p[1] + m[10] * p[2];
+    const w = DIST - z;
+    const nx = (this.proj[0] * x) / w + this.sp.shiftX.value;
+    const ny = (this.proj[5] * y) / w + this.sp.shiftY.value;
+    return { x: ((nx + 1) / 2) * this.cssW, y: ((1 - ny) / 2) * this.cssH, front: z > -0.05 * this.sp.scale.value };
+  }
 
   stats() {
     return { webgl: !!this.gl, running: this.running, fps: this.fps, points: this.count, mode: this.mode, topic: this.topic, freq: this.sp.freq.value, disp: this.sp.disp.value };
@@ -431,6 +453,7 @@ export class StillHologram {
   }
   start() { this.emit(); }
   stop() {}
+  cover() {}
   setMode(m) { this.mode = m; this.emit(); }
   setTopic(t) { this.topic = t; }
   pulse() {}
