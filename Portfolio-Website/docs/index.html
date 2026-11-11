@@ -1,0 +1,666 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Abhi Kanani | Data Science at Pitt, data engineering at Quest, building Bravox</title>
+  <meta name="description" content="Abhi Kanani is a Data Science major at the University of Pittsburgh and a Data Engineering Intern at Quest Diagnostics who builds his own products, including Bravox, an honest credit card approval engine.">
+  <meta name="theme-color" content="#050507">
+  <meta name="color-scheme" content="dark">
+  <!-- Optional: URL of your deployed answer endpoint (see api/ask.js). Empty = answers come from in-browser retrieval. -->
+  <meta name="ask-endpoint" content="">
+  <link rel="canonical" href="https://abhikanani07.github.io/Portfolio-Website/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Abhi Kanani">
+  <meta property="og:description" content="Enterprise data systems by day, his own products by night. Ask the site's assistant about his work.">
+  <meta property="og:url" content="https://abhikanani07.github.io/Portfolio-Website/">
+  <meta property="og:image" content="https://abhikanani07.github.io/Portfolio-Website/assets/og.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="assets/site.css">
+  <script>document.documentElement.classList.replace('no-js', 'js');</script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Person","name":"Abhi Kanani","url":"https://abhikanani07.github.io/Portfolio-Website/","email":"mailto:arkanani2mail@gmail.com","jobTitle":"Data Engineering Intern","worksFor":{"@type":"Organization","name":"Quest Diagnostics"},"affiliation":{"@type":"CollegeOrUniversity","name":"University of Pittsburgh"},"knowsLanguage":["English","Hindi","Gujarati"],"sameAs":["https://www.linkedin.com/in/abhikanani/","https://github.com/AbhiKanani07","https://www.bravoxcredit.com"]}
+  </script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav" data-nav>
+  <a class="nav__name" href="#top">Abhi Kanani</a>
+  <div class="nav__status" role="status" aria-label="Hologram renderer status">
+    <span class="nav__dot" aria-hidden="true"></span>
+    <span class="mono"><span class="nav__sys">SYS.ONLINE // </span><span data-fps>STARTING</span></span>
+  </div>
+  <p class="nav__time mono">Pittsburgh <time data-clock>--:--</time></p>
+  <nav class="nav__links" id="nav-links" aria-label="Sections">
+    <a href="#work">Work</a>
+    <a href="#sandbox">Sandbox</a>
+    <a href="#experience">Experience</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <button class="nav__menu" type="button" aria-expanded="false" aria-controls="nav-links" data-menu>Menu</button>
+</header>
+
+<main id="main">
+
+  <!-- ===================== Hero ===================== -->
+  <section class="hero" id="top" aria-labelledby="hero-title">
+    <canvas class="hero__canvas" data-holo aria-hidden="true"></canvas>
+    <div class="hero__fallback" aria-hidden="true"></div>
+
+    <div class="hero__grid wrap">
+      <p class="hero__coords mono"><span>University of Pittsburgh</span><span>40.4443° N, 79.9532° W</span></p>
+
+      <div class="hero__copy">
+        <h1 class="hero__title" id="hero-title">
+          <span class="hero__q mono" data-hero-q>Who is Abhi Kanani?</span>
+          <span class="hero__a" data-hero-a>He works on enterprise data systems by day and builds his own products by night.</span>
+        </h1>
+        <div class="hero__sources" data-hero-sources>
+          <span class="hero__sources-label mono">Sources</span>
+          <a class="chip" href="#contact" style="--i:0">About</a>
+          <a class="chip" href="#experience" style="--i:1">Quest Diagnostics</a>
+          <a class="chip" href="#case-bravox" style="--i:2">Bravox</a>
+        </div>
+        <p class="hero__lede">The hologram is an assistant. It answers from what Abhi has published here and shows where each answer came from.</p>
+      </div>
+
+      <div class="hero__stage">
+        <div class="holo-slot" data-holo-slot></div>
+
+        <div class="answer glass" data-answer hidden>
+          <div class="answer__head">
+            <span class="mono">Answers</span>
+            <button class="answer__clear" type="button" data-answer-clear>Clear</button>
+          </div>
+          <div class="answer__scroll" data-answer-scroll></div>
+        </div>
+
+        <form class="cmd glass" data-cmd aria-label="Ask the assistant about Abhi">
+          <div class="cmd__row">
+            <span class="cmd__glyph mono" aria-hidden="true">&gt;</span>
+            <label class="visually-hidden" for="cmd-input">Ask about Abhi</label>
+            <input class="cmd__input" id="cmd-input" type="text" autocomplete="off" spellcheck="false" maxlength="300" enterkeyhint="send" placeholder="Ask about his work, projects, or stack">
+            <button class="btn btn--solid" type="submit" data-magnetic><span>Ask</span></button>
+          </div>
+          <div class="cmd__presets" aria-label="Suggested questions">
+            <button class="chip" type="button" data-preset="Give me the 30-second summary of Abhi.">30-second summary</button>
+            <button class="chip" type="button" data-preset="How does Bravox estimate approval odds?">How Bravox scores odds</button>
+            <button class="chip" type="button" data-preset="What does he do at Quest Diagnostics?">His work at Quest</button>
+            <button class="chip" type="button" data-preset="What's his technical stack?">His stack</button>
+            <button class="chip" type="button" data-preset="What roles is he looking for?">Roles he wants</button>
+            <button class="chip" type="button" data-preset="How does this site work?">How this site works</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="hero__readouts mono" data-readouts aria-hidden="true">
+        <span>state <b data-ro="mode">idle</b></span>
+        <span>freq <b data-ro="freq">0.00</b> Hz</span>
+        <span>dispersion <b data-ro="disp">0.00</b></span>
+        <span class="ro-x">points <b data-ro="points">0</b></span>
+        <span class="ro-gap"></span>
+        <span>engine <b data-ro="engine">local retrieval</b></span>
+        <span class="ro-x">record <b data-ro="entries">0</b> entries</span>
+        <span class="ro-x">last retrieval <b data-ro="latency">none yet</b></span>
+      </div>
+    </div>
+    <div class="visually-hidden" aria-live="polite" data-live></div>
+  </section>
+
+  <!-- ===================== Work ===================== -->
+  <section class="section" id="work" aria-labelledby="work-title">
+    <div class="wrap">
+      <header class="section__head" data-reveal-group>
+        <h2 class="section__title" id="work-title" data-reveal>Work</h2>
+        <p class="section__intro" data-reveal>Four projects, from a production credit engine to experiments on my own data. Each one opens into the full case study with a working demo.</p>
+      </header>
+      <div class="rule" data-rule></div>
+
+      <div class="bento" data-reveal-group>
+        <a class="card card--bravox" href="#case-bravox" data-reveal aria-describedby="card-bravox-desc">
+          <span class="card__spot" aria-hidden="true"></span>
+          <span class="card__top mono"><span>Live at bravoxcredit.com</span><span class="card__open">Open case study</span></span>
+          <span class="card__viz" data-mini="odds" aria-hidden="true"></span>
+          <span class="card__body">
+            <span class="card__title">Bravox Credit</span>
+            <span class="card__desc" id="card-bravox-desc">Honest approval odds for 27 credit cards, each judged against the credit bureau its issuer actually pulls. Designed and shipped solo.</span>
+          </span>
+          <span class="card__tags mono"><span>27 cards</span><span>3 bureaus</span><span>45–96% odds band</span><span>FastAPI</span><span>Next.js</span><span>Neon Postgres</span></span>
+        </a>
+
+        <a class="card card--youtube" href="#case-youtube" data-reveal aria-describedby="card-youtube-desc">
+          <span class="card__spot" aria-hidden="true"></span>
+          <span class="card__top mono"><span>Personal data</span><span class="card__open">Open case study</span></span>
+          <span class="card__viz" data-mini="youtube" aria-hidden="true"></span>
+          <span class="card__body">
+            <span class="card__title">YouTube recommendation bias</span>
+            <span class="card__desc" id="card-youtube-desc">A graph model of my own watch history, built to measure how the feed steers what I watch next.</span>
+          </span>
+          <span class="card__tags mono"><span>Watch-history export</span><span>Transition graph</span><span>Topic drift</span><span>Binge detection</span></span>
+        </a>
+
+        <a class="card card--sleep" href="#case-sleep" data-reveal aria-describedby="card-sleep-desc">
+          <span class="card__spot" aria-hidden="true"></span>
+          <span class="card__top mono"><span>Personal health data</span><span class="card__open">Open case study</span></span>
+          <span class="card__viz" data-mini="sleep" aria-hidden="true"></span>
+          <span class="card__body">
+            <span class="card__title">Sleep insights dashboard</span>
+            <span class="card__desc" id="card-sleep-desc">A pipeline for my Fitbit and Apple Health exports that makes a lifelong sleep problem measurable.</span>
+          </span>
+          <span class="card__tags mono"><span>Sleep stages</span><span>HRV</span><span>Good or bad night classifier</span><span>Anomaly flags</span></span>
+        </a>
+
+        <a class="card card--water" href="#case-water" data-reveal aria-describedby="card-water-desc">
+          <span class="card__spot" aria-hidden="true"></span>
+          <span class="card__top mono"><span>Live project site</span><span class="card__open">Open case study</span></span>
+          <span class="card__viz" data-mini="water" aria-hidden="true"></span>
+          <span class="card__body">
+            <span class="card__title">Dutch water quality</span>
+            <span class="card__desc" id="card-water-desc">Seasonal and regional analysis of water measurements across the Netherlands, with anomaly checks that flag stations for follow-up testing.</span>
+          </span>
+          <span class="card__tags mono"><span>NumPy</span><span>Pandas</span><span>Province and month trends</span><span>Anomaly flags</span></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== Sandbox ===================== -->
+  <section class="section" id="sandbox" aria-labelledby="sandbox-title" data-sandbox>
+    <div class="wrap">
+      <header class="section__head" data-reveal-group>
+        <h2 class="section__title" id="sandbox-title" data-reveal>Sandbox</h2>
+        <p class="section__intro" data-reveal>This is the engine that answers questions on this page, opened up. It runs in your browser. Drag the stages, change the thresholds, and watch the answer change.</p>
+      </header>
+      <div class="rule" data-rule></div>
+
+      <div class="sb" data-reveal>
+        <div class="sb__graph" data-sb-graph role="group" aria-label="Answer pipeline. Each stage can be moved with the arrow keys.">
+          <svg class="sb__wires" data-sb-wires aria-hidden="true"></svg>
+
+          <div class="node" data-node="parse" data-x="0.02" data-y="0.04">
+            <div class="node__head" tabindex="0" role="button" aria-label="Parse stage. Arrow keys move it.">
+              <span class="node__n mono">1</span><span class="node__name">Parse</span><span class="node__state mono" data-state>waiting</span>
+            </div>
+            <p class="node__desc">Normalizes the question, drops filler words, and adds synonyms.</p>
+            <p class="node__out mono" data-out></p>
+          </div>
+
+          <div class="node" data-node="route" data-x="0.345" data-y="0.04">
+            <div class="node__head" tabindex="0" role="button" aria-label="Route stage. Arrow keys move it.">
+              <span class="node__n mono">2</span><span class="node__name">Route</span><span class="node__state mono" data-state>waiting</span>
+            </div>
+            <p class="node__desc">Sorts the question: about Abhi, a greeting, private, or off-topic.</p>
+            <p class="node__out mono" data-out></p>
+          </div>
+
+          <div class="node" data-node="retrieve" data-x="0.67" data-y="0.04">
+            <div class="node__head" tabindex="0" role="button" aria-label="Retrieve stage. Arrow keys move it.">
+              <span class="node__n mono">3</span><span class="node__name">Retrieve</span><span class="node__state mono" data-state>waiting</span>
+            </div>
+            <p class="node__desc">Scores every entry in the record with BM25.</p>
+            <div class="node__ctls">
+              <label class="ctl"><span>Entries kept</span><output data-param-out="topK">3</output><input type="range" min="1" max="5" step="1" value="3" data-param="topK"></label>
+              <label class="ctl"><span>Minimum match</span><output data-param-out="minMatch">0.25</output><input type="range" min="0" max="0.9" step="0.05" value="0.25" data-param="minMatch"></label>
+            </div>
+            <p class="node__out mono" data-out></p>
+          </div>
+
+          <div class="node" data-node="guard" data-x="0.16" data-y="0.53">
+            <div class="node__head" tabindex="0" role="button" aria-label="Guard stage. Arrow keys move it.">
+              <span class="node__n mono">4</span><span class="node__name">Guard</span><span class="node__state mono" data-state>waiting</span>
+            </div>
+            <p class="node__desc">Declines private questions and anything the record can't support.</p>
+            <div class="node__ctls">
+              <label class="ctl"><span>Honesty floor</span><output data-param-out="floor">0.32</output><input type="range" min="0" max="0.95" step="0.05" value="0.32" data-param="floor"></label>
+              <label class="ctl ctl--toggle"><input type="checkbox" checked data-param="blockPrivate"><span>Decline private topics</span></label>
+            </div>
+            <p class="node__out mono" data-out></p>
+          </div>
+
+          <div class="node" data-node="compose" data-x="0.52" data-y="0.53">
+            <div class="node__head" tabindex="0" role="button" aria-label="Compose stage. Arrow keys move it.">
+              <span class="node__n mono">5</span><span class="node__name">Compose</span><span class="node__state mono" data-state>waiting</span>
+            </div>
+            <p class="node__desc">Writes the answer from the kept entries only.</p>
+            <div class="node__ctls">
+              <label class="ctl"><span>Detail</span><output data-param-out="detail">2</output><input type="range" min="1" max="3" step="1" value="2" data-param="detail"></label>
+              <label class="ctl ctl--toggle"><input type="checkbox" checked data-param="cite"><span>Cite sources</span></label>
+            </div>
+            <p class="node__out mono" data-out></p>
+          </div>
+        </div>
+
+        <div class="sb__preview">
+          <form class="sb__form" data-sb-form>
+            <label class="visually-hidden" for="sb-input">Question for the sandbox</label>
+            <input class="sb__input" id="sb-input" type="text" value="Is Bravox accurate?" autocomplete="off" spellcheck="false" maxlength="300" data-sb-input>
+            <button class="btn btn--solid" type="submit"><span>Run</span></button>
+          </form>
+          <div class="sb__samples" aria-label="Sample questions">
+            <button class="chip chip--sm" type="button" data-sb-sample>Is Bravox accurate?</button>
+            <button class="chip chip--sm" type="button" data-sb-sample>What tools does he use at Quest?</button>
+            <button class="chip chip--sm" type="button" data-sb-sample>Does he know Kubernetes?</button>
+            <button class="chip chip--sm" type="button" data-sb-sample>What's his salary?</button>
+            <button class="chip chip--sm" type="button" data-sb-sample>Tell me a joke</button>
+          </div>
+          <div class="sb__answer glass" data-sb-answer aria-live="polite"><p class="qa__a" style="color: var(--ink-3)">Run a question to see each stage's output.</p></div>
+          <div class="sb__trace-wrap">
+            <table class="sb__trace">
+              <caption class="visually-hidden">Retrieval candidates and their scores</caption>
+              <thead><tr><th scope="col">Entry</th><th scope="col">BM25</th><th scope="col">Match</th><th scope="col">Status</th></tr></thead>
+              <tbody data-sb-trace></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== Experience ===================== -->
+  <section class="section" id="experience" aria-labelledby="experience-title">
+    <div class="wrap">
+      <header class="section__head" data-reveal-group>
+        <h2 class="section__title" id="experience-title" data-reveal>Experience</h2>
+        <p class="section__intro" data-reveal>Work, education, and leadership, most recent first.</p>
+      </header>
+      <div class="rule" data-rule></div>
+
+      <ol class="timeline" data-reveal-group>
+        <li class="row" data-reveal>
+          <p class="row__when mono">2026–present</p>
+          <h3 class="row__role">Data Engineering Intern</h3>
+          <p class="row__org">Quest Diagnostics<span class="mono">Part-time during the school year</span></p>
+          <ul class="row__desc">
+            <li>Work on enterprise-scale cloud data systems and build the internal tooling that keeps real infrastructure running.</li>
+            <li>Joined in my first year of college and stayed on part-time after the summer internship.</li>
+            <li>Specifics stay internal. Happy to walk through them in an interview.</li>
+          </ul>
+        </li>
+        <li class="row" data-reveal>
+          <p class="row__when mono">2026–present</p>
+          <h3 class="row__role">Founder, solo build</h3>
+          <p class="row__org">Bravox<span class="mono">bravoxcredit.com</span></p>
+          <ul class="row__desc">
+            <li>Designed, built, and shipped a credit card approval engine across 27 cards and 3 credit bureaus.</li>
+            <li>Next.js on Vercel, FastAPI on Render, and Neon Postgres, with auth, rate limiting, lockout, and CSP and HSTS headers.</li>
+          </ul>
+        </li>
+        <li class="row" data-reveal>
+          <p class="row__when mono">Mar–May 2025</p>
+          <h3 class="row__role">Project Intern</h3>
+          <p class="row__org">Mascaro Construction<span class="mono">Pittsburgh, PA</span></p>
+          <ul class="row__desc">
+            <li>Built a system to sort quantity and labor data from real-time entries.</li>
+            <li>Streamlined Excel data with AI automation (Copilot) plus Python and Java scripts.</li>
+            <li>Co-authored a business proposal and analyzed labor and quantity pricing in R.</li>
+          </ul>
+        </li>
+        <li class="row" data-reveal>
+          <p class="row__when mono">Jan–Mar 2025</p>
+          <h3 class="row__role">Project Consultant</h3>
+          <p class="row__org">Tom Brown, Inc.<span class="mono">Pittsburgh, PA</span></p>
+          <ul class="row__desc">
+            <li>Built a cost analysis for Department of Defense screen printing of 500 ballistic-nylon plates.</li>
+            <li>Modeled machinery and labor costs and presented solutions with a six-person team.</li>
+          </ul>
+        </li>
+        <li class="row" data-reveal>
+          <p class="row__when mono">Aug 2024–Jan 2025</p>
+          <h3 class="row__role">Web Development Intern</h3>
+          <p class="row__org">EAFab Corporation<span class="mono">Pittsburgh, PA</span></p>
+          <ul class="row__desc">
+            <li>Built a website for EAFab's services in steelmaking, aluminum, and oil and gas.</li>
+            <li>Implemented SEO with targeted keywords and content, and published an article on web development and SEO.</li>
+          </ul>
+        </li>
+      </ol>
+
+      <div class="exp__cols" data-reveal-group>
+        <div class="exp__col" data-reveal>
+          <h3 class="exp__h">Education</h3>
+          <div class="exp__item">
+            <b>University of Pittsburgh</b>
+            <span class="mono">B.S. Data Science, expected May 2029</span>
+            <p>Data Science major with a major specialization in Computer Systems: database management and operating systems coursework alongside the data science core. Dietrich School of Arts and Sciences.</p>
+          </div>
+        </div>
+        <div class="exp__col" data-reveal>
+          <h3 class="exp__h">Leadership</h3>
+          <div class="exp__item">
+            <b>VP of Finance, Phi Beta Lambda</b>
+            <span class="mono">2026–27 term, elected Nov 2025</span>
+            <p>Elected by about 100 members to lead income streams, financial awareness, and growth. Member since September 2025 through a competitive interview process.</p>
+          </div>
+          <div class="exp__item">
+            <b>Chapter President, FBLA</b>
+            <span class="mono">Upper St. Clair, Jul 2024–Jul 2025</span>
+            <p>Led 100+ members through regional, state, and national competitions and placed 4th in Pennsylvania to reach Nationals.</p>
+          </div>
+        </div>
+        <div class="exp__col" data-reveal>
+          <h3 class="exp__h">Volunteering</h3>
+          <div class="exp__item">
+            <b>Fundraising Manager, Snap Mobile</b>
+            <span class="mono">Oct–Dec 2024</span>
+            <p>Raised $5,000+ for Upper St. Clair FBLA, subsidizing travel for 50 students.</p>
+          </div>
+          <div class="exp__item">
+            <b>Gujarati Samaj of Greater Pittsburgh</b>
+            <span class="mono">Student and event coordinator, 2012–2022</span>
+            <p>Coordinated community events and sports tournaments to fund education, and earned a Gujarati fluency certificate.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="skills" data-reveal-group>
+        <div data-reveal>
+          <h3 class="exp__h">Skills</h3>
+          <dl>
+            <dt>Languages</dt><dd>Python, SQL, R, Java, JavaScript, TypeScript, C++</dd>
+            <dt>Data</dt><dd>Pandas, NumPy, Jupyter, Matplotlib, Seaborn, TensorFlow, Tableau, Excel</dd>
+            <dt>Product engineering</dt><dd>FastAPI, Next.js, React, Postgres on Neon, SQLite, Vercel, Render</dd>
+            <dt>Security</dt><dd>PBKDF2 hashing, rate limiting, login lockout, CSP and HSTS headers</dd>
+          </dl>
+        </div>
+        <div class="skills__side" data-reveal>
+          <h3 class="exp__h">Spoken</h3>
+          <p>English, Hindi, and Gujarati.</p>
+          <h3 class="exp__h">Outside work</h3>
+          <p>Weightlifting, pickleball, volleyball, and community service for youth. I also ran a YouTube channel growing up.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== Contact ===================== -->
+  <section class="section" id="contact" aria-labelledby="contact-title">
+    <div class="wrap">
+      <h2 class="contact__title" id="contact-title" data-reveal>Always up to talk shop.</h2>
+      <div class="contact__grid" data-reveal-group>
+        <figure class="portrait" data-reveal>
+          <picture>
+            <source type="image/webp" srcset="assets/img/abhi-kanani-480.webp 480w, assets/img/abhi-kanani-800.webp 800w" sizes="(max-width: 900px) 320px, 400px">
+            <img src="assets/img/abhi-kanani-480.jpg" srcset="assets/img/abhi-kanani-480.jpg 480w, assets/img/abhi-kanani-800.jpg 800w" sizes="(max-width: 900px) 320px, 400px" width="480" height="600" loading="lazy" decoding="async" alt="Abhi Kanani in a navy suit in front of a fountain, with the Cathedral of Learning behind him">
+          </picture>
+          <figcaption class="mono">Oakland, Pittsburgh</figcaption>
+        </figure>
+        <div class="contact__about" data-reveal>
+          <p>In my first year of college, I broke into data engineering at Quest Diagnostics, a Fortune 500 company, and I haven't slowed down since. Enterprise systems by day, my own products by night, and anything I can get my hands on in between.</p>
+          <p>At Quest I work on enterprise-scale cloud data systems and build the internal tooling that keeps real infrastructure running. Off the clock, I build my own, end to end. Most recently that's Bravox, a credit card approval engine I took from zero to production entirely solo. I built it because most credit tools exist to sell you cards, not tell you the truth. I wanted the honest one.</p>
+          <p>Here's the throughline: I like owning a problem all the way down, from the data to the architecture to the thing people actually touch. Three languages, two worlds (the technical and the practical), one obsession: building things that actually ship.</p>
+          <div class="contact__actions">
+            <a class="btn btn--solid" href="mailto:arkanani2mail@gmail.com" data-magnetic><span>Email Abhi</span></a>
+            <a class="btn" href="https://www.linkedin.com/in/abhikanani/" target="_blank" rel="noopener" data-magnetic><span>LinkedIn</span></a>
+            <a class="btn" href="https://github.com/AbhiKanani07" target="_blank" rel="noopener" data-magnetic><span>GitHub</span></a>
+            <a class="btn" href="https://www.bravoxcredit.com" target="_blank" rel="noopener" data-magnetic><span>Bravox</span></a>
+          </div>
+          <dl class="contact__list mono">
+            <dt>Personal</dt><dd><a href="mailto:arkanani2mail@gmail.com">arkanani2mail@gmail.com</a></dd>
+            <dt>Pitt</dt><dd><a href="mailto:ark440@pitt.edu">ark440@pitt.edu</a></dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot wrap">
+  <p>© 2026 Abhi Kanani</p>
+  <p>The assistant answers only from what's published on this page.</p>
+  <p><a href="https://github.com/AbhiKanani07/Portfolio-Website" target="_blank" rel="noopener">Source on GitHub</a></p>
+</footer>
+
+<!-- ===================== Case study drawer ===================== -->
+<div class="drawer" data-drawer role="dialog" aria-modal="true" aria-label="Case study" hidden>
+  <div class="drawer__backdrop" data-drawer-close></div>
+  <div class="drawer__panel" data-drawer-panel>
+    <div class="drawer__bar" data-drawer-drag>
+      <span class="drawer__grip" aria-hidden="true"></span>
+      <p class="drawer__crumb mono" data-drawer-crumb>Work</p>
+      <button class="btn btn--ghost" type="button" data-drawer-close><span>Close</span></button>
+    </div>
+    <div class="drawer__body" data-drawer-body>
+
+      <!-- Bravox -->
+      <article class="case" id="case-bravox" data-title="Bravox Credit" aria-labelledby="case-bravox-title" hidden>
+        <p class="case__meta mono"><span>Solo build</span><span>2026</span><span>Live at bravoxcredit.com</span></p>
+        <h2 class="case__title" id="case-bravox-title">Bravox Credit</h2>
+        <p class="case__lede">Honest approval odds for 27 credit cards, each judged against the credit bureau its issuer typically pulls.</p>
+        <div class="case__links">
+          <a class="btn btn--solid" href="https://www.bravoxcredit.com" target="_blank" rel="noopener"><span>Open bravoxcredit.com</span></a>
+          <a class="btn" href="https://www.bravoxcredit.com/waitlist" target="_blank" rel="noopener"><span>Bravox Vector waitlist</span></a>
+        </div>
+        <div class="case__grid">
+          <section class="case__sec">
+            <h3>Problem</h3>
+            <p>Most credit tools exist to sell you cards, not tell you the truth. From the outside, approval feels random: issuers don't publish cutoffs, they check different credit bureaus, and your scores can differ between those bureaus. I wanted a tool that estimates real odds and shows its reasoning, including when a card is out of reach.</p>
+          </section>
+          <section class="case__sec">
+            <h3>What I built</h3>
+            <ul>
+              <li>A rules-based odds engine across 27 cards and 3 bureaus, with plain-language reasons on every result.</li>
+              <li>Per-bureau logic: each issuer is tagged with the bureau it typically pulls, and its cards are judged against that score.</li>
+              <li>A full product around it: explore and filter, 27 card pages, a soft check, a dashboard, accounts, and free tools like a 5/24 counter and a utilization calculator.</li>
+              <li>Security and compliance before launch: PBKDF2 hashing, rate limiting, login lockout, CSP and HSTS, a privacy policy, terms, disclosures, and an FTC affiliate disclosure.</li>
+            </ul>
+          </section>
+          <section class="case__sec">
+            <h3>How the odds work</h3>
+            <p>Tiers gate, points score. A card's minimum score tier, utilization ceiling, and inquiry ceiling decide eligibility. Clearing them earns a margin score: 50% score headroom over the tier floor (full credit at 60 points above it), 30% utilization headroom, and 20% inquiry headroom, mapped onto 45 to 96%.</p>
+          </section>
+          <section class="case__sec">
+            <h3>Why 96%, not 100%</h3>
+            <p>Issuers also weigh income, debt-to-income, account age, and internal risk models the engine can't see. Promising near-certainty would be dishonest, so the ceiling stays at 96%. The 45% floor exists because clearing every threshold still isn't a coin flip.</p>
+          </section>
+        </div>
+
+        <section class="case__block">
+          <h3>Try the scoring math</h3>
+          <p class="case__note">This runs the same scoring approach as the production engine, in your browser. The six card archetypes and their thresholds are illustrative, not Bravox's live card data. For real odds, run a check on bravoxcredit.com.</p>
+          <div data-demo="odds"></div>
+        </section>
+
+        <section class="case__block">
+          <h3>Architecture</h3>
+          <div class="arch">
+            <div class="arch__node"><h4>Next.js frontend</h4><p>Home, explore, 27 card pages, check, dashboard, account, and free tools.</p><span class="mono">TypeScript on Vercel</span></div>
+            <div class="arch__node"><h4>Typed API client</h4><p>Every page talks to the backend through one typed client.</p><span class="mono">NEXT_PUBLIC_API_BASE</span></div>
+            <div class="arch__node"><h4>FastAPI backend</h4><p>Matching engine, auth, rate limits, login lockout, and the waitlist.</p><span class="mono">Python on Render</span></div>
+            <div class="arch__node"><h4>Neon Postgres</h4><p>Users, sessions, saved checks, feedback, and the waitlist.</p><span class="mono">Hashed identifiers in logs</span></div>
+          </div>
+        </section>
+
+        <section class="case__block">
+          <h3>Decisions</h3>
+          <dl class="case__dl">
+            <dt>Fit is its own score</dt><dd>Approval odds answer "will they say yes?" Fit answers "is this the right card?" Each tier a card sits below your profile costs 12% of its score, floored at 30%, so a near-certain secured card doesn't top an 810 profile's list.</dd>
+            <dt>No invented cutoffs</dt><dd>Thresholds come from community-reported data and are labeled as estimates. Per-bureau scores reuse each card's thresholds instead of inventing new ones.</dd>
+            <dt>Rebuilt in Next.js</dt><dd>After feedback that the first version looked generic, I rebuilt the frontend as a separate Next.js app, kept the FastAPI backend, and passed on a hybrid and on Kubernetes as over-engineering for this stage.</dd>
+            <dt>Not monetized yet</dt><dd>Apply buttons go to official issuer pages. Usefulness and search traffic come first.</dd>
+            <dt>Calibration is next</dt><dd>Users can report whether they were approved or denied. Those outcomes are the path from rules to evidence.</dd>
+          </dl>
+        </section>
+      </article>
+
+      <!-- YouTube -->
+      <article class="case" id="case-youtube" data-title="YouTube recommendation bias" aria-labelledby="case-youtube-title" hidden>
+        <p class="case__meta mono"><span>Personal data</span><span>Python</span><span>Pandas</span></p>
+        <h2 class="case__title" id="case-youtube-title">YouTube recommendation bias</h2>
+        <p class="case__lede">A graph model of my own watch history, built to measure how the feed steers what I watch next.</p>
+        <div class="case__links">
+          <a class="btn btn--solid" href="https://github.com/AbhiKanani07/YT-Behavior-Model" target="_blank" rel="noopener"><span>View on GitHub</span></a>
+        </div>
+        <div class="case__grid">
+          <section class="case__sec">
+            <h3>Why</h3>
+            <p>I ran a YouTube channel growing up, so I've thought about recommendations and retention from the creator side for years. This project flips it around: measure how the algorithm nudges my own behavior.</p>
+          </section>
+          <section class="case__sec">
+            <h3>Data and parsing</h3>
+            <p>My watch-history export (JSON and HTML) supplies timestamps, titles, channels, and inferred categories. Pandas pipelines clean and categorize it, then enrich sessions with watch time and return-visit flags.</p>
+          </section>
+          <section class="case__sec">
+            <h3>Analyses</h3>
+            <ul>
+              <li>Watch time per category and channel return rates</li>
+              <li>Topic transitions: what I watch after each category or channel</li>
+              <li>Preference drift over the years</li>
+              <li>Binge versus casual sessions</li>
+            </ul>
+          </section>
+          <section class="case__sec">
+            <h3>The model</h3>
+            <p>Videos and categories become nodes and transitions become edges. The graph estimates likely-next probabilities and simulates what the feed might surface next given recent views. Topic drift and binge likelihood turn the influence into numbers.</p>
+          </section>
+        </div>
+        <section class="case__block">
+          <h3>Try the transition graph</h3>
+          <p class="case__note">Illustrative categories and probabilities, not my watch history. Pick a starting topic, raise the reinforcement to see how a feed that repeats the current topic narrows a session, then simulate one.</p>
+          <div data-demo="youtube"></div>
+        </section>
+        <section class="case__block">
+          <h3>Pipeline</h3>
+          <div class="arch">
+            <div class="arch__node"><h4>Watch-history export</h4><p>Timestamps, titles, channels.</p><span class="mono">JSON and HTML</span></div>
+            <div class="arch__node"><h4>Cleaning</h4><p>Categories inferred, sessions split.</p><span class="mono">Pandas</span></div>
+            <div class="arch__node"><h4>Enrichment</h4><p>Watch time and return-visit flags.</p><span class="mono">Session features</span></div>
+            <div class="arch__node"><h4>Transition graph</h4><p>Likely-next probabilities.</p><span class="mono">Nodes and edges</span></div>
+            <div class="arch__node"><h4>Metrics</h4><p>Topic drift and binge likelihood.</p><span class="mono">Per session</span></div>
+          </div>
+        </section>
+        <section class="case__block">
+          <h3>Decisions</h3>
+          <dl class="case__dl">
+            <dt>A simple model on purpose</dt><dd>A transition-probability graph can be explained in one sentence and still shows how one video leads to the next.</dd>
+            <dt>Metrics that make it concrete</dt><dd>Topic drift and binge likelihood turn a vague feeling about the feed into numbers I can check against memory.</dd>
+          </dl>
+        </section>
+      </article>
+
+      <!-- Sleep -->
+      <article class="case" id="case-sleep" data-title="Sleep insights dashboard" aria-labelledby="case-sleep-title" hidden>
+        <p class="case__meta mono"><span>Personal health data</span><span>Python</span><span>Pandas</span></p>
+        <h2 class="case__title" id="case-sleep-title">Sleep insights dashboard</h2>
+        <p class="case__lede">A pipeline for my Fitbit and Apple Health exports, built to make a lifelong sleep problem measurable.</p>
+        <div class="case__links">
+          <a class="btn btn--solid" href="https://github.com/AbhiKanani07/Sleep-Dashboard" target="_blank" rel="noopener"><span>View on GitHub</span></a>
+        </div>
+        <div class="case__grid">
+          <section class="case__sec">
+            <h3>Why</h3>
+            <p>I've had sleep issues for as long as I can remember, so I turned them into a pipeline: clean, combine, analyze, present. The data supports decisions, but it never tells the whole story.</p>
+          </section>
+          <section class="case__sec">
+            <h3>Ingestion</h3>
+            <ul>
+              <li>Fitbit and Apple Health exports: sleep stages (light, REM, deep), overnight heart rate, and HRV</li>
+              <li>Bedtime and wake-time consistency, screen-time proxies, and tags for interventions like a new pillow or evening workouts</li>
+              <li>Synthetic data that mirrors the Fitbit format, for safe demos</li>
+            </ul>
+          </section>
+          <section class="case__sec">
+            <h3>Analysis</h3>
+            <ul>
+              <li>Duration versus bedtime consistency and evening screen time</li>
+              <li>HRV and overnight heart-rate drift as recovery and stress signals</li>
+              <li>Bad-night effects on the next day's steps, focus and mood proxies, and workouts</li>
+              <li>Weekday versus weekend patterns</li>
+            </ul>
+          </section>
+          <section class="case__sec">
+            <h3>Modeling</h3>
+            <ul>
+              <li>Classification: good versus bad nights</li>
+              <li>Regression: total sleep duration from behavior signals</li>
+              <li>Anomaly detection: unusual nights flagged for follow-up, not diagnosis</li>
+            </ul>
+          </section>
+        </div>
+        <section class="case__block">
+          <h3>Try it on synthetic nights</h3>
+          <p class="case__note">Twelve weeks of synthetic nights shaped like a Fitbit export, the same approach the project uses for safe demos. Change the habits, then change how unusual a night has to be before it's flagged.</p>
+          <div data-demo="sleep"></div>
+        </section>
+        <section class="case__block">
+          <h3>Pipeline</h3>
+          <div class="arch">
+            <div class="arch__node"><h4>Exports</h4><p>Fitbit and Apple Health.</p><span class="mono">Night-level</span></div>
+            <div class="arch__node"><h4>Merge</h4><p>One row per night.</p><span class="mono">Pandas</span></div>
+            <div class="arch__node"><h4>Features</h4><p>Stages, heart rate, HRV, consistency.</p><span class="mono">Behavior signals</span></div>
+            <div class="arch__node"><h4>Models</h4><p>Classifier, regression, anomalies.</p><span class="mono">Good or bad nights</span></div>
+            <div class="arch__node"><h4>Dashboard</h4><p>Heatmaps, trends, shareable summaries.</p><span class="mono">Weekly and monthly</span></div>
+          </div>
+        </section>
+        <section class="case__block">
+          <h3>Decisions</h3>
+          <dl class="case__dl">
+            <dt>Synthetic first</dt><dd>Health data is personal, so demos run on synthetic nights in the same shape as the real export.</dd>
+            <dt>Flags, not diagnoses</dt><dd>Unusual nights are flagged for follow-up. The project never claims to detect a condition.</dd>
+          </dl>
+        </section>
+      </article>
+
+      <!-- Water -->
+      <article class="case" id="case-water" data-title="Dutch water quality" aria-labelledby="case-water-title" hidden>
+        <p class="case__meta mono"><span>Environmental data</span><span>NumPy</span><span>Pandas</span></p>
+        <h2 class="case__title" id="case-water-title">Dutch water quality</h2>
+        <p class="case__lede">Seasonal and regional analysis of water measurements across the Netherlands, with anomaly checks that flag stations for follow-up.</p>
+        <div class="case__links">
+          <a class="btn btn--solid" href="https://abhikanani07.github.io/Dutch-Water-Model/" target="_blank" rel="noopener"><span>Open the live project</span></a>
+        </div>
+        <div class="case__grid">
+          <section class="case__sec">
+            <h3>Problem</h3>
+            <p>Water boards and utilities have more measurements than time. The questions are where and when to sample next, and which readings deserve a rapid follow-up test.</p>
+          </section>
+          <section class="case__sec">
+            <h3>Approach</h3>
+            <ul>
+              <li>Merged multi-region datasets, then cleaned and standardized fields with NumPy and Pandas</li>
+              <li>Engineered seasonal and location features and ran variance and trend analysis by province and month</li>
+              <li>Built anomaly checks that surface stations for rapid follow-up testing</li>
+            </ul>
+          </section>
+          <section class="case__sec">
+            <h3>Who it helps</h3>
+            <ul>
+              <li>Water boards and utilities prioritizing sampling routes by province and month</li>
+              <li>Pet owners, aquaculture, and recreation groups checking whether conditions are acceptable</li>
+              <li>Anyone who needs exportable summaries and clear visuals for reporting</li>
+            </ul>
+          </section>
+          <section class="case__sec">
+            <h3>Tools</h3>
+            <p>Python with NumPy, Pandas, Matplotlib, and Seaborn in Jupyter, plus data-quality checks, anomaly heuristics, and presentation-ready charts.</p>
+          </section>
+        </div>
+        <section class="case__block">
+          <h3>Try the anomaly check</h3>
+          <p class="case__note">Illustrative values for 12 provinces over 12 months. In this demo, each reading is compared with what its province and month would predict, and anything past the threshold is flagged. The live project has the real analysis.</p>
+          <div data-demo="water"></div>
+        </section>
+        <section class="case__block">
+          <h3>Pipeline</h3>
+          <div class="arch">
+            <div class="arch__node"><h4>Measurements</h4><p>Multi-region datasets.</p><span class="mono">Raw samples</span></div>
+            <div class="arch__node"><h4>Clean</h4><p>Standardized fields and units.</p><span class="mono">NumPy and Pandas</span></div>
+            <div class="arch__node"><h4>Features</h4><p>Seasonal and location flags.</p><span class="mono">Province and month</span></div>
+            <div class="arch__node"><h4>Trends</h4><p>Variance and trend analysis.</p><span class="mono">By province and month</span></div>
+            <div class="arch__node"><h4>Flags</h4><p>Stations queued for follow-up.</p><span class="mono">Summaries and visuals</span></div>
+          </div>
+        </section>
+      </article>
+
+    </div>
+  </div>
+</div>
+
+<script type="module" src="assets/site.js"></script>
+</body>
+</html>

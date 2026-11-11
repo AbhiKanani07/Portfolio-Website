@@ -1,0 +1,4 @@
+{
+  "buildCommand": "node tools/build.mjs",
+  "outputDirectory": "docs"
+}

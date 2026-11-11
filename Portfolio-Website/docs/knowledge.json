@@ -1,0 +1,468 @@
+{
+  "updated": "2026-11-11",
+  "person": {
+    "name": "Abhi Kanani",
+    "email": "arkanani2mail@gmail.com",
+    "pittEmail": "ark440@pitt.edu",
+    "linkedin": "https://www.linkedin.com/in/abhikanani/",
+    "github": "https://github.com/AbhiKanani07"
+  },
+  "replies": {
+    "empty": "Ask me something about Abhi: his work, his projects, or how to reach him.",
+    "greeting": "Hi. I answer questions about Abhi Kanani from what he's published here. Try asking about Bravox, his work at Quest, or his stack.",
+    "namaste": "Namaste. I answer questions about Abhi Kanani from what he's published here, in English. Try asking about Bravox, his work at Quest, or his stack.",
+    "kemcho": "Majama. I answer questions about Abhi Kanani from what he's published here, in English. Try asking about Bravox, his work at Quest, or his stack.",
+    "thanks": "Anytime. To reach Abhi directly, email arkanani2mail@gmail.com.",
+    "identity": "I'm the assistant on Abhi's site. I answer only from what he's published here: his work, projects, and record. I'm not Abhi, and if something isn't in the record, I'll say so.",
+    "injection": "I'll stay on topic. I only answer questions about Abhi and his work, from what he's published here.",
+    "comparison": "I don't compare Abhi to other people. I can walk you through what he's built and let the work speak for itself.",
+    "offtopic": "I only know about Abhi. Try asking about his projects, his work at Quest, or how to reach him.",
+    "notFound": "That isn't in what Abhi has published here, so I won't guess. You can ask him directly at arkanani2mail@gmail.com.",
+    "closest": "The closest thing in the record is {title}.",
+    "exhausted": "That's everything in the record on that topic. Ask about something else, or email him at arkanani2mail@gmail.com.",
+    "unknownTerm": "{term} isn't in what Abhi has published here, so I won't claim it. What is published: {stack}",
+    "private": {
+      "pay": "Compensation isn't something he discusses here. If you're hiring, email him at arkanani2mail@gmail.com.",
+      "phone": "He doesn't publish a phone number or address. Email works best: arkanani2mail@gmail.com.",
+      "gpa": "His GPA isn't published here. Ask him directly at arkanani2mail@gmail.com.",
+      "age": "That isn't published here. What is: he's a second-year student at Pitt, graduating in May 2029.",
+      "authorization": "Work authorization isn't covered here. Please ask him directly at arkanani2mail@gmail.com.",
+      "personal": "That's personal, and it isn't something Abhi has published here. For anything like that, email him at arkanani2mail@gmail.com."
+    }
+  },
+  "entries": [
+    {
+      "id": "summary",
+      "title": "Abhi in 30 seconds",
+      "href": "#contact",
+      "topic": "core",
+      "keywords": "summary overview who introduce introduction background bio himself tldr elevator pitch quick describe profile person",
+      "short": "Abhi Kanani studies data science at the University of Pittsburgh, works part-time as a Data Engineering Intern at Quest Diagnostics, and builds his own products, most recently Bravox.",
+      "body": "Abhi Kanani is a second-year Data Science major at the University of Pittsburgh with a major specialization in Computer Systems. In his first year of college he broke into data engineering at Quest Diagnostics, a Fortune 500 company, where he still works part-time. Off the clock he builds his own products end to end; the biggest is Bravox, a credit card approval engine he took from zero to production solo. His throughline: owning a problem all the way down, from the data to the architecture to the thing people actually touch."
+    },
+    {
+      "id": "quest",
+      "title": "Quest Diagnostics",
+      "href": "#experience",
+      "topic": "systems",
+      "keywords": "quest diagnostics intern internship job work employer current role position part time data engineering fortune 500 company day job",
+      "short": "He's a Data Engineering Intern at Quest Diagnostics, a Fortune 500 diagnostics company, working part-time during the school year after his summer internship.",
+      "body": "Abhi is a Data Engineering Intern at Quest Diagnostics, a Fortune 500 diagnostics company. He landed the role in his first year of college, completed the summer internship, and stayed on part-time during the school year. He works on enterprise-scale cloud data systems and builds the internal tooling that keeps real infrastructure running."
+    },
+    {
+      "id": "quest-private",
+      "title": "Specifics of his Quest work",
+      "href": "#experience",
+      "topic": "systems",
+      "guard": true,
+      "keywords": "internal confidential proprietary specifics details exactly",
+      "short": "The specifics of his Quest work stay inside Quest.",
+      "body": "The specifics of his Quest work stay inside Quest: he keeps internal systems, data, and tooling off the public record, and he's glad to walk through what he's built there in an interview. Publicly, he works on enterprise-scale cloud data systems and builds internal tooling."
+    },
+    {
+      "id": "pitt",
+      "title": "University of Pittsburgh",
+      "href": "#experience",
+      "topic": "helix",
+      "keywords": "pitt university pittsburgh school college education degree major study student graduate graduation 2029 bachelor data science dietrich",
+      "short": "He's pursuing a B.S. in Data Science at the University of Pittsburgh, expected May 2029.",
+      "body": "He's working toward a B.S. in Data Science at the University of Pittsburgh's Dietrich School of Arts and Sciences, expected May 2029. His program is a Data Science major with a major specialization in Computer Systems, which adds systems coursework such as database management and operating systems to the core data science curriculum."
+    },
+    {
+      "id": "systems-spec",
+      "title": "Computer Systems specialization",
+      "href": "#experience",
+      "topic": "systems",
+      "keywords": "specialization computer systems coursework courses classes database management operating systems os systems design curriculum",
+      "short": "His Computer Systems major specialization adds courses like database management and operating systems.",
+      "body": "The Computer Systems major specialization lets him take expertise courses such as database management and intro to operating systems alongside the data science core. It backs the systems side of his work: databases, operating systems, and systems design."
+    },
+    {
+      "id": "year",
+      "title": "Year in school",
+      "href": "#experience",
+      "topic": "helix",
+      "keywords": "year sophomore second freshman junior senior standing graduate graduating",
+      "short": "He's a second-year student at Pitt, graduating in May 2029.",
+      "body": "He's a second-year student at the University of Pittsburgh and expects to graduate in May 2029."
+    },
+    {
+      "id": "bravox",
+      "title": "Bravox Credit",
+      "href": "#case-bravox",
+      "topic": "matrix",
+      "keywords": "bravox bravoxcredit credit card cards approval odds product startup side project engine",
+      "short": "Bravox is a credit card approval engine Abhi built solo, live at bravoxcredit.com.",
+      "body": "Bravox is a credit card approval engine Abhi designed and shipped solo, live at bravoxcredit.com. It estimates approval odds across 27 cards, judging each one against the credit bureau its issuer typically pulls. He built it because most credit tools exist to sell you cards, not tell you the truth, and he wanted the honest one."
+    },
+    {
+      "id": "bravox-odds",
+      "title": "How Bravox estimates odds",
+      "href": "#case-bravox",
+      "topic": "matrix",
+      "keywords": "how works estimate calculate compute approval odds probability algorithm model scoring score formula engine tier tiers weights weighting margin method logic",
+      "short": "Score tiers decide eligibility; a weighted margin over score, utilization, and inquiries sets the odds.",
+      "body": "The engine works in two steps. Score tiers gate eligibility: each card has a minimum tier plus ceilings for utilization and recent inquiries. Then a weighted margin sets the odds: 50% how far the score clears the card's tier floor (full credit at 60 points above it), 30% utilization headroom, and 20% inquiry headroom, mapped onto a 45 to 96% band. Every result comes with plain-language reasons, including why a card is out of reach."
+    },
+    {
+      "id": "bravox-band",
+      "title": "Why the odds never reach 100%",
+      "href": "#case-bravox",
+      "topic": "matrix",
+      "keywords": "96 100 percent ceiling cap maximum max guarantee guaranteed certain certainty sure floor 45 band range limit",
+      "short": "Bravox caps odds at 96% because issuers weigh factors the engine can't see.",
+      "body": "Bravox caps odds at 96% on purpose. Issuers also weigh income, debt-to-income, account age, and internal risk models the engine can't see, so promising near-certainty would be dishonest. The 45% floor exists because clearing every threshold still isn't a coin flip."
+    },
+    {
+      "id": "bravox-bureaus",
+      "title": "Per-bureau logic",
+      "href": "#case-bravox",
+      "topic": "matrix",
+      "keywords": "bureau bureaus experian equifax transunion pull pulls inquiry issuer issuers chase amex american express capital one citi discover wells fargo bank america opensky",
+      "short": "Bravox judges each card against the bureau its issuer typically pulls.",
+      "body": "Issuers usually check one credit bureau, and scores can differ between bureaus. Bravox tags each issuer with the bureau it typically pulls, based on community reports, and evaluates its cards against that score: American Express, Chase, Citi, Discover, Wells Fargo, and Bank of America map to Experian, Capital One checks all three, and OpenSky runs no credit check. Users can enter a score per bureau; Bravox doesn't invent separate cutoffs for each one."
+    },
+    {
+      "id": "bravox-fit",
+      "title": "Approval odds versus fit",
+      "href": "#case-bravox",
+      "topic": "matrix",
+      "keywords": "fit recommendation recommend recommended best card ranking rank ranked secured starter mismatch right card",
+      "short": "Bravox scores fit separately from approval, so near-certain but poor matches sink.",
+      "body": "Approval odds and fit are different questions. Someone with an 810 score will almost certainly get a secured starter card, but it's a poor recommendation. So Bravox scores fit separately: each tier a card sits below the user's profile costs 12% of its score, floored at 30%, which lifts better-matched cards to the top."
+    },
+    {
+      "id": "bravox-524",
+      "title": "Chase 5/24",
+      "href": "#case-bravox",
+      "topic": "matrix",
+      "keywords": "fivetwentyfour chase rule new accounts opened 24 months",
+      "short": "Bravox models Chase's community-reported 5/24 rule.",
+      "body": "Bravox models Chase's community-reported 5/24 rule: with five or more new personal cards in the last 24 months, most Chase cards are marked out of reach, and the result says why. A free 5/24 counter on the site shows when the oldest account drops off."
+    },
+    {
+      "id": "bravox-arch",
+      "title": "Bravox architecture",
+      "href": "#case-bravox",
+      "topic": "systems",
+      "keywords": "architecture stack backend frontend fastapi nextjs typescript react postgres postgresql neon render vercel database api deploy deployed hosting infrastructure",
+      "short": "Bravox runs Next.js on Vercel, FastAPI on Render, and Neon Postgres.",
+      "body": "Bravox runs a Next.js and TypeScript frontend on Vercel, a FastAPI backend on Render, and a Neon Postgres database for users, sessions, saved checks, feedback, and the waitlist. The frontend talks to the API through a typed client, and the odds engine is plain Python with no framework dependencies, so its rules stay testable on their own."
+    },
+    {
+      "id": "bravox-security",
+      "title": "Security and privacy in Bravox",
+      "href": "#case-bravox",
+      "topic": "systems",
+      "keywords": "security secure privacy safe safety password passwords hashing hash pbkdf2 rate limiting lockout csp hsts headers ssn hard pull bank login audit",
+      "short": "Bravox asks for no SSN, runs no hard pull, and needs no bank login.",
+      "body": "Bravox asks for no SSN, runs no hard pull, and needs no bank login. On the backend it uses PBKDF2 password hashing, rate limiting, login lockout, CSP and HSTS headers, and request-size limits, and consumer identifiers in its audit and feedback logs are hashed, never stored raw."
+    },
+    {
+      "id": "bravox-compliance",
+      "title": "Compliance layer",
+      "href": "#case-bravox",
+      "topic": "matrix",
+      "keywords": "compliance legal terms policy disclosures disclosure ftc affiliate cookie consent banner",
+      "short": "He built the privacy policy, terms, disclosures, and consent flow before launch.",
+      "body": "Before asking anyone to trust Bravox with their numbers, Abhi built the compliance layer: a privacy policy, terms of use, disclosures, a cookie consent banner, and an FTC affiliate disclosure. Apply buttons go to official issuer pages."
+    },
+    {
+      "id": "bravox-rebuild",
+      "title": "The Next.js rebuild",
+      "href": "#case-bravox",
+      "topic": "systems",
+      "keywords": "rebuild rebuilt redesign redesigned migrate migration nextjs jinja templates feedback generic kubernetes docker overengineering hybrid decision",
+      "short": "He rebuilt Bravox's frontend in Next.js and chose not to add Kubernetes.",
+      "body": "Bravox started as a FastAPI app with server-rendered templates. After feedback that it looked generic, Abhi rebuilt the frontend as a separate Next.js app and kept the FastAPI backend. He deliberately turned down a hybrid of the two, and Kubernetes, as over-engineering for the project's stage."
+    },
+    {
+      "id": "bravox-design",
+      "title": "Designing Bravox",
+      "href": "#case-bravox",
+      "topic": "core",
+      "keywords": "design designer designed ui ux visual look aesthetic brand design system motion product interface typography",
+      "short": "He designs his products as well as building them.",
+      "body": "Abhi designs his products as well as building them. Bravox went through several visual directions, from a Robinhood-style layout to a metallic-card look to a terminal style, before landing on an airy, quiet system. Its design map sets motion levels per page: product pages stay quiet, and only the Vector waitlist is allowed to be loud."
+    },
+    {
+      "id": "bravox-tools",
+      "title": "Free tools on Bravox",
+      "href": "#case-bravox",
+      "topic": "matrix",
+      "keywords": "free tools tool utilization calculator compare comparison lookup counter guide guides fico vantagescore learn",
+      "short": "Bravox includes free planning tools like a bureau lookup and a 5/24 counter.",
+      "body": "Bravox includes free planning tools that run in the browser with no sign-up: a bureau lookup, a 5/24 counter, a utilization calculator, a side-by-side compare for up to three cards, and a FICO versus VantageScore guide."
+    },
+    {
+      "id": "bravox-scores",
+      "title": "FICO and VantageScore",
+      "href": "#case-bravox",
+      "topic": "matrix",
+      "keywords": "fico vantagescore vantage scoring models credit score",
+      "short": "Bravox uses the score model users report and never converts between FICO and VantageScore.",
+      "body": "Users tell Bravox which model their score comes from and can add the other. Odds use FICO-style tiers and the FICO score whenever one is given; both scores are shown side by side, and Bravox never converts one into the other."
+    },
+    {
+      "id": "bravox-accuracy",
+      "title": "Is Bravox accurate?",
+      "href": "#case-bravox",
+      "topic": "matrix",
+      "keywords": "accurate accuracy reliable reliability trust trustworthy correct validated validation precise precision real outcomes calibration calibrate tested",
+      "short": "Bravox doesn't claim an accuracy number; calibration against reported outcomes is next.",
+      "body": "Bravox doesn't claim an accuracy number, because its odds come from rules and community-reported data, not validated outcomes. Every result is an estimate with its reasons shown. The next step is calibration: users can report whether they were approved or denied, and those outcomes become the evidence for tuning the engine."
+    },
+    {
+      "id": "bravox-status",
+      "title": "Bravox status",
+      "href": "#case-bravox",
+      "topic": "matrix",
+      "keywords": "live launched launch users revenue money monetized monetization business affiliate traction growth status profit",
+      "short": "Bravox is live and not monetized yet.",
+      "body": "Bravox is live at bravoxcredit.com and isn't monetized yet; apply links go straight to issuers' official pages. Abhi launched it publicly on LinkedIn and is iterating from feedback, focusing first on usefulness and search traffic."
+    },
+    {
+      "id": "bravox-next",
+      "title": "What's next for Bravox",
+      "href": "#case-bravox",
+      "topic": "matrix",
+      "keywords": "next roadmap future plans plan upcoming improve improvements todo coming",
+      "short": "Next for Bravox: calibrating odds against reported outcomes.",
+      "body": "Next on the Bravox roadmap: calibrating odds against outcomes users report, faster first loads on the backend, privacy-friendly analytics, more guides, and a catalog that grows past 27 cards."
+    },
+    {
+      "id": "vector",
+      "title": "Bravox Vector",
+      "href": "https://www.bravoxcredit.com/waitlist",
+      "topic": "matrix",
+      "keywords": "vector waitlist new product next product secret mystery coming soon",
+      "short": "Bravox Vector is under wraps; the waitlist is open.",
+      "body": "Bravox Vector is Abhi's next product. What it does is under wraps for now, and the waitlist is open at bravoxcredit.com/waitlist."
+    },
+    {
+      "id": "youtube",
+      "title": "YouTube recommendation bias model",
+      "href": "#case-youtube",
+      "topic": "clusters",
+      "keywords": "youtube recommendation recommendations recommender algorithm watch history feed graph markov transition binge drift video videos channel",
+      "short": "He modeled his own YouTube watch history as a graph to see how the feed steers him.",
+      "body": "Abhi built a graph-based model of his own YouTube watch history to see how recommendations steer what he watches next. Videos and categories are nodes, transitions are edges, and the model estimates likely-next probabilities. He measured watch time by category, channel return rates, topic drift over the years, and binge versus casual sessions. He ran a YouTube channel growing up, so he'd thought about recommendations from the creator side first."
+    },
+    {
+      "id": "sleep",
+      "title": "Sleep insights dashboard",
+      "href": "#case-sleep",
+      "topic": "clusters",
+      "keywords": "sleep fitbit apple health hrv heart rate dashboard rest nights insomnia wearable",
+      "short": "A pipeline that turns his Fitbit and Apple Health exports into sleep insights.",
+      "body": "A personal project to quantify lifelong sleep issues with Fitbit and Apple Health exports. The pipeline cleans and merges night-level data (sleep stages, overnight heart rate, HRV, bedtime consistency), then classifies good versus bad nights, predicts sleep duration, and flags unusual nights for follow-up. Synthetic data that mirrors the Fitbit format keeps demos safe."
+    },
+    {
+      "id": "water",
+      "title": "Dutch water quality analysis",
+      "href": "#case-water",
+      "topic": "clusters",
+      "keywords": "water netherlands dutch quality rivers river environment environmental province provinces seasonal anomaly anomalies stations",
+      "short": "A seasonal and regional analysis of Dutch water measurements with anomaly flags.",
+      "body": "A spatial and seasonal analysis of water measurements across the Netherlands. Abhi merged multi-region datasets with NumPy and Pandas, engineered seasonal and location features, ran variance and trend analysis by province and month, and built anomaly checks that flag stations for rapid follow-up testing. The project site is live."
+    },
+    {
+      "id": "projects",
+      "title": "Projects overview",
+      "href": "#work",
+      "topic": "clusters",
+      "keywords": "projects project portfolio build made samples examples case studies side projects things",
+      "short": "His projects: Bravox, a YouTube bias model, a sleep pipeline, and a Dutch water analysis.",
+      "body": "His main projects are Bravox, a production credit card approval engine; a YouTube recommendation bias model built on his own watch history; a sleep insights pipeline for Fitbit and Apple Health data; and a seasonal water-quality analysis for the Netherlands. Each has a case study with a working demo on this page."
+    },
+    {
+      "id": "site",
+      "title": "How this site works",
+      "href": "#sandbox",
+      "topic": "core",
+      "keywords": "site website page hologram webgl shader shaders assistant chatbot bot retrieval",
+      "short": "The hologram is a WebGL2 point cloud; the assistant retrieves answers from Abhi's published record.",
+      "body": "The hologram is a WebGL2 point cloud with custom shaders for chromatic aberration, iridescent rims, and scanlines, and it changes shape to match each answer's topic. The assistant answers from a published record of Abhi's work using retrieval that runs in your browser, and it cites sources for every answer. The Sandbox section opens up the full pipeline."
+    },
+    {
+      "id": "stack",
+      "title": "Technical skills",
+      "href": "#experience",
+      "topic": "systems",
+      "keywords": "skills skill stack languages programming code coding tech technologies technical tools frameworks proficient python sql java javascript typescript rlang cplusplus pandas numpy jupyter tensorflow tableau excel fastapi nextjs react postgres sqlite",
+      "short": "His stack spans Python, SQL, R, Java, TypeScript, FastAPI, Next.js, and Postgres.",
+      "body": "Languages: Python, SQL, R, Java, JavaScript and TypeScript, and C++. Data: Pandas, NumPy, Jupyter, Matplotlib, Seaborn, TensorFlow, Tableau, and Excel. Product engineering: FastAPI, Next.js, React, Postgres on Neon, and SQLite, deployed on Vercel and Render. Security work includes PBKDF2 hashing, rate limiting, and CSP and HSTS headers."
+    },
+    {
+      "id": "cloud",
+      "title": "Cloud experience",
+      "href": "#experience",
+      "topic": "systems",
+      "keywords": "cloud aws azure gcp google platform deployment devops infrastructure servers dns domain",
+      "short": "His public cloud work is Bravox on Vercel, Render, and Neon.",
+      "body": "His public cloud deployment work is Bravox: a frontend on Vercel, an API on Render, and Postgres on Neon, with a custom domain and DNS he configured himself. At Quest he works on enterprise-scale cloud data systems; the specifics stay internal."
+    },
+    {
+      "id": "spoken",
+      "title": "Languages he speaks",
+      "href": "#experience",
+      "topic": "core",
+      "keywords": "speak spoken fluent hindi gujarati english multilingual bilingual trilingual",
+      "short": "He's fluent in English, Hindi, and Gujarati.",
+      "body": "He's fluent in English, Hindi, and Gujarati, and earned a Gujarati fluency certificate through the Gujarati Samaj of Greater Pittsburgh."
+    },
+    {
+      "id": "mascaro",
+      "title": "Mascaro Construction",
+      "href": "#experience",
+      "topic": "helix",
+      "keywords": "mascaro construction project intern labor quantities quantity copilot excel automation pricing proposal",
+      "short": "At Mascaro Construction he built a system to sort labor and quantity data.",
+      "body": "From March to May 2025, Abhi was a Project Intern at Mascaro Construction in Pittsburgh. He built a system to sort quantity and labor data from real-time entries, streamlined Excel data with AI automation (Copilot) plus Python and Java scripts, and co-authored a business proposal that analyzed labor and quantity pricing in R."
+    },
+    {
+      "id": "tombrown",
+      "title": "Tom Brown, Inc.",
+      "href": "#experience",
+      "topic": "helix",
+      "keywords": "tom brown consultant consulting cost analysis department defense dod screen printing ballistic nylon plates",
+      "short": "For Tom Brown, Inc. he modeled costs for a Department of Defense printing job.",
+      "body": "From January to March 2025, he was a Project Consultant for Tom Brown, Inc., building a cost analysis for Department of Defense screen printing of 500 ballistic-nylon plates. He modeled machinery and labor costs and presented solutions with a six-person team."
+    },
+    {
+      "id": "eafab",
+      "title": "EAFab Corporation",
+      "href": "#experience",
+      "topic": "helix",
+      "keywords": "eafab web development developer website seo steelmaking aluminum oil gas article",
+      "short": "At EAFab he built the company website and its SEO.",
+      "body": "From August 2024 to January 2025, he was a Web Development Intern at EAFab Corporation. He built a website for EAFab's services in steelmaking, aluminum, and oil and gas, implemented SEO with targeted keywords and content, and published an article on website development and SEO."
+    },
+    {
+      "id": "history",
+      "title": "Work history",
+      "href": "#experience",
+      "topic": "helix",
+      "keywords": "experience history resume previous past jobs internships career timeline worked employers",
+      "short": "Quest Diagnostics now; before that Mascaro, Tom Brown, Inc., and EAFab.",
+      "body": "Most recent first: Data Engineering Intern at Quest Diagnostics (2026 to now, part-time during the school year), Project Intern at Mascaro Construction (2025), Project Consultant for Tom Brown, Inc. (2025), and Web Development Intern at EAFab Corporation (2024 to 2025). Alongside those, he builds his own products, led by Bravox."
+    },
+    {
+      "id": "pbl",
+      "title": "Phi Beta Lambda",
+      "href": "#experience",
+      "topic": "helix",
+      "keywords": "phi beta lambda pbl vice president vp finance business organization elected treasurer",
+      "short": "He was elected VP of Finance of Phi Beta Lambda for 2026 to 2027.",
+      "body": "At Phi Beta Lambda, about 100 members elected Abhi to lead finance as VP of Finance for the 2026 to 2027 academic year, focused on income streams, financial awareness, and growing the organization. He joined in September 2025 after a competitive interview process."
+    },
+    {
+      "id": "fbla",
+      "title": "FBLA chapter president",
+      "href": "#experience",
+      "topic": "helix",
+      "keywords": "fbla future business leaders america chapter president high school upper st clair nationals national competition state regional",
+      "short": "As FBLA chapter president he led 100+ members and placed 4th in Pennsylvania.",
+      "body": "As FBLA Chapter President at Upper St. Clair from July 2024 to July 2025, he led 100+ members through regional, state, and national competitions and ran fundraising, promotion, and event logistics. He placed 4th in Pennsylvania to reach Nationals."
+    },
+    {
+      "id": "leadership",
+      "title": "Leadership",
+      "href": "#experience",
+      "topic": "helix",
+      "keywords": "leadership leader lead president team manage management managed people",
+      "short": "He leads finance at Phi Beta Lambda and led a 100+ member FBLA chapter.",
+      "body": "Leadership highlights: VP of Finance at Phi Beta Lambda, elected by about 100 members for 2026 to 2027; FBLA Chapter President, leading 100+ members and placing 4th in Pennsylvania to reach Nationals; and a fundraising drive that raised $5,000+ to cover travel for 50 students."
+    },
+    {
+      "id": "volunteer",
+      "title": "Volunteering",
+      "href": "#experience",
+      "topic": "helix",
+      "keywords": "volunteer volunteering community service fundraising fundraiser snap mobile gujarati samaj nonprofit youth charity",
+      "short": "He raised $5,000+ for student travel and ran community events for a decade.",
+      "body": "As a Fundraising Manager with Snap Mobile from October to December 2024, he raised $5,000+ for Upper St. Clair FBLA, subsidizing travel for 50 students. From 2012 to 2022 he coordinated community events and sports tournaments for the Gujarati Samaj of Greater Pittsburgh to fund education."
+    },
+    {
+      "id": "interests",
+      "title": "Outside of work",
+      "href": "#experience",
+      "topic": "core",
+      "keywords": "hobbies hobby interests fun free time sports weightlifting lifting gym pickleball volleyball personal outside weekends",
+      "short": "Weightlifting, pickleball, and volleyball.",
+      "body": "Outside of work he's into weightlifting, pickleball, and volleyball, plus community service for youth. He also ran a YouTube channel growing up."
+    },
+    {
+      "id": "roles",
+      "title": "Roles he's interested in",
+      "href": "#contact",
+      "topic": "core",
+      "keywords": "looking seeking open opportunities opportunity roles role want wants goals goal career hire hiring internship internships available availability job search position target",
+      "short": "He's most interested in data engineering, data governance, and applied ML.",
+      "body": "He's most interested in data engineering, data governance, and applied ML: roles where he can work with real systems and real data at scale. For timing and availability, email him directly at arkanani2mail@gmail.com."
+    },
+    {
+      "id": "contact",
+      "title": "Contact",
+      "href": "#contact",
+      "topic": "core",
+      "keywords": "contact email reach message linkedin github connect touch mail talk",
+      "short": "Email arkanani2mail@gmail.com.",
+      "body": "Email arkanani2mail@gmail.com (personal) or ark440@pitt.edu (Pitt). He's on LinkedIn at linkedin.com/in/abhikanani and on GitHub at github.com/AbhiKanani07, and he's always up to talk shop."
+    },
+    {
+      "id": "resume",
+      "title": "Resume",
+      "href": "#experience",
+      "topic": "helix",
+      "keywords": "resume cv pdf download file",
+      "short": "Everything from his resume is on this page.",
+      "body": "Everything from his resume is on this page, in the section after the sandbox. For a current resume file, email him at arkanani2mail@gmail.com."
+    },
+    {
+      "id": "principles",
+      "title": "How he works",
+      "href": "#contact",
+      "topic": "core",
+      "keywords": "approach philosophy principles values style mindset strengths strength different unique stand out qualities ethic why hire hiring",
+      "short": "He owns problems end to end and makes claims he can defend.",
+      "body": "He likes owning a problem all the way down: the data, the architecture, and the thing people actually touch. He ships small, verifies, then builds on it, and he'd rather make a claim he can defend than one that sounds bigger. Bravox taught him more than any class: how to make defensible decisions under uncertainty, ship something real instead of a notebook, and debug production when it breaks at 1 a.m."
+    },
+    {
+      "id": "gaps",
+      "title": "What's unfinished",
+      "href": "#case-bravox",
+      "topic": "core",
+      "keywords": "weakness weaknesses bad improve struggle struggles limitation limitations gaps gap unfinished challenge challenges criticism mistakes failures failure lacking",
+      "short": "Bravox's odds still need calibrating against real outcomes.",
+      "body": "Honest gaps, as of now: Bravox's odds are rule-based estimates that still need calibrating against real outcomes, and it isn't monetized yet. Bravox Vector is in validation, not built. And as a second-year student, his production experience comes from Quest and his own products rather than years in industry."
+    },
+    {
+      "id": "governance",
+      "title": "Data governance",
+      "href": "#case-bravox",
+      "topic": "systems",
+      "keywords": "data governance quality integrity governed lineage compliance honest honesty",
+      "short": "Data governance is one of his target areas, and Bravox shows it.",
+      "body": "Data governance is one of his target areas, and Bravox is where it shows: he refused to fabricate cutoffs, kept every claim defensible, hashed identifiers in logs, and built the privacy, consent, and disclosure layer before launch."
+    },
+    {
+      "id": "ml",
+      "title": "AI and machine learning",
+      "href": "#work",
+      "topic": "clusters",
+      "keywords": "ai ml machine learning models model deep tensorflow classification classifier regression llm artificial intelligence predictive prediction clustering anomaly detection",
+      "short": "His applied ML spans classification, regression, anomaly detection, and transition models.",
+      "body": "His applied ML work so far: good-versus-bad night classification, sleep-duration regression, and anomaly detection in the sleep project; transition-probability modeling and topic clustering in the YouTube project; and Bravox's rules-based odds engine, designed to be calibrated against real outcomes. TensorFlow is in his toolkit, and applied ML is one of the areas he wants to grow into."
+    },
+    {
+      "id": "location",
+      "title": "Where he is based",
+      "href": "#contact",
+      "topic": "core",
+      "keywords": "location located based live lives city pittsburgh pennsylvania hometown area",
+      "short": "He's based in Pittsburgh.",
+      "body": "He's based in Pittsburgh, Pennsylvania, where he studies at Pitt, and he grew up in the area in Upper St. Clair."
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+/* ==========================================================================
+   Tokens
+   Layer rule: square corners = printed on the page (sections, cards, tables).
+               rounded corners = floating over the page (nav, command bar,
+               answer panel, drawer, nodes, chips, buttons).
+   ========================================================================== */
+
+:root {
+  color-scheme: dark;
+
+  /* Surfaces */
+  --obsidian: #050507;
+  --glass-1: rgba(255, 255, 255, 0.035);
+  --glass-2: rgba(255, 255, 255, 0.06);
+  --glass-deep: rgba(6, 7, 10, 0.78);
+  --hair: rgba(255, 255, 255, 0.08);
+  --hair-strong: rgba(255, 255, 255, 0.16);
+  --hair-hot: rgba(255, 255, 255, 0.28);
+
+  /* Ink (all contrast-checked against --obsidian) */
+  --ink: #f1f5ff;                       /* spectral white, 18.6:1 */
+  --ink-2: rgba(241, 245, 255, 0.72);   /* body secondary, ~9.6:1 */
+  --ink-3: rgba(241, 245, 255, 0.58);   /* metadata, ~6.3:1 */
+  --ink-4: rgba(241, 245, 255, 0.5);    /* smallest permitted ink, 4.95:1 */
+
+  /* Signal (hologram light; used sparingly in UI) */
+  --cyan: #00f0ff;
+  --cobalt: #2e5bff;
+  --cobalt-ink: #7d9bff;                /* cobalt lifted for text on obsidian, 7.3:1 */
+  --flag: #ffb020;                      /* anomaly flags in demos only */
+  --cyan-soft: rgba(0, 240, 255, 0.14);
+  --cobalt-soft: rgba(46, 91, 255, 0.18);
+
+  /* Type */
+  --font-display: "Inter Tight", "Inter Display", "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-body: "Inter Tight", "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, "DejaVu Sans Mono", "Liberation Mono", monospace;
+
+  --fs-micro: 11px;
+  --fs-mono: 12.5px;
+  --fs-small: 14px;
+  --fs-body: 16.5px;
+  --fs-lead: clamp(18px, 1.35vw, 21px);
+  --fs-h4: 21px;
+  --fs-h3: clamp(25px, 2.3vw, 34px);
+  --fs-h2: clamp(46px, 6.6vw, 104px);
+  --fs-hero: clamp(35px, 4.6vw, 80px);
+  --fs-giant: clamp(54px, 9.4vw, 156px);
+
+  --track-display: -0.03em;
+  --track-tight: -0.02em;
+
+  /* Space & layout */
+  --gutter: clamp(16px, 2.2vw, 32px);
+  --margin: clamp(20px, 4vw, 56px);
+  --maxw: 1440px;
+  --section-pad: clamp(96px, 12vw, 176px);
+  --nav-h: 56px;
+  --nav-inset: 12px;
+
+  /* Radius (floating layer only) */
+  --r-chip: 999px;
+  --r-control: 12px;
+  --r-float: 18px;
+  --r-drawer: 24px;
+
+  /* Glass */
+  --blur: 16px;
+  --glass-edge: inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  --float-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.9);
+
+  /* Motion: sampled from a damped spring (zeta 0.92), not a bezier */
+  --ease-spring: linear(0, 0.0468, 0.1527, 0.2813, 0.4111, 0.5306, 0.6344, 0.721, 0.7911, 0.8463, 0.889, 0.9212, 0.9452, 0.9626, 0.9752, 0.984, 0.9901, 0.9942, 0.9969, 0.9986, 0.9996, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --t-fast: 180ms;
+  --t-med: 420ms;
+  --t-slow: 700ms;
+
+  --z-canvas: 0;
+  --z-content: 1;
+  --z-nav: 50;
+  --z-drawer: 80;
+  --z-skip: 100;
+}
+
+@supports not (transition-timing-function: linear(0, 1)) {
+  :root { --ease-spring: cubic-bezier(0.2, 0.9, 0.25, 1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --t-fast: 1ms; --t-med: 1ms; --t-slow: 1ms; }
+}

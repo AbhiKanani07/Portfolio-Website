@@ -1,0 +1,13 @@
+{
+  "name": "abhi-kanani-portfolio",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node tools/build.mjs",
+    "build:single": "node tools/build.mjs --single",
+    "serve": "python3 -m http.server 8080 --directory docs"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2"
+  }
+}
