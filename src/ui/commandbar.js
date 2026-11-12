@@ -52,7 +52,12 @@ export function initCommandBar({ engine, driver, holo, readouts }) {
     $('.qa__q', item).textContent = q;
     scroller.append(item);
     while (scroller.children.length > 4) scroller.firstElementChild.remove();
-    scroller.scrollTop = scroller.scrollHeight;
+    // Keep each new answer's question in view: follow the stream, but never past its start.
+    const follow = () => {
+      const anchor = item.getBoundingClientRect().top - scroller.getBoundingClientRect().top + scroller.scrollTop - 6;
+      scroller.scrollTop = Math.min(anchor, scroller.scrollHeight - scroller.clientHeight);
+    };
+    follow();
 
     holo.setMode('retrieving');
     holo.pulse(0.35);
@@ -76,7 +81,7 @@ export function initCommandBar({ engine, driver, holo, readouts }) {
       $('.meta', item).innerHTML = meta.join('');
       readouts.set('engine', engineName);
       holo.setMode(document.activeElement === input ? 'listening' : 'idle');
-      scroller.scrollTop = scroller.scrollHeight;
+      follow();
     };
     const ctl = driver.run(q, local, {
       instant: motion.reduced,
@@ -87,7 +92,7 @@ export function initCommandBar({ engine, driver, holo, readouts }) {
         textEl.textContent = text;
         holo.pulse(0.12);
         const nearBottom = scroller.scrollHeight - scroller.scrollTop - scroller.clientHeight < 80;
-        if (nearBottom) scroller.scrollTop = scroller.scrollHeight;
+        if (nearBottom) follow();
       },
       onDone: (final) => {
         textEl.textContent = final;

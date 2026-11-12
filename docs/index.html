@@ -47,6 +47,7 @@
     <a href="#experience">Experience</a>
     <a href="#between">In between</a>
     <a href="#contact">Contact</a>
+    <button class="nav__menu-ask" type="button" data-palette-open>Ask the assistant</button>
   </nav>
   <button class="nav__ask" type="button" data-palette-open aria-label="Ask the assistant or jump anywhere"><span>Ask</span><kbd data-kbd>Ctrl K</kbd></button>
   <button class="nav__menu" type="button" aria-expanded="false" aria-controls="nav-links" data-menu>Menu</button>
@@ -55,14 +56,12 @@
 <main id="main">
 
   <!-- ===================== Hero ===================== -->
-  <section class="hero is-booting" id="top" aria-labelledby="hero-title">
+  <section class="hero" id="top" aria-labelledby="hero-title">
     <canvas class="hero__canvas" data-holo aria-hidden="true"></canvas>
     <div class="hero__fallback" aria-hidden="true"></div>
 
     <div class="hero__grid wrap">
       <p class="hero__coords mono"><span>University of Pittsburgh</span><span>40.4443° N, 79.9532° W</span></p>
-
-      <div class="boot mono" data-boot aria-hidden="true"><ol data-boot-log></ol></div>
 
       <div class="hero__copy">
         <h1 class="hero__title" id="hero-title">
@@ -97,11 +96,8 @@
           <div class="cmd__presets" aria-label="Suggested questions">
             <button class="chip" type="button" data-preset="Give me the 30-second summary of Abhi.">30-second summary</button>
             <button class="chip" type="button" data-preset="What does he do at Quest Diagnostics?">His work at Quest</button>
-            <button class="chip" type="button" data-preset="How does Bravox estimate approval odds?">How Bravox scores odds</button>
             <button class="chip" type="button" data-preset="What is Keystroke?">What is Keystroke?</button>
-            <button class="chip" type="button" data-preset="What's his technical stack?">His stack</button>
-            <button class="chip" type="button" data-preset="What games does he play?">His Roblox games</button>
-            <button class="chip" type="button" data-preset="How is this assistant built?">How this assistant works</button>
+            <button class="chip chip--more" type="button" data-palette-open>More questions</button>
           </div>
         </form>
       </div>
@@ -116,6 +112,7 @@
         <span>engine <b data-ro="engine">local retrieval</b></span>
         <span class="ro-x">record <b data-ro="entries">0</b> entries</span>
         <span class="ro-x">last retrieval <b data-ro="latency">none yet</b></span>
+        <span class="ro-x">ready in <b data-ro="boot">0 ms</b></span>
       </div>
     </div>
     <div class="visually-hidden" aria-live="polite" data-live></div>
@@ -426,6 +423,7 @@
             <label class="rbx__sort"><span class="mono">Sort</span><select class="select" data-rbx-sort aria-label="Sort games"><option value="relevance">Relevance</option><option value="recent">Last played</option><option value="visits">Most visits</option><option value="name">Name</option></select></label>
           </div>
           <ol class="rbx__grid" data-rbx-grid aria-label="Games"></ol>
+          <button class="btn rbx__more" type="button" data-rbx-more hidden><span>Show all</span></button>
           <p class="rbx__foot mono" data-rbx-foot></p>
         </div>
 

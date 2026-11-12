@@ -20,6 +20,7 @@ const ago = (iso) => {
 const compact = (n) => new Intl.NumberFormat('en-US', { notation: 'compact', maximumFractionDigits: 1 }).format(n || 0);
 const safeImg = (u) => (typeof u === 'string' && /^https:\/\/[a-z0-9.-]+\.rbxcdn\.com\//i.test(u) ? u : null);
 const words = (s) => normalize(s).split(' ').filter(Boolean);
+const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
 const lastTime = (g) => (g.lastPlayed ? new Date(g.lastPlayed).getTime() : 0);
 
 export async function loadRoblox() {
@@ -40,7 +41,8 @@ export function robloxEntries(data) {
   const favs = data.games.filter((g) => g.favorite).slice(0, 8);
   const list = (arr, dated) => arr.map((g) => (dated && g.lastPlayed ? `${g.name} (${ago(g.lastPlayed)})` : g.name)).join(', ');
   const out = [];
-  if (recent.length) out.push({ id: 'roblox-recent', title: 'Recently played on Roblox', href: '#between', topic: 'voxels', keywords: `roblox recently played recent games last played playing ${recent.map((g) => g.name).join(' ')}`, short: `Recently played on Roblox: ${list(recent.slice(0, 3))}.`, body: `Based on the newest badges he's earned, his recently played Roblox games are ${list(recent, true)}. You can search them in the In between section.` });
+  const fromBadges = data.recentSource === 'badges';
+  if (recent.length) out.push({ id: 'roblox-recent', title: 'Recently played on Roblox', href: '#between', topic: 'voxels', keywords: `roblox recently played recent games last played playing ${recent.map((g) => g.name).join(' ')}`, short: `Recently played on Roblox: ${list(recent.slice(0, 3))}.`, body: `${fromBadges ? "Based on the newest badges he's earned, his" : 'His'} recently played Roblox games are ${list(recent, fromBadges)}. You can search them in the In between section.` });
   if (favs.length) out.push({ id: 'roblox-favorites', title: 'Favorite Roblox games', href: '#between', topic: 'voxels', keywords: `roblox favorite favorites top games best ${favs.map((g) => g.name).join(' ')}`, short: `His favorite Roblox games include ${list(favs.slice(0, 3))}.`, body: `His favorited Roblox games include ${list(favs)}. The In between section searches all of them.` });
   return out;
 }
@@ -68,7 +70,9 @@ export function initRoblox({ onData } = {}) {
   const status = $('[data-rbx-status]', root);
   const foot = $('[data-rbx-foot]', root);
   const sort = $('[data-rbx-sort]', root);
-  const state = { q: '', filter: 'all', sort: 'relevance' };
+  const LIMIT = 8;
+  const more = $('[data-rbx-more]', root);
+  const state = { q: '', filter: 'all', sort: 'relevance', all: false };
   let index = [];
   let data = { games: [] };
 
@@ -106,9 +110,11 @@ export function initRoblox({ onData } = {}) {
     rows.sort(by);
     const ms = performance.now() - t0;
     meta.textContent = `${rows.length} ${rows.length === 1 ? 'game' : 'games'}, ${ms < 0.1 ? 'under 0.1' : ms.toFixed(2)} ms`;
-    if (!data.games.length) { grid.innerHTML = '<li class="rbx__empty">The library appears here after its first sync from Roblox.</li>'; return; }
-    if (!rows.length) { grid.innerHTML = `<li class="rbx__empty">No games match "${escapeHTML(state.q)}". Try a creator or a genre.</li>`; return; }
-    grid.innerHTML = rows.map(({ g }) => {
+    if (!data.games.length) { more.hidden = true; grid.innerHTML = '<li class="rbx__empty">The library appears here after its first sync from Roblox.</li>'; return; }
+    if (!rows.length) { more.hidden = true; grid.innerHTML = `<li class="rbx__empty">No games match "${escapeHTML(state.q)}". Try a creator or a genre.</li>`; return; }
+    more.hidden = rows.length <= LIMIT;
+    more.firstElementChild.textContent = state.all ? 'Show fewer' : `Show all ${rows.length}`;
+    grid.innerHTML = (state.all ? rows : rows.slice(0, LIMIT)).map(({ g }) => {
       const img = safeImg(g.icon);
       const hue = 185 + ([...g.name].reduce((a, c) => a + c.charCodeAt(0), 0) % 50);
       const initials = g.name.split(/\s+/).filter(Boolean).slice(0, 2).map((w) => w[0]).join('').toUpperCase();
@@ -119,7 +125,8 @@ export function initRoblox({ onData } = {}) {
     }).join('');
   }
 
-  const later = debounce(() => { state.q = input.value.trim(); render(); }, 60);
+  more.addEventListener('click', () => { state.all = !state.all; render(); if (!state.all) root.scrollIntoView({ block: 'nearest' }); });
+  const later = debounce(() => { state.q = input.value.trim(); state.all = false; render(); }, 60);
   input.addEventListener('input', later);
   input.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') { input.value = ''; state.q = ''; render(); }
@@ -138,9 +145,12 @@ export function initRoblox({ onData } = {}) {
     index = d.games.map((g) => ({ g, fields: [[words(g.name), 3], [words(g.creator || ''), 1.5], [words(g.genre || ''), 1.2]] }));
     const rec = d.games.filter((g) => g.recent).length;
     const fav = d.games.filter((g) => g.favorite).length;
+    const recBtn = $('[data-rbx-filter="recent"]', root);
+    if (recBtn) recBtn.hidden = !rec;
     if (d.real) {
-      status.textContent = `Synced ${ago(d.updated)} from Roblox${d.user ? `, @${d.user.name}` : ''}. ${rec} recently played, ${fav} favorites.`;
-      foot.textContent = "Recently played comes from the newest badges he's earned, since Roblox doesn't publish play history. Favorites come from his Roblox favorites.";
+      const counts = [rec ? `${rec} recently played` : '', fav ? `${fav} favorites` : ''].filter(Boolean).join(', ');
+      status.textContent = `Synced ${ago(d.updated)} from Roblox${counts ? `. ${cap(counts)}.` : '.'}`;
+      foot.textContent = [d.recentSource === 'badges' ? "Recently played comes from the newest badges he's earned, read through Roblox Open Cloud." : d.recentSource === 'manual' ? 'Recently played is listed by Abhi.' : '', fav ? 'Favorites come from his Roblox favorites.' : ''].filter(Boolean).join(' ');
     } else if (d.sample) {
       status.textContent = 'Sample data. His real library appears after the first sync.';
       status.classList.add('is-sample');

@@ -344,7 +344,7 @@
       "topic": "core",
       "keywords": "site website page hologram webgl shader shaders assistant chatbot bot retrieval command palette labels boot",
       "short": "The hologram is a WebGL2 point cloud; the assistant retrieves answers from Abhi's published record.",
-      "body": "The hologram is a WebGL2 point cloud with custom shaders for chromatic dispersion, iridescent rims, and scanlines. It changes shape to match each answer's topic, and labels pinned to points on the shape track it in 3D. The assistant answers from a published record of Abhi's work using retrieval that runs in your browser, cites a source for every answer, and is reachable from anywhere with Ctrl or Command K. The Sandbox section opens up the full pipeline."
+      "body": "The hologram is a WebGL2 point cloud with custom shaders for chromatic dispersion, iridescent rims, and scanlines. It changes shape to match each answer's topic, with labels around it that show facts from the record. The assistant answers from a published record of Abhi's work using retrieval that runs in your browser, cites a source for every answer, and is reachable from anywhere with Ctrl or Command K. The Sandbox section opens up the full pipeline."
     },
     {
       "id": "stack",
@@ -551,7 +551,7 @@
       "topic": "voxels",
       "keywords": "roblox games game gaming play plays played library",
       "short": "He loves Roblox, and this site can search his Roblox library.",
-      "body": "Abhi loves Roblox. The In between section on this page has a search engine over his Roblox library: the games he's played recently, based on the newest badges he's earned, and his favorites, synced from Roblox's public APIs."
+      "body": "Abhi loves Roblox. The In between section on this page has a search engine over his Roblox library: the games he's played recently and his favorites, synced from Roblox."
     },
     {
       "id": "assistant",

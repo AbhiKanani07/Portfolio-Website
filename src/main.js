@@ -14,9 +14,7 @@ import { initMagnetic } from './ui/magnetic.js';
 import { initSandbox } from './ui/sandbox.js';
 import { initPalette } from './ui/palette.js';
 import { initDock } from './ui/dock.js';
-import { runBoot } from './ui/boot.js';
 import { initRoblox, robloxEntries } from './ui/roblox.js';
-import { initPointer } from './ui/pointer.js';
 import { mountDemo } from './demos/index.js';
 
 function readoutsAPI() {
@@ -68,14 +66,9 @@ function boot() {
   initRoblox({ onData: (data) => { const extra = robloxEntries(data); if (extra.length) { engine.extend(extra); readouts.set('entries', String(engine.size)); } } });
   initReveal();
   initMagnetic();
-  initPointer();
 
-  const info = holo.bootInfo || {};
-  runBoot({
-    gl, contextMs: info.contextMs || 0, compileMs: info.compileMs || 0, points: info.points || 0,
-    entries: engine.size, terms: engine.terms, indexMs, engine: driver.name,
-    w: window.innerWidth, h: window.innerHeight, dpr: Math.round((window.devicePixelRatio || 1) * 100) / 100,
-  }, () => bar.startIntro());
+  bar.startIntro();
+  readouts.set('boot', `${Math.round(performance.now())} ms`);
 
   window.addEventListener('pagehide', (e) => { if (!e.persisted) holo.destroy(); });
   if (new URLSearchParams(location.search).has('debug')) window.__portfolio = { holo, engine, driver, palette, drawer };

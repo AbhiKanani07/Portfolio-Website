@@ -119,6 +119,8 @@ export function initPalette({ engine, driver: words, holo, drawer, dock }) {
     if (open) return;
     open = true;
     clearTimeout(force);
+    const menu = document.querySelector('[data-menu][aria-expanded="true"]');
+    if (menu) menu.click();
     lastFocus = document.activeElement;
     root.hidden = false;
     input.value = '';

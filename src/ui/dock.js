@@ -73,10 +73,10 @@ export function initDock({ hero, onOpen }) {
     const dt = last ? Math.min(0.1, (now - last) / 1000) : 1 / 60;
     last = now;
     draw(dt);
-    if (on && !document.hidden && !motion.reduced) raf = requestAnimationFrame(loop);
+    if (on && !document.hidden && !motion.reduced && btn.getClientRects().length) raf = requestAnimationFrame(loop);
     else { raf = 0; last = 0; }
   };
-  const kick = () => { if (on && !raf && !document.hidden && !motion.reduced) raf = requestAnimationFrame(loop); };
+  const kick = () => { if (on && !raf && !document.hidden && !motion.reduced && btn.getClientRects().length) raf = requestAnimationFrame(loop); };
   const morph = (kind) => {
     const target = SHAPES[kind] || SHAPES.core;
     if (target === to) return;

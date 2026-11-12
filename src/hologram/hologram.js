@@ -394,6 +394,9 @@ export class Hologram {
   // A drawer covering the hero pauses rendering, which frees the GPU for demos.
   cover(flag) { this.covered = !!flag; this.sync(); }
 
+  // The hologram's on-screen radius in CSS pixels (scale is set from the slot size).
+  radiusPx() { return ((this.sp.scale.value * this.proj[5]) / DIST) * (this.cssH / 2); }
+
   // Model-space point to CSS pixels on the canvas, for labels pinned to the shape.
   project(p) {
     const m = this.modelM;

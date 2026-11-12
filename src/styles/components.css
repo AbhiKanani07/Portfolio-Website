@@ -29,12 +29,12 @@
 .nav__links { margin-left: auto; display: flex; gap: 2px; }
 .nav__ask { display: inline-flex; align-items: center; gap: 8px; min-height: 36px; padding: 0 7px 0 12px; border-radius: 10px; border: 1px solid var(--hair-strong); background: rgba(255, 255, 255, 0.03); color: var(--ink-2); font-size: 14px; transition: color var(--t-fast) var(--ease-out), border-color var(--t-fast) var(--ease-out); }
 .nav__ask:hover { color: var(--ink); border-color: var(--hair-hot); }
-.nav__links a {
+.nav__links a, .nav__links .nav__menu-ask {
   padding: 8px 12px; border-radius: 10px;
   color: var(--ink-2); font-size: 14.5px; text-decoration: none;
   transition: color var(--t-fast) var(--ease-out), background-color var(--t-fast) var(--ease-out);
 }
-.nav__links a:hover { color: var(--ink); background: rgba(255, 255, 255, 0.05); }
+.nav__links a:hover, .nav__links .nav__menu-ask:hover { color: var(--ink); background: rgba(255, 255, 255, 0.05); }
 .nav__links a[aria-current="true"] { color: var(--ink); background: rgba(255, 255, 255, 0.075); }
 .nav__menu {
   display: none; margin-left: auto;
@@ -783,3 +783,35 @@ html.is-locked .dock { opacity: 0; pointer-events: none; }
 .dock__label { color: var(--ink-3); font-size: 10px; }
 @media (max-width: 1000px) { .nav__ask { display: none; } }
 @media (max-width: 560px) { .rbx__meta { display: none; } }
+.seg button[hidden] { display: none; }
+
+/* ==========================================================================
+   Refinement pass: the desktop hero always fits the screen
+   ========================================================================== */
+@media (min-width: 861px) and (min-height: 540px) {
+  .hero__grid { height: 100svh; min-height: 0; }
+  .holo-slot { min-height: 0; }
+  .hero__stage .answer { flex: 0 1 auto; min-height: 0; max-height: min(40svh, 420px); }
+  .hero__stage .cmd { flex: 0 0 auto; }
+}
+@media (min-width: 861px) and (max-height: 760px) {
+  .hero__grid { padding-top: calc(var(--nav-h) + var(--nav-inset) + 12px); padding-bottom: 12px; }
+  .hero__copy { padding-block: 8px; }
+  .hero__q { margin-bottom: 0.7rem; }
+  .hero__sources { margin-top: 18px; }
+  .hero__lede { margin-top: 14px; font-size: 16.5px; }
+  .hero__readouts { margin-top: 10px; padding-top: 10px; }
+  .cmd__presets { margin-top: 8px; padding-top: 8px; }
+}
+.cmd__presets { flex-wrap: wrap; overflow: visible; -webkit-mask-image: none; mask-image: none; }
+.chip--more { border-style: dashed; color: var(--ink-3); }
+.chip--more:hover { color: var(--ink); }
+.note { transition: opacity 260ms linear; }
+.holo-notes { transition: opacity 200ms linear; }
+
+/* The dock never sits on content: hidden where the nav has Ask, compact on phones */
+@media (max-width: 1839px) { .dock { display: none; } }
+.nav__links .nav__menu-ask { display: none; }
+@media (max-width: 760px) { .nav__links .nav__menu-ask { display: block; width: 100%; text-align: left; } }
+
+.rbx__more { margin-top: 14px; }

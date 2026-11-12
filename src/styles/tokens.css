@@ -43,9 +43,9 @@
   --fs-lead: clamp(18px, 1.35vw, 21px);
   --fs-h4: 21px;
   --fs-h3: clamp(25px, 2.3vw, 34px);
-  --fs-h2: clamp(46px, 6.6vw, 104px);
-  --fs-hero: clamp(35px, 4.6vw, 80px);
-  --fs-giant: clamp(54px, 9.4vw, 156px);
+  --fs-h2: clamp(44px, min(6.6vw, 12vh), 104px);
+  --fs-hero: clamp(35px, min(4.6vw, 8.6vh), 80px);
+  --fs-giant: clamp(54px, min(9.4vw, 16vh), 156px);
 
   --track-display: -0.03em;
   --track-tight: -0.02em;
@@ -54,7 +54,7 @@
   --gutter: clamp(16px, 2.2vw, 32px);
   --margin: clamp(20px, 4vw, 56px);
   --maxw: 1440px;
-  --section-pad: clamp(96px, 12vw, 176px);
+  --section-pad: clamp(72px, min(12vw, 16vh), 176px);
   --nav-h: 56px;
   --nav-inset: 12px;
 
