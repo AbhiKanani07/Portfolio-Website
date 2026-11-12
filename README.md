@@ -23,6 +23,8 @@ api/ask.js          Optional Vercel Edge Function that lets a language model phr
 - What the assistant knows: edit `src/ai/knowledge.js`, then `npm run build`. The file ships to the browser, so keep it to public facts.
 - Page copy: edit `docs/index.html`.
 - Retrain the models after editing the record: `node tools/train.mjs` (about a second). It rebuilds `src/ai/model.js` and reports accuracy on held-out questions.
+- Learn from visitors: create a free form at formspree.io, paste its URL into the `feedback-endpoint` meta tag in `docs/index.html`, and answers get a "Was this helpful?" prompt. Later, export the submissions and run `node tools/feedback.mjs export.csv`; helpful ratings become training questions on the next `node tools/train.mjs`, and the not-helpful ones are listed so you can fix the record.
+- Resume: `docs/assets/Abhi-Kanani-Resume.pdf` is linked from Contact and Experience. It has no phone number.
 - Test the assistant: `npm test` runs 124 questions, including typos, multi-part questions, private topics, injection attempts, gibberish, and non-English input.
 
 ## How the assistant works

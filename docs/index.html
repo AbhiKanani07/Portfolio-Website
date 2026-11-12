@@ -8,6 +8,7 @@
   <meta name="theme-color" content="#050507">
   <meta name="color-scheme" content="dark">
   <meta name="ask-endpoint" content="">
+  <meta name="feedback-endpoint" content="">
   <link rel="canonical" href="https://abhikanani07.github.io/Portfolio-Website/">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Abhi Kanani">
@@ -120,7 +121,7 @@
     <div class="wrap">
       <header class="section__head" data-reveal-group>
         <h2 class="section__title" id="work-title" data-reveal>Work</h2>
-        <p class="section__intro" data-reveal>Four products I designed, built, and shipped. Each one opens into the full case study with a working demo that runs in your browser.</p>
+        <p class="section__intro" data-reveal>Four products I designed, built, and shipped, plus the assistant that runs this page. Each one opens into the full case study with a working demo that runs in your browser.</p>
       </header>
       <div class="rule" data-rule></div>
 
@@ -167,6 +168,17 @@
             <span class="card__desc" id="card-youtube-desc">My own recommender: it models how I watch, ranks videos by content similarity and engagement, and serves the results from a Redis-cached FastAPI endpoint to a React front end.</span>
           </span>
           <span class="card__tags mono"><span>YouTube Data API</span><span>Content-based ranking</span><span>Redis</span><span>FastAPI</span><span>React</span></span>
+        </a>
+
+        <a class="card card--assistant card--wide" href="#case-assistant" data-reveal aria-describedby="card-assistant-desc">
+          <span class="card__spot" aria-hidden="true"></span>
+          <span class="card__top mono"><span>Runs in your browser</span><span class="card__open">Open case study</span></span>
+          <span class="card__viz" data-mini="assistant" aria-hidden="true"></span>
+          <span class="card__body">
+            <span class="card__title">Answer engine</span>
+            <span class="card__desc" id="card-assistant-desc">The assistant on this page: rules, BM25 search, and two small models trained on this record, with every answer cited and an honest "not in the record" when it doesn't know.</span>
+          </span>
+          <span class="card__tags mono"><span>Softmax regression</span><span>LSA embeddings</span><span>t-SNE map</span><span>124/124 edge cases</span><span>No server</span></span>
         </a>
       </div>
     </div>
@@ -281,7 +293,7 @@
     <div class="wrap">
       <header class="section__head" data-reveal-group>
         <h2 class="section__title" id="experience-title" data-reveal>Experience</h2>
-        <p class="section__intro" data-reveal>Work, education, and leadership, most recent first.</p>
+        <p class="section__intro" data-reveal>Work, education, and leadership, most recent first. <a href="assets/Abhi-Kanani-Resume.pdf" download>Download the resume as a PDF</a>.</p>
       </header>
       <div class="rule" data-rule></div>
 
@@ -476,6 +488,7 @@
             <a class="btn btn--solid" href="mailto:arkanani2mail@gmail.com" data-magnetic><span>Email Abhi</span></a>
             <a class="btn" href="https://www.linkedin.com/in/abhikanani/" target="_blank" rel="noopener" data-magnetic><span>LinkedIn</span></a>
             <a class="btn" href="https://github.com/AbhiKanani07" target="_blank" rel="noopener" data-magnetic><span>GitHub</span></a>
+            <a class="btn" href="assets/Abhi-Kanani-Resume.pdf" download data-magnetic><span>Resume PDF</span></a>
             <a class="btn" href="https://www.bravoxcredit.com" target="_blank" rel="noopener" data-magnetic><span>Bravox</span></a>
           </div>
           <dl class="contact__list mono">
@@ -698,6 +711,58 @@
             <div class="arch__node"><h4>Ranker</h4><p>Relevance scores per video.</p><span class="mono">PostgreSQL</span></div>
             <div class="arch__node"><h4>Redis</h4><p>Ranked results, cached.</p><span class="mono">Cache</span></div>
             <div class="arch__node"><h4>FastAPI to React</h4><p>A REST endpoint feeds the front end.</p><span class="mono">Render</span></div>
+          </div>
+        </section>
+      </article>
+
+      <article class="case" id="case-assistant" data-title="Answer engine" aria-labelledby="case-assistant-title" hidden>
+        <p class="case__meta mono"><span>Runs in your browser</span><span>Rules, BM25, two trained models</span><span>No server</span></p>
+        <h2 class="case__title" id="case-assistant-title">Answer engine</h2>
+        <p class="case__lede">The assistant on this page answers questions about Abhi from a published record, cites every answer, and says so when something isn't in the record.</p>
+        <div class="case__links">
+          <a class="btn btn--solid" href="#sandbox" data-drawer-close><span>Open the Sandbox</span></a>
+        </div>
+        <div class="case__grid">
+          <section class="case__sec">
+            <h3>What it does</h3>
+            <p>Visitors ask in plain English. The engine fixes typos against the record's own vocabulary, answers multi-part questions part by part, and declines private topics, internal Quest details, and anything the record can't support.</p>
+          </section>
+          <section class="case__sec">
+            <h3>How it ranks</h3>
+            <p>BM25 keyword search with synonyms and intent boosts, blended with an intent classifier and LSA embeddings trained on the record. The blend weights were tuned on questions held out of training.</p>
+          </section>
+          <section class="case__sec">
+            <h3>Rules come first</h3>
+            <p>Privacy, prompt injection, and internal details are decided by rules before any model runs, so a model can never talk its way past them.</p>
+          </section>
+          <section class="case__sec">
+            <h3>No made-up facts</h3>
+            <p>Answers are composed only from entries in the record, and every one cites its source. When the best match is too weak, the answer says it isn't in the record.</p>
+          </section>
+        </div>
+        <section class="case__block">
+          <h3>Probe the models</h3>
+          <p class="case__note">Type a question to see what the trained models think, live: the intent classifier's top five entries by probability and the five nearest entries by meaning. The highlighted entry is the one the full engine answers from.</p>
+          <div data-demo="assistant"></div>
+        </section>
+        <section class="case__block">
+          <h3>Pipeline</h3>
+          <div class="arch">
+            <div class="arch__node"><h4>Question</h4><p>Typed in plain English.</p><span class="mono">Spell-checked</span></div>
+            <div class="arch__node"><h4>Rules</h4><p>Private topics, injection, internal details.</p><span class="mono">Decided first</span></div>
+            <div class="arch__node"><h4>BM25</h4><p>Keyword search with synonyms.</p><span class="mono">Every entry scored</span></div>
+            <div class="arch__node"><h4>Trained models</h4><p>Intent classifier and LSA embeddings.</p><span class="mono">Blended in</span></div>
+            <div class="arch__node"><h4>Answer</h4><p>From the record, with sources.</p><span class="mono">Or "not in the record"</span></div>
+          </div>
+        </section>
+        <section class="case__block">
+          <h3>Training</h3>
+          <div class="arch">
+            <div class="arch__node"><h4>The record</h4><p>Every published fact about Abhi.</p><span class="mono">knowledge.js</span></div>
+            <div class="arch__node"><h4>Questions</h4><p>Generated from the record, plus hand-written ones.</p><span class="mono">Held-out split</span></div>
+            <div class="arch__node"><h4>Models</h4><p>Softmax regression and LSA (TF-IDF, then SVD).</p><span class="mono">Pruned</span></div>
+            <div class="arch__node"><h4>Blend</h4><p>Tuned on held-out questions.</p><span class="mono">No regressions allowed</span></div>
+            <div class="arch__node"><h4>model.js</h4><p>Shipped with the page.</p><span class="mono">Runs in the browser</span></div>
           </div>
         </section>
       </article>

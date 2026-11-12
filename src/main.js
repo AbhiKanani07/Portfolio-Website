@@ -58,7 +58,7 @@ function boot() {
   const drawer = initDrawer({
     onOpen: (id, article) => {
       holo.cover(true);
-      $$("[data-demo]", article).forEach(mountDemo);
+      $$("[data-demo]", article).forEach((el) => mountDemo(el, { engine }));
       initMagnetic(article);
     },
     onClose: () => holo.cover(false)

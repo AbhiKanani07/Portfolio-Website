@@ -460,8 +460,8 @@ const KB = {
       href: "#experience",
       topic: "helix",
       keywords: "resume cv pdf download file",
-      short: "Everything from his resume is on this page.",
-      body: "Everything from his resume is on this page, in the Experience section. For a current resume file, email him at arkanani2mail@gmail.com."
+      short: "His resume is on this page and as a PDF in the Contact section.",
+      body: "Everything from his resume is on this page in the Experience section, and the PDF version is linked in the Contact section. It leaves out his phone number; email works best: arkanani2mail@gmail.com."
     },
     {
       id: "principles",
@@ -556,7 +556,7 @@ const KB = {
     {
       id: "assistant",
       title: "How this assistant works",
-      href: "#sandbox",
+      href: "#case-assistant",
       topic: "core",
       keywords: "assistant agent bot chatbot engine coded built works retrieval bm25 model",
       short: "I'm a retrieval engine that runs in your browser and answers only from Abhi's published record.",

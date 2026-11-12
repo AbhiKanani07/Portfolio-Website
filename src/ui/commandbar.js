@@ -1,6 +1,7 @@
 import { $, $$, escapeHTML } from "../core/dom.js";
 import { streamText } from "../core/stream.js";
 import { motion } from "../core/motion.js";
+import { attachFeedback } from "./feedback.js";
 import { DEFAULTS } from "../ai/engine.js";
 const DECLINED = new Set(["private", "confidential", "injection", "comparison", "offtopic", "not-found", "unknown-term"]);
 function initCommandBar({ engine, driver, holo, readouts }) {
@@ -67,6 +68,7 @@ function initCommandBar({ engine, driver, holo, readouts }) {
       meta.push(`<span>retrieved in ${local.trace.ms.toFixed(2)} ms</span>`);
       $(".meta", item).innerHTML = meta.join("");
       readouts.set("engine", engineName);
+      attachFeedback(item, q, local, "hero");
       holo.setMode(document.activeElement === input ? "listening" : "idle");
       follow();
     };

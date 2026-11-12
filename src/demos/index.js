@@ -3,13 +3,14 @@ import { mountKeystroke, miniKeystroke } from "./keystroke.js";
 import { mountYouTube, miniYouTube } from "./youtube.js";
 import { mountSleep, miniSleep } from "./sleep.js";
 import { mountWater, miniWater } from "./water.js";
-const DEMOS = { odds: mountOdds, keystroke: mountKeystroke, youtube: mountYouTube, sleep: mountSleep, water: mountWater };
-const MINIS = { odds: miniOdds, keystroke: miniKeystroke, youtube: miniYouTube, sleep: miniSleep, water: miniWater };
-function mountDemo(el) {
+import { mountAssistant, miniAssistant } from "./assistant.js";
+const DEMOS = { odds: mountOdds, keystroke: mountKeystroke, youtube: mountYouTube, sleep: mountSleep, water: mountWater, assistant: mountAssistant };
+const MINIS = { odds: miniOdds, keystroke: miniKeystroke, youtube: miniYouTube, sleep: miniSleep, water: miniWater, assistant: miniAssistant };
+function mountDemo(el, deps = {}) {
   if (el.dataset.mounted) return;
   const fn = DEMOS[el.dataset.demo];
   if (!fn) return;
-  fn(el);
+  fn(el, deps);
   el.dataset.mounted = "1";
 }
 function mountMini(el) {

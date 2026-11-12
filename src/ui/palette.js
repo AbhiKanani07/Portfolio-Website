@@ -1,6 +1,7 @@
 import { $, $$, escapeHTML } from "../core/dom.js";
 import { Spring, driver } from "../core/spring.js";
 import { motion } from "../core/motion.js";
+import { attachFeedback } from "./feedback.js";
 import { DEFAULTS } from "../ai/engine.js";
 function initPalette({ engine, driver: words, holo, drawer, dock }) {
   const root = $("[data-palette]");
@@ -67,10 +68,12 @@ function initPalette({ engine, driver: words, holo, drawer, dock }) {
     { group: "Case studies", label: "Sleep insights dashboard", hint: "Random Forest, SHAP", run: caseStudy("sleep") },
     { group: "Case studies", label: "YouTube content algorithm", hint: "ranking with Redis", run: caseStudy("youtube") },
     { group: "Case studies", label: "Dutch water quality", hint: "earlier project", run: caseStudy("water") },
+    { group: "Case studies", label: "Answer engine", hint: "the assistant on this page", run: caseStudy("assistant") },
     { group: "Contact", label: "Copy email address", hint: "arkanani2mail@gmail.com", run: copyEmail },
     { group: "Contact", label: "Open LinkedIn", hint: "linkedin.com/in/abhikanani", run: ext("https://www.linkedin.com/in/abhikanani/") },
     { group: "Contact", label: "Open GitHub", hint: "github.com/AbhiKanani07", run: ext("https://github.com/AbhiKanani07") },
-    { group: "Contact", label: "Open bravoxcredit.com", hint: "live product", run: ext("https://www.bravoxcredit.com") }
+    { group: "Contact", label: "Open bravoxcredit.com", hint: "live product", run: ext("https://www.bravoxcredit.com") },
+    { group: "Contact", label: "Download resume (PDF)", hint: "PDF, no phone number", run: () => { close(); const a = document.createElement("a"); a.href = "assets/Abhi-Kanani-Resume.pdf"; a.download = ""; document.body.append(a); a.click(); a.remove(); } },
   ];
   const sp = new Spring(0, { stiffness: 320, damping: 32 });
   const anim = driver(sp, () => {
@@ -145,6 +148,7 @@ function initPalette({ engine, driver: words, holo, drawer, dock }) {
         if (caret) caret.remove();
         $(".qa__src", answer).innerHTML = local.sources.length ? `<span class="mono">Sources</span>${local.sources.map((s) => `<a class="chip chip--sm" href="${escapeHTML(s.href)}"${/^https?:/.test(s.href) ? ' target="_blank" rel="noopener"' : ""}>${escapeHTML(s.title)}</a>`).join("")}` : "";
         $(".meta", answer).innerHTML = `<span>${escapeHTML(engineName)}</span><span>retrieved in ${local.trace.ms.toFixed(2)} ms</span>`;
+        attachFeedback(answer, q, local, "palette");
         holo.setMode("idle");
         current = null;
       }

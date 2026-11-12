@@ -414,8 +414,18 @@ function createEngine(kb, { now = () => new Date(), model = null } = {}) {
     const ids = new Set(extra.map((e) => e.id));
     index(entries.filter((e) => !ids.has(e.id)).concat(extra));
   }
+  function explain(question) {
+    const r = ask(question);
+    const t = r.trace.tokens || [];
+    if (!model || !t.length) return { r, intents: [], neighbors: [] };
+    const { p } = model.classify(t);
+    const q = model.embed(t);
+    const intents = [...p.entries()].sort((a, b) => b[1] - a[1]).slice(0, 5).map(([id, v]) => ({ id, title: (byId.get(id) || {}).title || id, v }));
+    const neighbors = q ? docs.filter((d) => d.emb && !d.e.guard).map((d) => ({ id: d.id, title: d.e.title, v: model.dot(q, d.emb) })).sort((a, b) => b.v - a.v).slice(0, 5) : [];
+    return { r, intents, neighbors };
+  }
   const mapPoints = () => model ? docs.filter((d) => !d.e.guard).map((d) => ({ id: d.id, title: d.e.title, topic: d.e.topic, xy: model.point(d.id) || model.place(d.emb, docs.filter((x) => model.point(x.id))) })).filter((d) => d.xy) : [];
-  return { ask, remember, extend, mapPoints, model, get size() {
+  return { ask, remember, extend, mapPoints, explain, model, get size() {
     return N;
   }, get terms() {
     return df.size;

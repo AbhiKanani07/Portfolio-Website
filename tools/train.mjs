@@ -1,4 +1,4 @@
-import { writeFile } from "node:fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
 import { KB } from "../src/ai/knowledge.js";
 import { analyze, normalize } from "../src/ai/text.js";
 const seed = (s) => () => {
@@ -111,6 +111,9 @@ for (const e of entries) {
   e.body.split(/(?<=[.!?])\s+/).forEach(add);
   add(e.short);
 }
+const feedback = JSON.parse(await readFile(new URL("./feedback.json", import.meta.url), "utf8").catch(() => "[]"));
+const fromVisitors = feedback.filter((r) => r.helpful && ids.includes(r.entry));
+fromVisitors.forEach((r) => samples.push({ q: r.question, y: r.entry, kind: "feedback" }));
 const base = samples.length;
 for (let i = 0; i < base; i++) if (samples[i].kind !== "curated" && rand() < 0.15) samples.push({ q: typo(samples[i].q), y: samples[i].y, kind: "typo" });
 const featurize = (q) => {
@@ -451,6 +454,7 @@ const model = {
   version: 1,
   trained: (new Date()).toISOString().slice(0, 10),
   classes: ids,
+  topics: Object.fromEntries(entries.map((e) => [e.id, e.topic])),
   features,
   bias: Array.from(Bv, (b) => Math.round(b * 1e3) / 1e3),
   weights: sparse,
@@ -494,6 +498,7 @@ model.meta.humanBaseline = Math.round(baseHuman * 1e3) / 1e3;
 model.meta.humanLearned = best ? Math.round(best.hh * 1e3) / 1e3 : model.meta.humanBaseline;
 model.meta.humanClassifier = Math.round(evalSet(heldHuman).top1 * 1e3) / 1e3;
 model.meta.suite = `${best ? best.s : suite(baseline)}/${CASES.length}`;
+model.meta.feedback = fromVisitors.length;
 model.meta.kb = Math.round(JSON.stringify(model).length / 1024);
 const src = `export const MODEL = ${JSON.stringify(model)};
 `;
