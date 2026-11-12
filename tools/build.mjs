@@ -3,6 +3,7 @@
 // self-contained HTML file to dist/.
 import { build, transform } from 'esbuild';
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
+import { existsSync } from 'node:fs';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import path from 'node:path';
 
@@ -33,7 +34,8 @@ async function single() {
   const jpg = await b64(r('docs/assets/img/abhi-kanani-480.jpg'));
   const fav = await b64(r('docs/assets/favicon.svg'));
   html = html.replace('<link rel="stylesheet" href="assets/site.css">', () => `<style>${css}</style>`);
-  html = html.replace('<script type="module" src="assets/site.js"></script>', () => `<script type="module">${js}</script>`);
+  const rbx = existsSync(r('docs/roblox.json')) ? `<script>window.__ROBLOX__ = ${(await readFile(r('docs/roblox.json'), 'utf8')).replace(/<\//g, '<\\/')};</script>` : '';
+  html = html.replace('<script type="module" src="assets/site.js"></script>', () => `${rbx}<script type="module">${js}</script>`);
   html = html.replace(/<source type="image\/webp"[^>]*>\s*/, '');
   html = html.replace(/<img src="assets\/img\/abhi-kanani-480\.jpg" srcset="[^"]*"/, () => `<img src="data:image/jpeg;base64,${jpg}"`);
   html = html.replace('href="assets/favicon.svg"', () => `href="data:image/svg+xml;base64,${fav}"`);

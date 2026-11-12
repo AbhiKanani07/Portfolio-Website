@@ -120,8 +120,10 @@ export function initCommandBar({ engine, driver, holo, readouts }) {
   input.addEventListener('blur', () => { if (!busy) holo.setMode('idle'); });
   input.addEventListener('input', () => { if (introCancel) introCancel(); holo.pulse(0.05); });
 
-  introCancel = heroIntro(holo, () => { introCancel = null; });
-  return { ask };
+  return {
+    ask,
+    startIntro() { introCancel = heroIntro(holo, () => { introCancel = null; }); },
+  };
 }
 
 // The page's single orchestrated moment: the assistant "answers" the headline.

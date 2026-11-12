@@ -1,139 +1,137 @@
-// Transition-graph demo: topics are nodes, transitions are edges, and a
-// reinforcement knob shows how a feed that repeats your last topic narrows a
-// session. Illustrative probabilities, not real watch history.
-import { mulberry32, escapeHTML } from '../core/dom.js';
-import { rangeHTML, bindRanges } from './ui.js';
+// Ranking demo in the shape of the real service: score a catalog by content
+// similarity plus engagement and freshness, then cache each response by its
+// request key, the way the production endpoint uses Redis. The catalog is
+// synthetic; every timing shown is measured live in the browser.
+import { mulberry32, gauss, clamp, escapeHTML, rangeHTML, bindRanges } from './shared.js';
 
-const CATS = ['Tech reviews', 'Coding', 'Gaming', 'Music', 'Sports', 'Finance', 'Comedy'];
-const SHORT = ['Tech', 'Code', 'Games', 'Music', 'Sports', 'Finance', 'Comedy'];
-const COLORS = ['#00F0FF', '#2E5BFF', '#A9B8FF', '#F1F5FF', '#5FD7E6', '#7D9BFF', '#C8FBFF'];
-const INK = ['#05060a', '#f1f5ff', '#05060a', '#05060a', '#05060a', '#05060a', '#05060a'];
-const BASE = [
-  [0.34, 0.22, 0.12, 0.08, 0.06, 0.12, 0.06],
-  [0.2, 0.42, 0.08, 0.1, 0.04, 0.1, 0.06],
-  [0.1, 0.06, 0.44, 0.12, 0.08, 0.04, 0.16],
-  [0.06, 0.08, 0.12, 0.46, 0.1, 0.04, 0.14],
-  [0.06, 0.04, 0.14, 0.1, 0.48, 0.06, 0.12],
-  [0.16, 0.1, 0.04, 0.06, 0.06, 0.48, 0.1],
-  [0.08, 0.06, 0.16, 0.14, 0.12, 0.06, 0.38],
-];
-
-export const biased = (a) => BASE.map((row, i) => row.map((v, j) => (1 - a) * v + (i === j ? a : 0)));
-export function stationary(P) {
-  let pi = new Array(P.length).fill(1 / P.length);
-  for (let k = 0; k < 300; k++) {
-    const nx = new Array(P.length).fill(0);
-    for (let i = 0; i < P.length; i++) for (let j = 0; j < P.length; j++) nx[j] += pi[i] * P[i][j];
-    pi = nx;
-  }
-  return pi;
-}
-const entropy = (row) => -row.reduce((s, p) => (p > 0 ? s + p * Math.log2(p) : s), 0);
-function walk(P, start, steps, rand) {
-  const path = [start];
-  let cur = start;
-  for (let s = 1; s < steps; s++) {
-    const r = rand();
-    let acc = 0;
-    let next = P[cur].length - 1;
-    for (let j = 0; j < P[cur].length; j++) { acc += P[cur][j]; if (r < acc) { next = j; break; } }
-    path.push(next);
-    cur = next;
-  }
-  return path;
-}
-const pos = (i, R, cx = 200, cy = 165) => {
-  const a = -Math.PI / 2 + (i * Math.PI * 2) / CATS.length;
-  return [cx + Math.cos(a) * R, cy + Math.sin(a) * R, a];
+const N = 4000;
+const DIMS = 16;
+const TOPICS = ['Coding', 'Tech reviews', 'Finance', 'Sports', 'Music', 'Gaming'];
+const PHRASES = {
+  Coding: ['Async Python, explained', 'A REST API in one sitting', 'SQL window functions in practice', 'Designing a cache layer', 'TypeScript generics, gently', 'Profiling a slow endpoint'],
+  'Tech reviews': ['A week with a folding phone', 'Budget laptop showdown', 'Mechanical keyboards, ranked', 'Is this camera worth it?', 'Noise-canceling headphones compared', 'A tiny PC build'],
+  Finance: ['Index funds in ten minutes', 'How credit scores actually work', 'Budgeting on a student income', 'Reading an earnings report', 'What a yield curve says', 'Roth versus traditional'],
+  Sports: ['Every goal from the weekend', 'Film breakdown: the final drive', 'Training like a sprinter', 'Top plays of the month', 'The tactics behind the upset', 'Rookie season review'],
+  Music: ['Beats to focus to', 'Producing a track from scratch', 'Live session in the studio', 'The story behind the album', 'Guitar tone, demystified', 'An a cappella cover'],
+  Gaming: ['Speedrun record attempt', 'Patch notes, explained', 'The hardest boss, solved', 'Building a city in one hour', 'Retro console restoration', 'Indie games worth your time'],
+};
+const PROFILES = {
+  coding: { label: 'Mostly coding', mix: [1, 0.5, 0.25, 0, 0.1, 0.15] },
+  sports: { label: 'Sports and music', mix: [0.05, 0.1, 0, 1, 0.7, 0.2] },
+  finance: { label: 'Finance and tech', mix: [0.2, 0.6, 1, 0.05, 0.05, 0] },
 };
 
+let CAT = null;
+function catalog() {
+  if (CAT) return CAT;
+  const rand = mulberry32(424242);
+  const vec = new Float32Array(N * DIMS);
+  const meta = new Array(N);
+  for (let i = 0; i < N; i++) {
+    const t = Math.floor(rand() * 6);
+    const t2 = Math.floor(rand() * 6);
+    let norm = 0;
+    for (let d = 0; d < DIMS; d++) {
+      const v = d < 6 ? (d === t ? 1 : d === t2 ? 0.35 : 0) + gauss(rand) * 0.08 : gauss(rand) * 0.22;
+      vec[i * DIMS + d] = v;
+      norm += v * v;
+    }
+    norm = Math.sqrt(norm);
+    for (let d = 0; d < DIMS; d++) vec[i * DIMS + d] /= norm;
+    const ph = PHRASES[TOPICS[t]];
+    meta[i] = { title: `${ph[Math.floor(rand() * ph.length)]}, part ${1 + Math.floor(rand() * 9)}`, topic: TOPICS[t], wtr: clamp(0.4 + gauss(rand) * 0.18), likes: clamp(0.55 + gauss(rand) * 0.18), days: Math.floor(rand() * 365) };
+  }
+  CAT = { vec, meta };
+  return CAT;
+}
+
+export function rank(profile, w, k = 8) {
+  const { vec, meta } = catalog();
+  const mix = PROFILES[profile].mix;
+  const p = new Float32Array(DIMS);
+  const pn = Math.sqrt(mix.reduce((s, x) => s + x * x, 0));
+  mix.forEach((x, d) => { p[d] = x / pn; });
+  const top = [];
+  for (let i = 0; i < N; i++) {
+    let dot = 0;
+    const o = i * DIMS;
+    for (let d = 0; d < DIMS; d++) dot += p[d] * vec[o + d];
+    const m = meta[i];
+    const sim = w.sim * Math.max(0, dot);
+    const eng = w.eng * (0.6 * m.wtr + 0.4 * m.likes);
+    const fresh = w.fresh * Math.exp(-m.days / 45);
+    const s = sim + eng + fresh;
+    if (top.length < k || s > top[top.length - 1].s) {
+      top.push({ i, s, sim, eng, fresh });
+      top.sort((a, b) => b.s - a.s);
+      if (top.length > k) top.pop();
+    }
+  }
+  return top.map((t) => ({ ...t, ...meta[t.i] }));
+}
+
 export function mountYouTube(root) {
-  const state = { alpha: 0.25, cur: 1, seed: 7 };
+  const state = { profile: 'coding', sim: 0.6, eng: 0.3, fresh: 0.1 };
+  const cache = new Map();
+  let requests = 0;
+  let hits = 0;
+  let lastKey = '';
   root.innerHTML = `<div class="demo"><div class="demo__grid">
     <div class="demo__controls">
-      ${rangeHTML('alpha', 'Feed reinforcement', 0, 0.8, 0.05, state.alpha)}
-      <p class="demo__foot" style="margin-top:-8px">How strongly the feed repeats whatever was just watched. Zero is the base graph.</p>
-      <button class="btn" type="button" data-sim><span>Simulate a 24-video session</span></button>
-      <p class="demo__foot">Pick a starting topic on the graph.</p>
+      <div class="ctl"><span>Viewer</span><span></span><div class="seg" role="group" aria-label="Viewer profile" style="grid-column: 1 / -1; justify-self: start; margin-top: 6px; flex-wrap: wrap">${Object.entries(PROFILES).map(([k, p]) => `<button type="button" data-profile="${k}" aria-pressed="${k === state.profile}">${p.label}</button>`).join('')}</div></div>
+      ${rangeHTML('sim', 'Content similarity weight', 0, 1, 0.05, state.sim)}
+      ${rangeHTML('eng', 'Engagement weight', 0, 1, 0.05, state.eng)}
+      ${rangeHTML('fresh', 'Freshness weight', 0, 1, 0.05, state.fresh)}
+      <button class="btn" type="button" data-repeat><span>Send the same request again</span></button>
     </div>
     <div class="demo__out">
-      <div class="yt">
-        <svg viewBox="0 0 400 330" data-g role="group" aria-label="Topic transition graph"></svg>
-        <div><p class="demo__h" data-h></p><div class="stats" data-stats></div></div>
-      </div>
-      <p class="demo__h" style="margin-top: 20px">Simulated session</p>
-      <div class="yt__session" data-session></div>
-      <p class="demo__foot" data-sum></p>
+      <div class="rk__req mono" data-req></div>
+      <div class="rk__legend mono"><span><i class="s"></i>similarity</span><span><i class="e"></i>engagement</span><span><i class="f"></i>freshness</span></div>
+      <ol class="rk__list" data-list></ol>
+      <div class="stats" data-stats style="margin-top: 16px"></div>
     </div>
   </div></div>`;
-  const svgEl = root.querySelector('[data-g]');
+  const list = root.querySelector('[data-list]');
+  catalog();
 
-  function render() {
-    const P = biased(state.alpha);
-    const pi = stationary(P);
-    const c = state.cur;
-    const [cx, cy] = pos(c, 118);
-    let edges = '';
-    for (let j = 0; j < CATS.length; j++) {
-      if (j === c) continue;
-      const [x, y] = pos(j, 118);
-      const p = P[c][j];
-      edges += `<line class="yt__edge" x1="${cx.toFixed(1)}" y1="${cy.toFixed(1)}" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}" stroke-width="${(0.6 + p * 16).toFixed(2)}" opacity="${Math.min(0.95, 0.16 + p * 1.7).toFixed(2)}"/>`;
-    }
-    const [lx, ly] = pos(c, 118 - (8 + pi[c] * 44) - 17);
-    edges += `<circle class="yt__edge" cx="${lx.toFixed(1)}" cy="${ly.toFixed(1)}" r="14" stroke-width="${(0.6 + P[c][c] * 10).toFixed(2)}" opacity="${Math.min(0.95, 0.2 + P[c][c]).toFixed(2)}"/>`;
-    let nodes = '';
-    for (let j = 0; j < CATS.length; j++) {
-      const [x, y, a] = pos(j, 118);
-      const r = 8 + pi[j] * 44;
-      const [tx, ty] = pos(j, 118 + r + 30);
-      const anchor = Math.abs(Math.cos(a)) < 0.3 ? 'middle' : Math.cos(a) > 0 ? 'start' : 'end';
-      nodes += `<g class="yt__node${j === c ? ' is-cur' : ''}" data-node="${j}" tabindex="0" role="button" aria-pressed="${j === c}" aria-label="Start from ${CATS[j]}">
-        <circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r.toFixed(1)}"/>
-        <text x="${tx.toFixed(1)}" y="${(ty + 4).toFixed(1)}" text-anchor="${anchor}">${CATS[j]}</text></g>`;
-    }
-    svgEl.innerHTML = edges + nodes;
-    const stay = P[c][c];
-    root.querySelector('[data-h]').textContent = `Starting from ${CATS[c]}`;
+  function request() {
+    const key = `GET /rank?viewer=${state.profile}&sim=${state.sim.toFixed(2)}&eng=${state.eng.toFixed(2)}&fresh=${state.fresh.toFixed(2)}`;
+    lastKey = key;
+    requests += 1;
+    const t0 = performance.now();
+    let res = cache.get(key);
+    const hit = !!res;
+    if (hit) { hits += 1; cache.delete(key); cache.set(key, res); }
+    else { res = rank(state.profile, state); cache.set(key, res); if (cache.size > 32) cache.delete(cache.keys().next().value); }
+    const ms = performance.now() - t0;
+    root.querySelector('[data-req]').innerHTML = `<span>${escapeHTML(key)}</span><span class="rk__status ${hit ? 'hit' : 'miss'}">${hit ? 'cache hit' : 'cache miss'}</span><span>${ms < 0.1 ? 'under 0.1' : ms.toFixed(2)} ms</span>`;
+    const max = res[0] ? res[0].s : 1;
+    list.innerHTML = res.map((r, n) => `<li class="rk__row"><span class="rk__n">${n + 1}</span><span class="rk__t">${escapeHTML(r.title)}<small>${r.topic}, ${r.days} ${r.days === 1 ? 'day' : 'days'} old</small></span><span class="rk__stack" title="similarity ${r.sim.toFixed(2)}, engagement ${r.eng.toFixed(2)}, freshness ${r.fresh.toFixed(2)}"><i class="s" style="width:${((r.sim / max) * 100).toFixed(1)}%"></i><i class="e" style="width:${((r.eng / max) * 100).toFixed(1)}%"></i><i class="f" style="width:${((r.fresh / max) * 100).toFixed(1)}%"></i></span><span class="rk__score">${r.s.toFixed(3)}</span></li>`).join('');
     root.querySelector('[data-stats]').innerHTML = [
-      [`${(stay * 100).toFixed(0)}%`, 'stays on topic'],
-      [`${(1 / (1 - stay)).toFixed(1)}`, 'expected streak'],
-      [`${(pi[c] * 100).toFixed(0)}%`, 'long-run share'],
-      [`${entropy(P[c]).toFixed(2)} bits`, 'next-step spread'],
+      [N.toLocaleString('en-US'), 'videos scored'], [String(DIMS), 'vector dimensions'], [String(cache.size), 'cached responses'], [`${Math.round((hits / requests) * 100)}%`, 'cache hit rate'],
     ].map(([b, s]) => `<div class="stat"><b>${b}</b><span>${s}</span></div>`).join('');
-    const path = walk(P, c, 24, mulberry32(state.seed));
-    const runs = [];
-    path.forEach((k) => { const last = runs[runs.length - 1]; if (last && last.k === k) last.n += 1; else runs.push({ k, n: 1 }); });
-    root.querySelector('[data-session]').innerHTML = runs.map((r) => `<div class="yt__seg" style="flex:${r.n} 1 0; background:${COLORS[r.k]}; color:${INK[r.k]}" title="${CATS[r.k]}, ${r.n} ${r.n === 1 ? 'video' : 'videos'}">${r.n >= 2 ? `${escapeHTML(SHORT[r.k])} ${r.n}` : ''}</div>`).join('');
-    const longest = Math.max(...runs.map((r) => r.n));
-    root.querySelector('[data-sum]').textContent = `Longest streak: ${longest} ${longest === 1 ? 'video' : 'videos'}${longest >= 5 ? ', a binge' : ''}. Topic switches: ${runs.length - 1} of 23.`;
   }
-
-  svgEl.addEventListener('click', (e) => { const g = e.target.closest('[data-node]'); if (g) { state.cur = Number(g.dataset.node); render(); } });
-  svgEl.addEventListener('keydown', (e) => {
-    const g = e.target.closest('[data-node]');
-    if (g && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); state.cur = Number(g.dataset.node); render(); svgEl.querySelector(`[data-node="${state.cur}"]`).focus(); }
-  });
-  root.querySelector('[data-sim]').addEventListener('click', () => { state.seed += 1; render(); });
-  bindRanges(root, state, render);
-  render();
+  root.querySelectorAll('[data-profile]').forEach((b) => b.addEventListener('click', () => {
+    state.profile = b.dataset.profile;
+    root.querySelectorAll('[data-profile]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    request();
+  }));
+  root.querySelector('[data-repeat]').addEventListener('click', request);
+  bindRanges(root, state, request);
+  request();
+  return { lastKey: () => lastKey };
 }
 
 export function miniYouTube(el) {
-  const P = BASE;
-  const pi = stationary(P);
-  let lines = '';
-  for (let i = 0; i < CATS.length; i++) {
-    for (let j = i + 1; j < CATS.length; j++) {
-      const [x1, y1] = pos(i, 96, 160, 112);
-      const [x2, y2] = pos(j, 96, 160, 112);
-      const w = (P[i][j] + P[j][i]) / 2;
-      lines += `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="#00F0FF" stroke-width="${(0.4 + w * 9).toFixed(2)}" opacity="${(0.12 + w * 2.2).toFixed(2)}"/>`;
-    }
-  }
-  const dots = CATS.map((c, i) => {
-    const [x, y] = pos(i, 96, 160, 112);
-    return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${(5 + pi[i] * 34).toFixed(1)}" fill="${i === 1 ? '#00F0FF' : '#07080b'}" stroke="${i === 1 ? '#00F0FF' : 'rgba(255,255,255,0.3)'}"/>`;
+  const res = rank('coding', { sim: 0.6, eng: 0.3, fresh: 0.1 }, 6);
+  const max = res[0].s;
+  const rows = res.map((r, i) => {
+    const y = 14 + i * 28;
+    const x0 = 250;
+    const span = 330;
+    const ws = (r.sim / max) * span; const we = (r.eng / max) * span; const wf = (r.fresh / max) * span;
+    const t = r.title.length > 34 ? `${r.title.slice(0, 33)}…` : r.title;
+    return `<text class="mini-txt" x="0" y="${y + 9}">${i + 1}  ${escapeHTML(t)}</text><rect x="${x0}" y="${y}" width="${ws.toFixed(1)}" height="10" fill="#00f0ff"/><rect x="${(x0 + ws).toFixed(1)}" y="${y}" width="${we.toFixed(1)}" height="10" fill="#2e5bff"/><rect x="${(x0 + ws + we).toFixed(1)}" y="${y}" width="${wf.toFixed(1)}" height="10" fill="rgba(241,245,255,0.55)"/>`;
   }).join('');
-  el.innerHTML = `<svg viewBox="0 0 320 234" role="img" aria-label="Illustrative topic transition graph">${lines}${dots}<text class="mini-txt" x="0" y="232">transition graph, illustrative</text></svg>`;
+  el.innerHTML = `<svg viewBox="0 0 600 196" role="img" aria-label="Top six ranked videos for a coding-heavy viewer">${rows}<text class="mini-txt" x="0" y="194">ranked from 4,000 synthetic videos in your browser: similarity, engagement, freshness</text></svg>`;
 }
