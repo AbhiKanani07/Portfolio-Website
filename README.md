@@ -14,7 +14,7 @@ src/ui/             Nav, command bar, palette, dock, drawer, sandbox, Roblox eng
 src/demos/          Bravox odds, Keystroke pass builder, YouTube ranker, sleep explainer, water anomalies
 src/data/           Sample Roblox data, shown only in previews
 tools/              build.mjs, roblox-sync.mjs, engine-test.mjs
-api/ask.js          Optional Vercel Edge Function that lets Claude phrase answers from the same record
+api/ask.js          Optional Vercel Edge Function that lets a language model phrase answers from the same record
 .github/workflows/  roblox.yml, a daily Roblox sync
 ```
 
@@ -22,6 +22,7 @@ api/ask.js          Optional Vercel Edge Function that lets Claude phrase answer
 
 - What the assistant knows: edit `src/ai/knowledge.js`, then `npm run build`. The file ships to the browser, so keep it to public facts.
 - Page copy: edit `docs/index.html`.
+- Retrain the models after editing the record: `node tools/train.mjs` (about a second). It rebuilds `src/ai/model.js` and reports accuracy on held-out questions.
 - Test the assistant: `npm test` runs 124 questions, including typos, multi-part questions, private topics, injection attempts, gibberish, and non-English input.
 
 ## How the assistant works
@@ -34,7 +35,7 @@ It runs in the browser. For each question it:
 4. Retrieves with BM25 over the record, plus synonyms and intent boosts. Questions with several parts are split and answered part by part.
 5. Guards and composes: it answers only from entries that clear the honesty floor and cites them. Otherwise it says the answer isn't in the record.
 
-The Sandbox section shows each stage live. To let Claude phrase answers, deploy `api/ask.js` to Vercel and put its URL in the `ask-endpoint` meta tag.
+The Sandbox section shows each stage live. To let a language model phrase answers, deploy `api/ask.js` to Vercel and put its URL in the `ask-endpoint` meta tag.
 
 ## Roblox library
 

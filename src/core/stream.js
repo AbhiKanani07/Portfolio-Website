@@ -1,21 +1,23 @@
-// Paces text into the UI token by token, the way a model streams.
-export function tokenize(text) {
+function tokenize(text) {
   return String(text).match(/\S+\s*/g) || [];
 }
-
-export function streamText(text, { onToken, onDone, instant = false, speed = 1 } = {}) {
+function streamText(text, { onToken, onDone, instant = false, speed = 1 } = {}) {
   const tokens = tokenize(text);
   if (instant || !tokens.length) {
-    if (tokens.length) onToken(tokens.join(''), 0, tokens.length);
+    if (tokens.length) onToken(tokens.join(""), 0, tokens.length);
     onDone && onDone();
-    return { cancel() {} };
+    return { cancel() {
+    } };
   }
   let i = 0;
   let timer = 0;
   let cancelled = false;
   const next = () => {
     if (cancelled) return;
-    if (i >= tokens.length) { onDone && onDone(); return; }
+    if (i >= tokens.length) {
+      onDone && onDone();
+      return;
+    }
     const tok = tokens[i];
     onToken(tok, i, tokens.length);
     i += 1;
@@ -26,5 +28,12 @@ export function streamText(text, { onToken, onDone, instant = false, speed = 1 }
     timer = setTimeout(next, delay / speed);
   };
   next();
-  return { cancel() { cancelled = true; clearTimeout(timer); } };
+  return { cancel() {
+    cancelled = true;
+    clearTimeout(timer);
+  } };
 }
+export {
+  streamText,
+  tokenize
+};

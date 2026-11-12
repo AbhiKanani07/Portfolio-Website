@@ -1,8 +1,4 @@
-// GLSL for the holographic core. One draw call renders every point; the
-// vertex shader computes all five shapes procedurally and morphs between two.
-// A composite pass adds chromatic dispersion, glow, scanlines, and grain.
-
-export const POINTS_VERT = `#version 300 es
+const POINTS_VERT = `#version 300 es
 precision highp float;
 layout(location = 0) in vec4 aRand;
 layout(location = 1) in float aIdx;
@@ -37,7 +33,6 @@ const vec3 CYAN = vec3(0.0, 0.941, 1.0);
 const vec3 COBALT = vec3(0.18, 0.357, 1.0);
 const vec3 SPECTRAL = vec3(0.945, 0.961, 1.0);
 
-// 0 core: Fibonacci shell with a sparse inner volume
 vec3 sphereShape(float i, vec4 r) {
   float y = 1.0 - 2.0 * (i + 0.5) / uN;
   float rad = sqrt(max(0.0, 1.0 - y * y));
@@ -47,7 +42,6 @@ vec3 sphereShape(float i, vec4 r) {
   return p * shell;
 }
 
-// 1 systems: a tilted torus whose points flow around the ring like a pipeline
 vec3 torusShape(vec4 r) {
   float u = r.x * TAU + uTime * 0.32 * (0.6 + r.w);
   float v = r.y * TAU;
@@ -59,7 +53,6 @@ vec3 torusShape(vec4 r) {
   return vec3(p.x, p.y * c - p.z * s, p.y * s + p.z * c);
 }
 
-// 2 matrix: Bravox's 27 cards as pillars, split into 3 bureau bands
 vec3 matrixShape(vec4 r) {
   float pillar = floor(r.x * 27.0);
   float band = floor(r.y * 3.0);
@@ -70,7 +63,6 @@ vec3 matrixShape(vec4 r) {
   return vec3(cos(ang) * R, y, sin(ang) * R) + tang * (r.w - 0.5) * 0.08;
 }
 
-// 3 clusters: six topic clusters, like grouped viewing or sleep patterns
 vec3 clustersShape(vec4 r) {
   float k = floor(r.x * 6.0);
   float a = k * 1.0471976 + 0.4;
@@ -82,7 +74,6 @@ vec3 clustersShape(vec4 r) {
   return c + vec3(g1, g2, g3) * 0.11;
 }
 
-// 4 helix: a double strand read as a timeline, with rungs
 vec3 helixShape(vec4 r) {
   float t = r.x;
   float y = (t - 0.5) * 2.1;
@@ -99,7 +90,6 @@ vec3 helixShape(vec4 r) {
   return vec3(cos(aa) * R * f, (stp - 0.5) * 2.1, sin(aa) * R * f);
 }
 
-// 5 pipelines: five production streams converging into a 10 x 10 lattice of labs
 vec3 pipelinesShape(vec4 r) {
   if (r.x < 0.62) {
     float k = floor(r.y * 5.0);
@@ -112,7 +102,6 @@ vec3 pipelinesShape(vec4 r) {
   return vec3(0.86 + (r.z - 0.5) * 0.04, (floor(id / 10.0) - 4.5) * 0.125 + (r.w - 0.5) * 0.03, (mod(id, 10.0) - 4.5) * 0.125 + (fract(r.x * 53.0) - 0.5) * 0.03);
 }
 
-// 6 pass: a Wallet pass, the shape of what Keystroke produces
 vec3 passShape(vec4 r) {
   float W = 0.62;
   float H = 0.86;
@@ -142,7 +131,6 @@ vec3 passShape(vec4 r) {
   return vec3(mix(-W + 0.08, -W + 0.08 + (2.0 * W - 0.16) * len, r.w), 0.1 - line * 0.11, 0.0);
 }
 
-// 7 voxels: a small block build, for the Roblox side
 const vec3 C_POS[8] = vec3[8](vec3(0.0, -0.7, 0.0), vec3(-0.45, -0.38, 0.25), vec3(0.4, -0.38, -0.2), vec3(-0.45, 0.04, 0.25), vec3(0.45, 0.12, -0.25), vec3(0.45, 0.55, -0.25), vec3(-0.1, -0.02, -0.45), vec3(0.0, 0.85, 0.35));
 const vec3 C_HALF[8] = vec3[8](vec3(0.85, 0.08, 0.65), vec3(0.22), vec3(0.22), vec3(0.18), vec3(0.2), vec3(0.16, 0.2, 0.16), vec3(0.15), vec3(0.12));
 vec3 voxelsShape(vec4 r) {
@@ -177,7 +165,6 @@ vec3 tintOf(int s, vec4 r) {
 }
 
 void main() {
-  // each point starts its morph at a different moment, so shapes ripple apart
   float d = aRand.w * 0.42;
   float t = clamp((uMorph - d) / 0.58, 0.0, 1.0);
   t = t * t * (3.0 - 2.0 * t);
@@ -185,12 +172,10 @@ void main() {
   vec3 dirc = normalize(p + vec3(1e-4));
   p += dirc * sin(t * PI) * 0.22 * (0.4 + aRand.z);
 
-  // assembly on load: points fall in from a wide scatter
   float ti = clamp((uIntro - aRand.w * 0.5) / 0.5, 0.0, 1.0);
   ti = 1.0 - pow(1.0 - ti, 3.0);
   p = mix((aRand.xyz - 0.5) * 7.0, p, ti);
 
-  // breathing: the AI state sets the tempo
   float phase = aRand.x * TAU + p.y * 2.6;
   p += dirc * sin(uTime * uFreq * TAU + phase) * uAmp * (0.55 + 0.45 * aRand.y);
   p += dirc * uPulse * 0.09 * (0.3 + aRand.z);
@@ -198,7 +183,6 @@ void main() {
   vec4 view = uView * uModel * vec4(p, 1.0);
   vec4 clip = uProj * view;
 
-  // magnetic lens around the cursor, scaled by cursor speed
   vec2 ndc = clip.xy / clip.w + uShift;
   vec2 dd = ndc - uMouse;
   dd.x *= uAspect;
@@ -212,7 +196,6 @@ void main() {
   clip.xy = ndc * clip.w;
   gl_Position = clip;
 
-  // iridescent rim lighting
   vec3 n = normalize(mat3(uView * uModel) * dirc);
   float rim = pow(1.0 - abs(n.z), 1.5);
   vec3 tint = mix(tintOf(uFrom, aRand), tintOf(uTo, aRand), t);
@@ -226,8 +209,7 @@ void main() {
   vAlpha = clamp(1.3 - (depth - 3.2) * 0.42, 0.18, 1.0) * (0.5 + 0.5 * aRand.z) * (0.35 + 0.65 * ti);
   gl_PointSize = clamp(uSize * uDpr * (0.8 + rim * 0.7 + fall * 1.6 + uPulse * 0.4) * (3.8 / depth), 1.0, 28.0 * uDpr);
 }`;
-
-export const POINTS_FRAG = `#version 300 es
+const POINTS_FRAG = `#version 300 es
 precision mediump float;
 in vec3 vColor;
 in float vAlpha;
@@ -240,16 +222,14 @@ void main() {
   float a = (exp(-r2 * 22.0) + exp(-r2 * 7.0) * 0.35) * vAlpha * uGain;
   outColor = vec4(vColor * a, a);
 }`;
-
-export const FULL_VERT = `#version 300 es
+const FULL_VERT = `#version 300 es
 out vec2 vUv;
 void main() {
   vec2 p = vec2(float((gl_VertexID << 1) & 2), float(gl_VertexID & 2));
   vUv = p;
   gl_Position = vec4(p * 2.0 - 1.0, 0.0, 1.0);
 }`;
-
-export const COMPOSITE_FRAG = `#version 300 es
+const COMPOSITE_FRAG = `#version 300 es
 precision highp float;
 in vec2 vUv;
 uniform sampler2D uScene;
@@ -265,12 +245,10 @@ float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
 
 void main() {
   vec2 uv = vUv;
-  // a slow interference band drifts down the frame
   float bandY = 1.0 - fract(uTime * 0.045);
   float band = exp(-pow((uv.y - bandY) * 28.0, 2.0));
   uv.x += band * uGlitch * 0.006 * sin(uTime * 37.0 + uv.y * 420.0);
 
-  // chromatic dispersion radiating from the orb
   vec2 ca = (uv - uCenter) * (0.006 + uDisp * 0.022);
   vec3 col = vec3(texture(uScene, uv + ca).r, texture(uScene, uv).g, texture(uScene, uv - ca).b);
 
@@ -289,3 +267,9 @@ void main() {
 
   outColor = vec4(vec3(0.0196, 0.0196, 0.0275) + col, 1.0);
 }`;
+export {
+  COMPOSITE_FRAG,
+  FULL_VERT,
+  POINTS_FRAG,
+  POINTS_VERT
+};

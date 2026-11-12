@@ -560,7 +560,7 @@
       "topic": "core",
       "keywords": "assistant agent bot chatbot engine coded built works retrieval bm25 model",
       "short": "I'm a retrieval engine that runs in your browser and answers only from Abhi's published record.",
-      "body": "I'm a retrieval engine that runs in your browser, not a chatbot model. Each question is normalized and spell-checked against the record, then routed: greetings, private topics, internal Quest details, and off-topic requests are handled by rules first. Everything else is ranked with BM25 across a published record of Abhi's work, with synonyms and intent boosts. If the best match clears an honesty floor, I answer from those entries only and cite them; if not, I say it isn't in the record. Questions with several parts are answered part by part, and the Sandbox section shows every stage live."
+      "body": "I'm a retrieval engine with two small trained models, running in your browser, not a chatbot model. Each question is spell-checked against the record and routed by rules first: greetings, private topics, internal Quest details, and off-topic requests. Everything else is ranked by BM25 keyword search blended with an intent classifier and semantic embeddings, both trained on this record. If the best match clears an honesty floor, I answer from those entries only and cite them; if not, I say it isn't in the record. The Sandbox section shows every stage, the model card, and a live semantic map."
     },
     {
       "id": "flagship",

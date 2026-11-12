@@ -7,7 +7,6 @@
   <meta name="description" content="Abhi Kanani is an Enterprise Data Engineer at Quest Diagnostics and a Data Science student at the University of Pittsburgh who ships his own products, including Bravox and Keystroke.">
   <meta name="theme-color" content="#050507">
   <meta name="color-scheme" content="dark">
-  <!-- Optional: URL of your deployed answer endpoint (see api/ask.js). Empty = answers come from in-browser retrieval. -->
   <meta name="ask-endpoint" content="">
   <link rel="canonical" href="https://abhikanani07.github.io/Portfolio-Website/">
   <meta property="og:type" content="website">
@@ -55,7 +54,6 @@
 
 <main id="main">
 
-  <!-- ===================== Hero ===================== -->
   <section class="hero" id="top" aria-labelledby="hero-title">
     <canvas class="hero__canvas" data-holo aria-hidden="true"></canvas>
     <div class="hero__fallback" aria-hidden="true"></div>
@@ -118,7 +116,6 @@
     <div class="visually-hidden" aria-live="polite" data-live></div>
   </section>
 
-  <!-- ===================== Work ===================== -->
   <section class="section" id="work" aria-labelledby="work-title">
     <div class="wrap">
       <header class="section__head" data-reveal-group>
@@ -175,12 +172,11 @@
     </div>
   </section>
 
-  <!-- ===================== Sandbox ===================== -->
   <section class="section" id="sandbox" aria-labelledby="sandbox-title" data-sandbox>
     <div class="wrap">
       <header class="section__head" data-reveal-group>
         <h2 class="section__title" id="sandbox-title" data-reveal>Sandbox</h2>
-        <p class="section__intro" data-reveal>This is the engine that answers questions on this page, opened up. It runs in your browser. Drag the stages, change the thresholds, and watch the answer change.</p>
+        <p class="section__intro" data-reveal>The engine behind the hologram, opened up: rules, keyword search, and two small models trained on this record. It all runs in your browser. Drag the stages, change the thresholds, and watch the answer change.</p>
       </header>
       <div class="rule" data-rule></div>
 
@@ -212,9 +208,16 @@
             </div>
             <p class="node__out mono" data-out></p>
           </div>
-          <div class="node" data-node="guard" data-x="0.16" data-y="0.53">
+          <div class="node" data-node="model" data-x="0.67" data-y="0.53">
+            <div class="node__head" tabindex="0" role="button" aria-label="Model stage. Arrow keys move it.">
+              <span class="node__n mono">4</span><span class="node__name">Model</span><span class="node__state mono" data-state>waiting</span>
+            </div>
+            <p class="node__desc">A trained intent classifier and semantic embeddings score every entry.</p>
+            <p class="node__out mono" data-out></p>
+          </div>
+          <div class="node" data-node="guard" data-x="0.345" data-y="0.53">
             <div class="node__head" tabindex="0" role="button" aria-label="Guard stage. Arrow keys move it.">
-              <span class="node__n mono">4</span><span class="node__name">Guard</span><span class="node__state mono" data-state>waiting</span>
+              <span class="node__n mono">5</span><span class="node__name">Guard</span><span class="node__state mono" data-state>waiting</span>
             </div>
             <p class="node__desc">Declines private questions and anything the record can't support.</p>
             <div class="node__ctls">
@@ -223,9 +226,9 @@
             </div>
             <p class="node__out mono" data-out></p>
           </div>
-          <div class="node" data-node="compose" data-x="0.52" data-y="0.53">
+          <div class="node" data-node="compose" data-x="0.02" data-y="0.53">
             <div class="node__head" tabindex="0" role="button" aria-label="Compose stage. Arrow keys move it.">
-              <span class="node__n mono">5</span><span class="node__name">Compose</span><span class="node__state mono" data-state>waiting</span>
+              <span class="node__n mono">6</span><span class="node__name">Compose</span><span class="node__state mono" data-state>waiting</span>
             </div>
             <p class="node__desc">Writes the answer from the kept entries only.</p>
             <div class="node__ctls">
@@ -254,16 +257,26 @@
           <div class="sb__trace-wrap">
             <table class="sb__trace">
               <caption class="visually-hidden">Retrieval candidates and their scores</caption>
-              <thead><tr><th scope="col">Entry</th><th scope="col">BM25</th><th scope="col">Match</th><th scope="col">Status</th></tr></thead>
+              <thead><tr><th scope="col">Entry</th><th scope="col">BM25</th><th scope="col">Intent</th><th scope="col">Meaning</th><th scope="col">Final</th><th scope="col">Status</th></tr></thead>
               <tbody data-sb-trace></tbody>
             </table>
           </div>
         </div>
       </div>
+      <div class="ml" data-ml data-reveal>
+        <div class="ml__map">
+          <div class="ml__head"><h3 class="exp__h">Semantic map</h3><p class="mono" data-ml-hint>Type in the sandbox and your question appears among its closest entries.</p></div>
+          <svg class="ml__svg" data-ml-map viewBox="-1.3 -1.1 2.6 2.2" role="img" aria-label="Every entry in the record, laid out by meaning. Your question appears among its closest entries."></svg>
+          <div class="ml__legend mono" data-ml-legend></div>
+        </div>
+        <div class="ml__card">
+          <h3 class="exp__h">Model card</h3>
+          <dl class="ml__dl" data-ml-card></dl>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- ===================== Experience ===================== -->
   <section class="section" id="experience" aria-labelledby="experience-title">
     <div class="wrap">
       <header class="section__head" data-reveal-group>
@@ -393,7 +406,6 @@
     </div>
   </section>
 
-  <!-- ===================== In between ===================== -->
   <section class="section" id="between" aria-labelledby="between-title">
     <div class="wrap">
       <header class="section__head" data-reveal-group>
@@ -445,7 +457,6 @@
     </div>
   </section>
 
-  <!-- ===================== Contact ===================== -->
   <section class="section" id="contact" aria-labelledby="contact-title">
     <div class="wrap">
       <h2 class="contact__title" id="contact-title" data-reveal>Always up to talk shop.</h2>
@@ -483,7 +494,6 @@
   <p><a href="https://github.com/AbhiKanani07/Portfolio-Website" target="_blank" rel="noopener">Source on GitHub</a></p>
 </footer>
 
-<!-- ===================== Ask from anywhere ===================== -->
 <button class="dock" type="button" data-dock tabindex="-1" aria-hidden="true" aria-label="Ask the assistant">
   <canvas width="40" height="40" aria-hidden="true"></canvas><span class="dock__text"><span class="dock__label mono" data-dock-label>Work</span><span>Ask</span></span><kbd data-kbd>Ctrl K</kbd>
 </button>
@@ -502,7 +512,6 @@
   </div>
 </div>
 
-<!-- ===================== Case study drawer ===================== -->
 <div class="drawer" data-drawer role="dialog" aria-modal="true" aria-label="Case study" hidden>
   <div class="drawer__backdrop" data-drawer-close></div>
   <div class="drawer__panel" data-drawer-panel>
@@ -513,7 +522,6 @@
     </div>
     <div class="drawer__body" data-drawer-body>
 
-      <!-- Bravox -->
       <article class="case" id="case-bravox" data-title="Bravox Credit" aria-labelledby="case-bravox-title" hidden>
         <p class="case__meta mono"><span>Solo build</span><span>2026</span><span>Live at bravoxcredit.com</span></p>
         <h2 class="case__title" id="case-bravox-title">Bravox Credit</h2>
@@ -571,7 +579,6 @@
         </section>
       </article>
 
-      <!-- Keystroke -->
       <article class="case" id="case-keystroke" data-title="Keystroke" aria-labelledby="case-keystroke-title" hidden>
         <p class="case__meta mono"><span>iOS app</span><span>Swift, SwiftUI</span><span>Python, FastAPI</span></p>
         <h2 class="case__title" id="case-keystroke-title">Keystroke</h2>
@@ -611,7 +618,6 @@
         </section>
       </article>
 
-      <!-- Sleep -->
       <article class="case" id="case-sleep" data-title="Sleep insights dashboard" aria-labelledby="case-sleep-title" hidden>
         <p class="case__meta mono"><span>Machine learning</span><span>scikit-learn</span><span>SHAP</span><span>Streamlit</span></p>
         <h2 class="case__title" id="case-sleep-title">Sleep insights dashboard</h2>
@@ -654,7 +660,6 @@
         </section>
       </article>
 
-      <!-- YouTube -->
       <article class="case" id="case-youtube" data-title="YouTube content algorithm" aria-labelledby="case-youtube-title" hidden>
         <p class="case__meta mono"><span>Ranking service</span><span>Python, FastAPI</span><span>Redis, PostgreSQL</span><span>React</span></p>
         <h2 class="case__title" id="case-youtube-title">YouTube content algorithm</h2>
@@ -697,7 +702,6 @@
         </section>
       </article>
 
-      <!-- Water (earlier) -->
       <article class="case" id="case-water" data-title="Dutch water quality" aria-labelledby="case-water-title" hidden>
         <p class="case__meta mono"><span>Earlier project</span><span>NumPy</span><span>Pandas</span></p>
         <h2 class="case__title" id="case-water-title">Dutch water quality</h2>
