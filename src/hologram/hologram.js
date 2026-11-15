@@ -104,6 +104,10 @@ class Hologram {
     this.fpsElapsed = 0;
     this.slow = 0;
     this.age = 0;
+    this.ft = new Float32Array(90);
+    this.fti = 0;
+    this.ftn = 0;
+    this.capped = false;
     this.mouse = { x: 0, y: 0, vx: 0, vy: 0, t: 0, inside: false };
     const sp = (v, k, c) => new Spring(v, { stiffness: k, damping: c, precision: 1e-4 });
     const m = MODES.idle;
@@ -146,7 +150,11 @@ class Hologram {
   build() {
     const gl = this.gl;
     const full = /[?&]holo=full\b/.test(location.search);
-    const small = !full && (Math.min(screen.width, screen.height) < 700 || (navigator.hardwareConcurrency || 8) <= 4);
+    const info = gl.getExtension("WEBGL_debug_renderer_info");
+    this.gpu = String(info ? gl.getParameter(info.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER));
+    this.software = /swiftshader|llvmpipe|softpipe|basic render|software/i.test(this.gpu);
+    const small = !full && (this.software || Math.min(screen.width, screen.height) < 700 || (navigator.hardwareConcurrency || 8) <= 4);
+    this.budget = full ? Infinity : this.software ? 1e6 : small ? 1.6e6 : 2.6e6;
     this.noAdapt = full;
     this.N = small ? 14e3 : 3e4;
     this.count = this.N;
@@ -262,7 +270,8 @@ class Hologram {
     const cr = this.canvas.getBoundingClientRect();
     const w = Math.max(1, cr.width);
     const h = Math.max(1, cr.height);
-    const dpr = Math.min(window.devicePixelRatio || 1, this.dprCap);
+    let dpr = Math.min(window.devicePixelRatio || 1, this.dprCap);
+    if (w * h * dpr * dpr > this.budget) dpr = Math.sqrt(this.budget / (w * h));
     const W = Math.round(w * dpr);
     const H = Math.round(h * dpr);
     if (W !== this.canvas.width || H !== this.canvas.height) {
@@ -317,6 +326,9 @@ class Hologram {
     this.tick(Math.min(0.25, raw));
     this.draw();
     if (this.onFrame) this.onFrame(this);
+    this.fti = (this.fti + 1) % this.ft.length;
+    this.ft[this.fti] = raw * 1e3;
+    this.ftn = Math.min(this.ft.length, this.ftn + 1);
     this.frames += 1;
     this.fpsElapsed += raw;
     this.age += raw;
@@ -353,14 +365,30 @@ class Hologram {
       this.slow = 0;
       return;
     }
+    const { p50, p95 } = this.frameTimes();
+    this.capped = p50 > 20 && p95 - p50 < 3;
+    if (this.capped) { this.slow = 0; return; }
     if (this.fps < 45) this.slow += 1;
     if (this.slow < 4) return;
     this.slow = 0;
-    if (this.count > this.minCount) this.count = Math.max(this.minCount, Math.floor(this.count * 0.75));
-    else if (this.dprCap > 1) {
-      this.dprCap = Math.max(1, this.dprCap - 0.25);
+    if (this.budget > 7e5) {
+      this.budget = Math.max(7e5, Math.min(this.budget, this.canvas.width * this.canvas.height) * 0.7);
       this.layout();
-    }
+    } else if (this.count > this.minCount) this.count = Math.max(this.minCount, Math.floor(this.count * 0.75));
+  }
+  frameTimes() {
+    const n = this.ftn;
+    if (n < 20) return { p50: 0, p95: 0 };
+    const a = Array.from(this.ft.slice(0, n)).sort((x, y) => x - y);
+    return { p50: a[Math.floor(n * 0.5)], p95: a[Math.floor(n * 0.95)] };
+  }
+  diag() {
+    const { p50, p95 } = this.frameTimes();
+    let verdict = "Running smoothly.";
+    if (this.software) verdict = "Software rendering: this browser isn't using the GPU. Turn on hardware acceleration in the browser's settings.";
+    else if (this.capped && this.fps < 50) verdict = `Steady ${Math.round(p50)} ms frames: something outside the site is capping this browser near ${Math.round(1e3 / p50)} FPS, such as a power-saving mode or the monitor's refresh rate.`;
+    else if (this.fps && this.fps < 50) verdict = "Uneven frames: the GPU is the limit, so quality is being lowered automatically.";
+    return { gpu: this.gpu, software: this.software, buffer: `${this.canvas.width} × ${this.canvas.height}`, css: `${Math.round(this.cssW)} × ${Math.round(this.cssH)}`, scale: Math.round(this.dpr * 100) / 100, points: this.count, maxPoints: this.N, fps: this.fps, p50: Math.round(p50 * 10) / 10, p95: Math.round(p95 * 10) / 10, verdict };
   }
   draw() {
     const gl = this.gl;

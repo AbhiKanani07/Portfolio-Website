@@ -3471,3 +3471,6 @@ html.is-locked .dock {
 .pb__card { margin-top: 18px; }
 .section__intro a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--hair-hot); text-underline-offset: 3px; }
 .section__intro a:hover { text-decoration-color: var(--cyan); }
+.diag { position: fixed; left: 12px; bottom: 12px; z-index: 99; display: grid; gap: 4px; max-width: min(520px, calc(100vw - 24px)); padding: 10px 12px; border: 1px solid var(--hair-strong); border-radius: 10px; background: rgba(5, 5, 7, 0.9); color: var(--ink-2); font-size: 11px; line-height: 1.45; }
+.diag div { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 8px; }
+.diag b { color: var(--ink-3); font-weight: 500; }

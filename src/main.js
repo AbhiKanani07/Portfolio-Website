@@ -92,7 +92,20 @@ function boot() {
   window.addEventListener("pagehide", (e) => {
     if (!e.persisted) holo.destroy();
   });
-  if (new URLSearchParams(location.search).has("debug")) window.__portfolio = { holo, engine, driver, palette, drawer };
+  if (new URLSearchParams(location.search).has("debug")) {
+    window.__portfolio = { holo, engine, driver, palette, drawer };
+    if (holo.diag) {
+      const panel = document.createElement("div");
+      panel.className = "diag mono";
+      document.body.append(panel);
+      const show = () => {
+        const d = holo.diag();
+        panel.innerHTML = [["GPU", d.gpu], ["Render", `${d.buffer} px for a ${d.css} hero (scale ${d.scale})`], ["Points", `${d.points.toLocaleString("en-US")} of ${d.maxPoints.toLocaleString("en-US")}`], ["Frames", `${d.fps} FPS, median ${d.p50} ms, slowest 5% ${d.p95} ms`], ["Verdict", d.verdict]].map(([k, v]) => `<div><b>${k}</b><span>${String(v).replace(/</g, "&lt;")}</span></div>`).join("");
+      };
+      show();
+      setInterval(show, 500);
+    }
+  }
 }
 if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
 else boot();
