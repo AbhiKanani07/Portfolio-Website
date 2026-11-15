@@ -3474,3 +3474,5 @@ html.is-locked .dock {
 .diag { position: fixed; left: 12px; bottom: 12px; z-index: 99; display: grid; gap: 4px; max-width: min(520px, calc(100vw - 24px)); padding: 10px 12px; border: 1px solid var(--hair-strong); border-radius: 10px; background: rgba(5, 5, 7, 0.9); color: var(--ink-2); font-size: 11px; line-height: 1.45; }
 .diag div { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 8px; }
 .diag b { color: var(--ink-3); font-weight: 500; }
+.no-glass * { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+.no-glass .glass, .no-glass .nav, .no-glass .dock, .no-glass .palette__panel { background: rgba(10, 11, 15, 0.94) !important; }

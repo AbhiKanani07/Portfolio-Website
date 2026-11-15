@@ -108,6 +108,7 @@ class Hologram {
     this.fti = 0;
     this.ftn = 0;
     this.capped = false;
+    this.jsMs = 0;
     this.mouse = { x: 0, y: 0, vx: 0, vy: 0, t: 0, inside: false };
     const sp = (v, k, c) => new Spring(v, { stiffness: k, damping: c, precision: 1e-4 });
     const m = MODES.idle;
@@ -323,9 +324,11 @@ class Hologram {
     if (!this.running) return;
     const raw = this.last ? (now - this.last) / 1e3 : 1 / 60;
     this.last = now;
+    const work = performance.now();
     this.tick(Math.min(0.25, raw));
     this.draw();
     if (this.onFrame) this.onFrame(this);
+    this.jsMs = this.jsMs * 0.9 + (performance.now() - work) * 0.1;
     this.fti = (this.fti + 1) % this.ft.length;
     this.ft[this.fti] = raw * 1e3;
     this.ftn = Math.min(this.ft.length, this.ftn + 1);
@@ -366,7 +369,7 @@ class Hologram {
       return;
     }
     const { p50, p95 } = this.frameTimes();
-    this.capped = p50 > 20 && p95 - p50 < 3;
+    this.capped = Math.abs(p50 - 33.3) < 2 && p95 - p50 < 3;
     if (this.capped) { this.slow = 0; return; }
     if (this.fps < 45) this.slow += 1;
     if (this.slow < 4) return;
@@ -387,8 +390,9 @@ class Hologram {
     let verdict = "Running smoothly.";
     if (this.software) verdict = "Software rendering: this browser isn't using the GPU. Turn on hardware acceleration in the browser's settings.";
     else if (this.capped && this.fps < 50) verdict = `Steady ${Math.round(p50)} ms frames: something outside the site is capping this browser near ${Math.round(1e3 / p50)} FPS, such as a power-saving mode or the monitor's refresh rate.`;
-    else if (this.fps && this.fps < 50) verdict = "Uneven frames: the GPU is the limit, so quality is being lowered automatically.";
-    return { gpu: this.gpu, software: this.software, buffer: `${this.canvas.width} × ${this.canvas.height}`, css: `${Math.round(this.cssW)} × ${Math.round(this.cssH)}`, scale: Math.round(this.dpr * 100) / 100, points: this.count, maxPoints: this.N, fps: this.fps, p50: Math.round(p50 * 10) / 10, p95: Math.round(p95 * 10) / 10, verdict };
+    else if (this.fps && this.fps < 50 && this.jsMs > 8) verdict = `The page's code is the limit: ${this.jsMs.toFixed(1)} ms of JavaScript per frame.`;
+    else if (this.fps && this.fps < 50) verdict = `Slow frames with little JavaScript work (${this.jsMs.toFixed(1)} ms), so the GPU or the browser's compositing is the limit. If this GPU is integrated, plug the monitor into the graphics card. Then try adding &noglass to the URL to test the glass blur.`;
+    return { gpu: this.gpu, software: this.software, buffer: `${this.canvas.width} × ${this.canvas.height}`, jsMs: Math.round(this.jsMs * 100) / 100, css: `${Math.round(this.cssW)} × ${Math.round(this.cssH)}`, scale: Math.round(this.dpr * 100) / 100, points: this.count, maxPoints: this.N, fps: this.fps, p50: Math.round(p50 * 10) / 10, p95: Math.round(p95 * 10) / 10, verdict };
   }
   draw() {
     const gl = this.gl;
